@@ -1,7 +1,5 @@
 package loot.models;
 
-import character.models.Characters;
-
 public class Consumable extends Loot{
 
 	private int effectOnHealth;

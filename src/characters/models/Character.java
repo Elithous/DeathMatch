@@ -3,6 +3,10 @@ package characters.models;
 import character.enums.EquipmentSlot;
 import interfaces.IHasStats;
 import javafx.scene.image.Image;
+import loot.enums.ArmorType;
+import loot.models.Armor;
+import loot.models.Equipment;
+import loot.models.Weapon;
 
 public abstract class Character implements IHasStats
 {
@@ -14,7 +18,7 @@ public abstract class Character implements IHasStats
 	protected int intelligence;
 	protected int armor;
 	protected int level;
-	protected Equipment[] equipment;
+	protected Equipment[] equipment = new Equipment[7];
 	protected Image image;
 
 	@Override
@@ -128,5 +132,48 @@ public abstract class Character implements IHasStats
 	public Equipment getEquipment(EquipmentSlot slot)
 	{
 		return equipment[slot.ordinal()];
+	}
+	
+	public boolean equip(EquipmentSlot slot, Equipment item)
+	{
+		if (item instanceof Weapon)
+		{
+			if (slot == EquipmentSlot.MAIN_HAND) 
+			{
+				equipment[slot.ordinal()] = item;
+				if (((Weapon)item).isTwoHanded) equipment[EquipmentSlot.OFFHAND.ordinal()] = null;
+				return true;
+			}
+			if (slot == EquipmentSlot.OFFHAND)
+			{
+				if (((Weapon)item).isTwoHanded) return false;
+				else equipment[slot.ordinal()] = item;
+				return true;
+			}
+		}
+		else
+		{
+			Armor armor = ((Armor)item);
+			if ((slot == EquipmentSlot.HELM && armor.armorType == ArmorType.HELM) ||
+				(slot == EquipmentSlot.BODY && armor.armorType == ArmorType.BODY) ||
+				(slot == EquipmentSlot.LEGS && armor.armorType == ArmorType.LEGS) ||
+				((slot == EquipmentSlot.RING1 || slot == EquipmentSlot.RING2) && armor.armorType == ArmorType.RING))
+			{
+				equipment[slot.ordinal()] = armor;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Image getImage()
+	{
+		return image;
+	}
+	
+	public void setImage(Image imageN)
+	{
+		if (image != null)
+			image = imageN;
 	}
 }
