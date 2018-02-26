@@ -1,8 +1,10 @@
 package loot.models;
 
+import java.io.Serializable;
+
 import javafx.scene.image.Image;
 
-public class Loot {
+public class Loot implements Serializable{
 
 	protected String name;
 	protected String description;
