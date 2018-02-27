@@ -23,22 +23,23 @@ public class GameApp extends Application implements IEventListener
 		@Override
 		public void start(Stage stage) throws IOException 
 		{
-			Parent root = loadFXML(ScreenType.MAIN);
+			Parent root = loadFXML(ScreenType.PARTY);
 			stage.setScene(new Scene(root));
 			stage.setFullScreen(true);
+			stage.show();
 		}
 		
 		@Override
 		public void init()
 		{
 			screenPaths = new HashMap<>();
-			screenPaths.put(ScreenType.BATTLE, "../../fxml-resources/battle.fxml");
-			screenPaths.put(ScreenType.LOSE, "../../fxml-resources/loss.fxml");
-			screenPaths.put(ScreenType.MAIN, "/res/main.fxml");
-			screenPaths.put(ScreenType.MANAGEMENT, "../../fxml-resources/management.fxml");
-			screenPaths.put(ScreenType.PARTY, "../../fxml-resources/party.fxml");
-			screenPaths.put(ScreenType.QUEST, "../../fxml-resources/quest.fxml");
-			screenPaths.put(ScreenType.WIN, "../../fxml-resources/win.fxml");
+			screenPaths.put(ScreenType.BATTLE, "battle.fxml");
+			screenPaths.put(ScreenType.LOSE, "loss.fxml");
+			screenPaths.put(ScreenType.MAIN, "main.fxml");
+			screenPaths.put(ScreenType.MANAGEMENT, "management.fxml");
+			screenPaths.put(ScreenType.PARTY, "party.fxml");
+			screenPaths.put(ScreenType.QUEST, "quest.fxml");
+			screenPaths.put(ScreenType.WIN, "win.fxml");
 		}
 		
 		public void save(PlayerSave playerSave)
