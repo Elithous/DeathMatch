@@ -1,6 +1,6 @@
 package models.quests;
 
-import character.models.Monster;
+import characters.models.Monster;
 
 public class Quest {
 

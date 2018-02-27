@@ -9,6 +9,4 @@ public class Armor extends Equipment{
 	public Armor(ArmorType armorType) {
 		this.armorType = armorType;
 	}
-	
-	
 }

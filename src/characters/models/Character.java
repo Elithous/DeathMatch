@@ -1,6 +1,8 @@
 package characters.models;
 
-import character.enums.EquipmentSlot;
+import java.io.Serializable;
+
+import characters.enums.EquipmentSlot;
 import interfaces.IHasStats;
 import javafx.scene.image.Image;
 import loot.enums.ArmorType;
@@ -8,7 +10,7 @@ import loot.models.Armor;
 import loot.models.Equipment;
 import loot.models.Weapon;
 
-public abstract class Character implements IHasStats
+public class Character implements IHasStats, Serializable
 {
 	protected String name;
 	protected int currentHealth;

@@ -19,11 +19,11 @@ public class Inventory implements Serializable{
 	}
 	
 	public void addEquipment(Equipment equipment) {
-		
+		//TODO
 	}
 	
 	public void removeEquipment(Equipment equipment) {
-		
+		//TODO
 	}
 	
 	public ArrayList<Consumable> getConsumables() {
@@ -31,30 +31,39 @@ public class Inventory implements Serializable{
 	}
 	
 	public void addConsumeable(Consumable consumable) {
-		
+		//TODO
 	}
 	
 	public void removeConsumeable(Consumable consumable) {
-		
+		//TODO
 	}
 	
 	public ArrayList<Loot> getLoot() {
-		
+		return loot;
+		//TODO
 	}
 	
 	public void addLoot(Loot loot) {
-		
+		//TODO
 	}
 	
-	public void removeLoot(Loot loot) {
-		
+	public void removeLoot(Loot loot) 
+	{
+		//TODO
 	}
 	
 	public int getGold() {
 		return gold;
 	}
 	
-	public void setGold() {
-		
+	public boolean goldTransaction(int amount) 
+	{
+		gold += amount;
+		if (gold<0) 
+		{
+			gold -= amount;
+			return false;
+		}
+		else return true;
 	}
 }

@@ -20,7 +20,8 @@ public class Consumable extends Loot
 		this.effectOnHealth = effectOnHealth;
 	}
 	
-	public void use(Character target) {
-		
+	public void use(characters.models.Character target) 
+	{
+		target.adjustHealth(effectOnHealth);
 	}
 }

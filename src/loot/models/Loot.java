@@ -1,17 +1,11 @@
 package loot.models;
 
-<<<<<<< HEAD
-import javafx.scene.image.Image;
-
-public class Loot {
-=======
 import java.io.Serializable;
 
 import javafx.scene.image.Image;
 
-public class Loot implements Serializable{
->>>>>>> origin/Quest_loot_Player_Models
-
+public class Loot implements Serializable
+{
 	protected String name;
 	protected String description;
 	protected int value;

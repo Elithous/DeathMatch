@@ -1,4 +1,4 @@
-package character.enums;
+package characters.enums;
 
 public enum EquipmentSlot 
 {

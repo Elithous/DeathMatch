@@ -1,6 +1,6 @@
 package characters.models;
 
-import character.enums.BattleChoice;
+import characters.enums.BattleChoice;
 
 public class TurnChoice 
 {
