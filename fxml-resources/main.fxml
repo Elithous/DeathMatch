@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainMenuController">
    <children>
       <ImageView fitHeight="408.0" fitWidth="607.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -22,10 +22,10 @@
                   <Font size="32.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" onAction="#adfs" prefHeight="25.0" prefWidth="104.0" text="New Game" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Load Game" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Settings" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Exit" />
+            <Button mnemonicParsing="false" onAction="#newGameButtonAction" prefHeight="25.0" prefWidth="104.0" text="New Game" />
+            <Button mnemonicParsing="false" onAction="#loadGameButtonAction" prefHeight="25.0" prefWidth="103.0" text="Load Game" />
+            <Button mnemonicParsing="false" onAction="#settingButtonAction" prefHeight="25.0" prefWidth="103.0" text="Settings" />
+            <Button mnemonicParsing="false" onAction="#exitButtonAction" prefHeight="25.0" prefWidth="104.0" text="Exit" />
          </children>
       </VBox>
    </children>
