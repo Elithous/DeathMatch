@@ -1,6 +1,7 @@
 package characters.models;
 
 import java.io.Serializable;
+import java.util.Random;
 
 import characters.enums.EquipmentSlot;
 import interfaces.IHasStats;
@@ -10,7 +11,7 @@ import loot.models.Armor;
 import loot.models.Equipment;
 import loot.models.Weapon;
 
-public class Character implements IHasStats, Serializable
+public class Character implements IHasStats, Serializable, Comparable<Character>
 {
 	protected String name;
 	protected int currentHealth;
@@ -139,6 +140,10 @@ public class Character implements IHasStats, Serializable
 	
 	public boolean equip(EquipmentSlot slot, Equipment item)
 	{
+		if (item.getRequiredDexterity() > getDexterity()) return false;
+		if (item.getRequiredStrength() > getStrength()) return false;
+		if (item.getRequiredIntelligence() > getIntelligence()) return false;
+		
 		if (item instanceof Weapon)
 		{
 			if (slot == EquipmentSlot.MAIN_HAND) 
@@ -183,12 +188,28 @@ public class Character implements IHasStats, Serializable
 	@Override
 	public int getAttack() 
 	{
-		return attack;
+		int result = attack;
+		
+		for(Equipment e : equipment)
+			result += e.getAttack();
+		
+		return result;
 	}
 
 	@Override
 	public void setAttack(int attack) 
 	{
 		this.attack = attack;
+	}
+
+	@Override
+	public int compareTo(Character o) 
+	{
+		int myDex = this.getDexterity();
+		int otherDex = o.getDexterity();
+		
+		if (myDex>otherDex) return 1;
+		else if (myDex<otherDex) return -1;
+		else return (new Random().nextInt(2)==0? 1 : -1);
 	}
 }

@@ -100,11 +100,11 @@ public class LootGenerator
 		weapon.setAttackMin((int)(attack*1.2f-rand.nextDouble()*.2f));
 		
 		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
-		if (choice < NORMAL_RATIO)
+		if (rarity < NORMAL_RATIO)
 			weapon.setRarity(Rarity.NORMAL);
-		else if (choice < NORMAL_RATIO + RARE_RATIO)
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
 			weapon.setRarity(Rarity.RARE);
-		else if (choice < NORMAL_RATIO + RARE_RATIO)
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
 			weapon.setRarity(Rarity.EPIC);
 		else weapon.setRarity(Rarity.LEGENDARY);
 		

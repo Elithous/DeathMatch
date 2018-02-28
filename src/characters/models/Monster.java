@@ -1,10 +1,8 @@
 package characters.models;
 
-import events.TurnEvent;
-
 public class Monster extends Character
 {
-	public TurnEvent decideNextTurn(Hero[] heros)
+	public TurnChoice decideNextTurn(Hero[] heros)
 	{
 		// TODO !!!!!!!
 		return null;

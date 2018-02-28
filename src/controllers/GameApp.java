@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import lib.Event;
 import lib.FileUtil;
 import lib.IEventListener;
+import loot.LootGenerator;
+import loot.models.Weapon;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.enums.ScreenType;
@@ -27,6 +29,10 @@ public class GameApp extends Application implements IEventListener
 			stage.setScene(new Scene(root));
 			stage.setFullScreen(true);
 			stage.show();
+			
+			Weapon weap = LootGenerator.generateWeapon(1000, 10);
+			//System.out.println(weap.getName());
+			//System.out.println("foo");
 		}
 		
 		@Override

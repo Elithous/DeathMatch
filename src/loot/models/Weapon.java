@@ -27,6 +27,7 @@ public class Weapon extends Equipment{
 	@Override
 	public int getAttack()
 	{
+		System.out.println(attackMin + "-"+ attackMax);
 		return attackMin + (new Random().nextInt(attackMax-attackMin));
 	}
 	
