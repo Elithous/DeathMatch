@@ -21,7 +21,7 @@ public class LootGenerator
 				{},
 				{"Lance of Cassius", "Wooden Spear", "Ugandan Spear", "Metal Spear", "Naginata", "Halberd", "Elite Guard Lance", "Darksteel Spear", "Holy Lance"}
 			};
-	private static String[] paths = new String[] {"","../../Assets/Weapons/Spear"};
+	private static String[] paths = new String[] {"","../../Assets/Weapons/Spear/Spear"};
 	
 	private static final int WEAPON_RATIO = 10;
 	private static final int ARMOR_RATIO = 10;
@@ -37,7 +37,7 @@ public class LootGenerator
 	
 	private static final int AMOUNT_OF_SPEARS = 9;
 	
-	private static final int VALUE_PER_ATTACK_POINT = 10;	
+	private static final int VALUE_PER_ATTACK_POINT = 3;
 
 	public static LootGeneratorResult generateLoot(Quest quest)
 	{
