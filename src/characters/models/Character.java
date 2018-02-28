@@ -19,6 +19,7 @@ public class Character implements IHasStats, Serializable
 	protected int dexterity;
 	protected int intelligence;
 	protected int armor;
+	protected int attack;	
 	protected int level;
 	protected Equipment[] equipment = new Equipment[7];
 	protected Image image;
@@ -177,5 +178,17 @@ public class Character implements IHasStats, Serializable
 	{
 		if (image != null)
 			image = imageN;
+	}
+
+	@Override
+	public int getAttack() 
+	{
+		return attack;
+	}
+
+	@Override
+	public void setAttack(int attack) 
+	{
+		this.attack = attack;
 	}
 }

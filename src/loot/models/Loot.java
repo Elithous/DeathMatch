@@ -3,6 +3,7 @@ package loot.models;
 import java.io.Serializable;
 
 import javafx.scene.image.Image;
+import loot.enums.Rarity;
 
 public class Loot implements Serializable
 {
@@ -10,6 +11,16 @@ public class Loot implements Serializable
 	protected String description;
 	protected int value;
 	protected Image image;
+	
+	public Rarity getRarity() {
+		return rarity;
+	}
+
+	public void setRarity(Rarity rarity) {
+		this.rarity = rarity;
+	}
+
+	protected Rarity rarity;
 	
 	public String getName() {
 		return name;

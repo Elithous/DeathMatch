@@ -7,9 +7,11 @@ public interface IHasStats
 	public int getDexterity();
 	public int getIntelligence();
 	public int getArmor();
+	public int getAttack();
 	public void setMaxHealth(int hp);
 	public void setStrength(int str);
 	public void setDexterity(int dex);
 	public void setIntelligence(int intel);
 	public void setArmor(int armor);
+	public void setAttack(int attack);
 }
