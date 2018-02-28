@@ -10,6 +10,39 @@ public class Equipment extends Loot implements IHasStats{
 	protected int dexterity;
 	protected int intelligence;
 	protected int armor;
+	protected int requiredStrength;
+	protected int requiredDexterity;
+	protected int requiredIntelligence;
+
+	public int getRequiredStrength() 
+	{
+		return requiredStrength;
+	}
+
+	public void setRequiredStrength(int requiredStrength) 
+	{
+		this.requiredStrength = requiredStrength;
+	}
+
+	public int getRequiredDexterity() 
+	{
+		return requiredDexterity;
+	}
+
+	public void setRequiredDexterity(int requiredDexterity) 
+	{
+		this.requiredDexterity = requiredDexterity;
+	}
+
+	public int getRequiredIntelligence() 
+	{
+		return requiredIntelligence;
+	}
+
+	public void setRequiredIntelligence(int requiredIntelligence) 
+	{
+		this.requiredIntelligence = requiredIntelligence;
+	}
 
 	@Override
 	public int getMaxHealth() {
