@@ -13,6 +13,7 @@ public class Equipment extends Loot implements IHasStats{
 	protected int requiredStrength;
 	protected int requiredDexterity;
 	protected int requiredIntelligence;
+	private int attack;
 
 	public int getRequiredStrength() 
 	{
@@ -101,5 +102,17 @@ public class Equipment extends Loot implements IHasStats{
 
 	public void setEquipped(boolean isEquipped) {
 		this.isEquipped = isEquipped;
+	}
+
+	@Override
+	public int getAttack() 
+	{
+		return attack;
+	}
+
+	@Override
+	public void setAttack(int attack) 
+	{
+		this.attack = attack;
 	}
 }

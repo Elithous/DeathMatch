@@ -150,7 +150,7 @@ public class LootGenerator
 			item.setName("Educational " + item.getName()); break;
 			case 4: item.setArmor(item.getValue()/5);
 			item.setName("Protective " + item.getName()); break;
-			case 5: item.setDexterity(item.getValue()/5);
+			case 5: item.setAttack(item.getValue()/5);
 			item.setName("Sharpened " + item.getName()); break;
 		}
 	}
