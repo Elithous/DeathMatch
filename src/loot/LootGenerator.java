@@ -18,10 +18,10 @@ public class LootGenerator
 {
 	private static String[][] names = new String[][]
 			{
-				{},
+				{"Strength of Zeus", "Shortsword", "Sword", "Greatsword", "Thief's Dagger", "Improved Sword", "Renforced Shortsword", "Renforced Sword", "Renforced Greatsword", "Hammer Blade", "The Great Blade", "Stabbing Sword", "Spiked Sword", "Sword of Canyons", "Sword of Storms", "Sword of Illness", "Sword of Winter", "Shortsword of Darkness", "Sword of a Thousand Fires", "Poseidons' Gift"},
 				{"Lance of Cassius", "Wooden Spear", "Ugandan Spear", "Metal Spear", "Naginata", "Halberd", "Elite Guard Lance", "Darksteel Spear", "Holy Lance"}
 			};
-	private static String[] paths = new String[] {"","../../Assets/Weapons/Spear/Spear"};
+	private static String[] paths = new String[] {"../../Assets/Weapons/Sword/Sword","../../Assets/Weapons/Spear/Spear"};
 	
 	private static final int WEAPON_RATIO = 10;
 	private static final int ARMOR_RATIO = 10;
@@ -36,6 +36,7 @@ public class LootGenerator
 	private static final int LEGENDARY_RATIO = 1;
 	
 	private static final int AMOUNT_OF_SPEARS = 9;
+	private static final int AMOUNT_OF_SWORDS = 20;
 	
 	private static final int VALUE_PER_ATTACK_POINT = 3;
 
@@ -88,6 +89,16 @@ public class LootGenerator
 		switch(choice)
 		{
 			// Add others
+			case 0: 
+				boolean isTwoHanded = false;
+				if (type == 3 || type == 8 || type == 10) {
+					isTwoHanded = true;
+				}
+				weapon = new Weapon(isTwoHanded, AttackType.STRENGTH);
+				if (type >= AMOUNT_OF_SWORDS) {
+					type = AMOUNT_OF_SWORDS - 1;
+				}
+				break;
 			case 1: weapon = new Weapon(true, AttackType.DEXTERITY);
 					if (type>=AMOUNT_OF_SPEARS) type = AMOUNT_OF_SPEARS-1;
 				break;
