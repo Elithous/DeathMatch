@@ -127,8 +127,8 @@ public class LootGenerator
 		}
 		
 		//SETTING ATTACK
-		weapon.setName(names[choice][type+1]);
-		int attack = getAttackFromType(type);
+		weapon.setName(names[choice][type]);
+		int attack = getAttackFromLevel(level);
 		if (choice==3) // if shield?
 		{
 			weapon.setArmor(attack/2);
@@ -216,7 +216,7 @@ public class LootGenerator
 		return null;
 	}
 	
-	private static int getAttackFromType(int type)
+	private static int getAttackFromLevel(int type)
 	{
 		return 10 * (int)Math.pow(2, ((float)type)/5);
 	}
