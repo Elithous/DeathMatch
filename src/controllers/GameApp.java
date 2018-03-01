@@ -25,12 +25,12 @@ public class GameApp extends Application implements IEventListener
 		@Override
 		public void start(Stage stage) throws IOException 
 		{
-			Parent root = loadFXML(ScreenType.PARTY);
+			Parent root = loadFXML(ScreenType.MAIN);
 			stage.setScene(new Scene(root));
 			stage.setFullScreen(true);
 			stage.show();
 			
-			Weapon weap = LootGenerator.generateWeapon(1000, 10);
+			//Weapon weap = LootGenerator.generateWeapon(1000, 10);
 			//System.out.println(weap.getName());
 			//System.out.println("foo");
 		}
