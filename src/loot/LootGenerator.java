@@ -26,7 +26,7 @@ public class LootGenerator
 				{"Phoenix Bow", "Wood Bow", "Hardwood Bow", "Darkwood Bow", "Precision Bow", "Gold Bow", "Ugandan Bow", "King's Bow", "Golden Wood Bow", "Bow of Winter", "Bow of Illness", "Bow of a Thousand Fires", "Fallen Angel Bow", "Risen Angel Bow"},
 				{"Wand of the Sun", "Spellcasting 101", "Advanced Spellcasting", "Expert Spellcasting", "Udandan Wand", "Corrupted Magic", "Secrets of the Dark Arts", "Wand of the Hero", "Gold Wand", "King's Wand", "Grand Paladin's Book", "Grand Paladin's Wand"}
 			};
-	private static String[] paths = new String[] {"../../Assets/Weapons/Sword/Sword","../../Assets/Weapons/Spear/Spear", "../../Assets/Weapons/Axe/Axe", "../../Assets/Weapons/Shields/Shield", "../../Assets/Weapons/Bow/Bow", "../../Assets/Magic/Magic"};
+	private static String[] paths = new String[] {"file:Assets/Weapons/Sword/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
 	
 	private static final int WEAPON_RATIO = 10;
 	private static final int ARMOR_RATIO = 10;
@@ -132,7 +132,7 @@ public class LootGenerator
 		weapon.setName(names[choice][type+1]);
 		int attack = getAttackFromType(type);
 		weapon.setAttackMin((int)(attack*.8f+rand.nextDouble()*.2f));
-		weapon.setAttackMin((int)(attack*1.2f-rand.nextDouble()*.2f));
+		weapon.setAttackMax((int)(attack*1.2f-rand.nextDouble()*.2f));
 		
 		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
 		if (rarity < NORMAL_RATIO)
@@ -148,6 +148,7 @@ public class LootGenerator
 		for (int i = 0; i < weapon.getRarity().ordinal(); i++)
 			addRandomBonus(weapon);
 		
+		System.out.println(paths[choice]+0+".png");
 		if (weapon.getRarity() == Rarity.LEGENDARY)
 		{
 			weapon.setName(names[choice][0]);
