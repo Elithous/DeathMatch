@@ -5,12 +5,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.QuestController">
    <children>
       <VBox fx:id="contentBox" alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="10.0">
          <children>
-            <Label fx:id="title" alignment="CENTER" prefHeight="38.0" prefWidth="279.0" text="Choose your quest">
+            <Label fx:id="title" alignment="CENTER" prefHeight="38.0" prefWidth="279.0" style="-fx-background-color: black;" text="Choose your quest">
                <font>
                   <Font size="25.0" />
                </font>

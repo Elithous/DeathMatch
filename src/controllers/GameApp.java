@@ -29,7 +29,8 @@ public class GameApp extends Application implements IEventListener
 			this.stage = stage;
 			Parent root = loadFXML(ScreenType.MAIN, null);
 			stage.setScene(new Scene(root));
-			//stage.setFullScreen(true);
+			stage.setFullScreen(true);
+			stage.setFullScreenExitHint("");
 			stage.show();
 		}
 		
@@ -93,6 +94,7 @@ public class GameApp extends Application implements IEventListener
 				try {
 					Parent node = loadFXML(screenEvent.screenType, screenEvent.playerSave, screenEvent.quest);
 					stage.setScene(new Scene(node));
+					stage.setFullScreen(true);
 				} catch (IOException e) {
 					
 				}
