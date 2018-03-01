@@ -3,6 +3,7 @@ package views.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import controllers.GameApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,8 +12,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import models.player.PlayerSave;
+import models.quests.Quest;
+import views.interfaces.PlayerController;
 
-public class BattleScreenController {
+public class BattleScreenController implements PlayerController {
 
 	@FXML
 	private ResourceBundle resources;
@@ -125,5 +129,16 @@ public class BattleScreenController {
 		assert itemList1 != null : "fx:id=\"itemList1\" was not injected: check your FXML file 'battle.fxml'.";
 		assert itemList2 != null : "fx:id=\"itemList2\" was not injected: check your FXML file 'battle.fxml'.";
 
+	}
+
+	@Override
+	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
+		
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }
