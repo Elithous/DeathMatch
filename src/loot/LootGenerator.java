@@ -18,10 +18,10 @@ public class LootGenerator
 {
 	private static String[][] names = new String[][]
 			{
-				{},
+				{"Strength of Zeus", "Shortsword", "Sword", "Greatsword", "Thief's Dagger", "Improved Sword", "Reinforced Shortsword", "Reinforced Sword", "Reinforced Greatsword", "Hammer Blade", "Great Blade", "Stabbing Sword", "Spiked Sword", "Sword of Canyons", "Sword of Storms", "Sword of Illness", "Sword of Winter", "Shortsword of Darkness", "Sword of a Thousand Fires", "Poseidons' Gift"},
 				{"Lance of Cassius", "Wooden Spear", "Ugandan Spear", "Metal Spear", "Naginata", "Halberd", "Elite Guard Lance", "Darksteel Spear", "Holy Lance"}
 			};
-	private static String[] paths = new String[] {"","../../Assets/Weapons/Spear/Spear"};
+	private static String[] paths = new String[] {"../../Assets/Weapons/Swords/Sword","../../Assets/Weapons/Spear/Spear"};
 	
 	private static final int WEAPON_RATIO = 10;
 	private static final int ARMOR_RATIO = 10;
@@ -36,6 +36,7 @@ public class LootGenerator
 	private static final int LEGENDARY_RATIO = 1;
 	
 	private static final int AMOUNT_OF_SPEARS = 9;
+	private static final int AMOUNT_OF_SWORDS = 20;
 	
 	private static final int VALUE_PER_ATTACK_POINT = 3;
 
@@ -87,7 +88,16 @@ public class LootGenerator
 
 		switch(choice)
 		{
-			// Add others
+			case 0: 
+				boolean isTwoHanded = false;
+				if (type == 3 || type == 8 || type == 10) {
+					isTwoHanded = true;
+				}
+				weapon = new Weapon(isTwoHanded, AttackType.STRENGTH);
+				if (type >= AMOUNT_OF_SWORDS) {
+					type = AMOUNT_OF_SWORDS - 1;
+				}
+				break;
 			case 1: weapon = new Weapon(true, AttackType.DEXTERITY);
 					if (type>=AMOUNT_OF_SPEARS) type = AMOUNT_OF_SPEARS-1;
 				break;
@@ -100,11 +110,11 @@ public class LootGenerator
 		weapon.setAttackMin((int)(attack*1.2f-rand.nextDouble()*.2f));
 		
 		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
-		if (choice < NORMAL_RATIO)
+		if (rarity < NORMAL_RATIO)
 			weapon.setRarity(Rarity.NORMAL);
-		else if (choice < NORMAL_RATIO + RARE_RATIO)
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
 			weapon.setRarity(Rarity.RARE);
-		else if (choice < NORMAL_RATIO + RARE_RATIO)
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
 			weapon.setRarity(Rarity.EPIC);
 		else weapon.setRarity(Rarity.LEGENDARY);
 		

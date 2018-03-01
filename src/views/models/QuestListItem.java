@@ -14,7 +14,8 @@ public class QuestListItem extends HBox {
 	private Button playButton = new Button();
 	private Label questName = new Label();
 
-	public QuestListItem(Quest quest) {
+	public QuestListItem(Quest quest) 
+	{
 		this.setAlignment(Pos.CENTER);
 		this.setQuest(quest);
 		this.questIcon.setImage(quest.monsters[0].getImage() == null ? null : quest.monsters[0].getImage());
