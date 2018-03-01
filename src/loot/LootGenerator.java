@@ -102,9 +102,7 @@ public class LootGenerator
 					isTwoHanded = true;
 				}
 				weapon = new Weapon(isTwoHanded, AttackType.STRENGTH);
-				if (type >= AMOUNT_OF_SWORDS) {
-					type = AMOUNT_OF_SWORDS - 1;
-				}
+				if (type >= AMOUNT_OF_SWORDS) type = AMOUNT_OF_SWORDS - 1;
 				break;
 			case 1: weapon = new Weapon(true, AttackType.DEXTERITY);
 					if (type>=AMOUNT_OF_SPEARS) type = AMOUNT_OF_SPEARS-1;
@@ -128,10 +126,28 @@ public class LootGenerator
 			default: weapon = null;
 		}
 		
-		weapon.setName(names[choice][type+1]);
-		int attack = getAttackFromType(type);
+		//SETTING ATTACK
+		weapon.setName(names[choice][type]);
+		int attack = getAttackFromLevel(level);
+		if (choice==3) // if shield?
+		{
+			weapon.setArmor(attack/2);
+			attack/=10;
+		}
 		weapon.setAttackMin((int)(attack*.8f+rand.nextDouble()*.2f));
 		weapon.setAttackMax((int)(attack*1.2f-rand.nextDouble()*.2f));
+		
+		// SETTING REQUIREMENTS
+		int required = attack *2/5;
+		switch(weapon.attackType)
+		{
+		case STRENGTH:	weapon.setRequiredStrength(required);
+			break;
+		case DEXTERITY: weapon.setRequiredDexterity(required);
+			break;
+		case INTELLIGENCE: weapon.setRequiredIntelligence(required);
+			break;
+		}
 		
 		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
 		if (rarity < NORMAL_RATIO)
@@ -200,7 +216,7 @@ public class LootGenerator
 		return null;
 	}
 	
-	private static int getAttackFromType(int type)
+	private static int getAttackFromLevel(int type)
 	{
 		return 10 * (int)Math.pow(2, ((float)type)/5);
 	}

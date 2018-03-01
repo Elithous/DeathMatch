@@ -28,7 +28,7 @@ public class GameApp extends Application implements IEventListener
 		@Override
 		public void start(Stage stage) throws IOException 
 		{
-			Weapon weap = LootGenerator.generateWeapon(500, 20);
+			Weapon weap = LootGenerator.generateWeapon(500, 30);
 			System.out.println(weap.getName() + " "+weap.getAttack());
 
 			
