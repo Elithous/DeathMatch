@@ -194,6 +194,8 @@ public class PartyManagementController implements PlayerController{
         assert player4Image != null : "fx:id=\"player4Image\" was not injected: check your FXML file 'party.fxml'.";
         assert hireImage != null : "fx:id=\"hireImage\" was not injected: check your FXML file 'party.fxml'.";
 
+        
+        
     }
 
 	@Override

@@ -29,7 +29,7 @@ public class GameApp extends Application implements IEventListener
 			this.stage = stage;
 			Parent root = loadFXML(ScreenType.MAIN, null);
 			stage.setScene(new Scene(root));
-			stage.setFullScreen(true);
+			//stage.setFullScreen(true);
 			stage.show();
 		}
 		
@@ -80,8 +80,8 @@ public class GameApp extends Application implements IEventListener
 		public Parent loadFXML(ScreenType type, PlayerSave ps, Quest quest) throws IOException
 		{
 			FXMLLoader loader = new FXMLLoader(GameApp.class.getResource(screenPaths.get(type)));
-			Parent root = loader.load();			
-			((PlayerController)loader.getController()).init(ps, quest, this);	
+			Parent root = loader.load();
+			((PlayerController)loader.getController()).init(ps, quest, this);
 			return root;
 		}
 
