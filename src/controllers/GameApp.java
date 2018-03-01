@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.util.HashMap;
 
+import events.ChangeScreenEvent;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,8 +12,6 @@ import javafx.stage.Stage;
 import lib.Event;
 import lib.FileUtil;
 import lib.IEventListener;
-import loot.LootGenerator;
-import loot.models.Weapon;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.enums.ScreenType;
@@ -21,18 +20,17 @@ import views.interfaces.PlayerController;
 public class GameApp extends Application implements IEventListener
 {
 		public static HashMap<ScreenType, String> screenPaths;
-	
+		
+		public Stage stage;
+		
 		@Override
 		public void start(Stage stage) throws IOException 
 		{
-			Parent root = loadFXML(ScreenType.MAIN);
+			this.stage = stage;
+			Parent root = loadFXML(ScreenType.MAIN, null);
 			stage.setScene(new Scene(root));
 			stage.setFullScreen(true);
 			stage.show();
-			
-			//Weapon weap = LootGenerator.generateWeapon(1000, 10);
-			//System.out.println(weap.getName());
-			//System.out.println("foo");
 		}
 		
 		@Override
@@ -64,32 +62,40 @@ public class GameApp extends Application implements IEventListener
 			launch(args);
 		}
 		
-		public static Parent loadFXML(ScreenType type) throws IOException
+		public Parent loadFXML(ScreenType type) throws IOException
 		{
 			FXMLLoader loader = new FXMLLoader(GameApp.class.getResource(screenPaths.get(type)));
-			Parent root = loader.load();			
+			Parent root = loader.load();
 			return root;
 		}
 		
-		public static Parent loadFXML(ScreenType type, PlayerSave ps) throws IOException
+		public Parent loadFXML(ScreenType type, PlayerSave ps) throws IOException
 		{
 			FXMLLoader loader = new FXMLLoader(GameApp.class.getResource(screenPaths.get(type)));
 			Parent root = loader.load();			
-			((PlayerController)loader.getController()).init(ps, null);	
+			((PlayerController)loader.getController()).init(ps, null, this);	
 			return root;
 		}
 		
-		public static Parent loadFXML(ScreenType type, PlayerSave ps, Quest quest) throws IOException
+		public Parent loadFXML(ScreenType type, PlayerSave ps, Quest quest) throws IOException
 		{
 			FXMLLoader loader = new FXMLLoader(GameApp.class.getResource(screenPaths.get(type)));
-			Parent root = loader.load();			
-			((PlayerController)loader.getController()).init(ps, quest);	
+			Parent root = loader.load();
+			((PlayerController)loader.getController()).init(ps, quest, this);
 			return root;
 		}
 
 		@Override
 		public void reactToNotification(Event arg0)
 		{
-			// TODO Auto-generated method stub
+			if(arg0 instanceof ChangeScreenEvent) {
+				ChangeScreenEvent screenEvent = (ChangeScreenEvent) arg0;
+				try {
+					Parent node = loadFXML(screenEvent.screenType, screenEvent.playerSave, screenEvent.quest);
+					stage.setScene(new Scene(node));
+				} catch (IOException e) {
+					
+				}
+			}
 		}
 }

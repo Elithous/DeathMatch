@@ -17,4 +17,5 @@ public class TurnEvent extends Event
 		this.choice = choice;
 		this.item = item;
 	}	
+
 }

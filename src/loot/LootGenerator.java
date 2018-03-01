@@ -97,7 +97,6 @@ public class LootGenerator
 
 		switch(choice)
 		{
-			// Add others
 			case 0: 
 				boolean isTwoHanded = false;
 				if (type == 3 || type == 8 || type == 10) {

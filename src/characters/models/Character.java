@@ -22,13 +22,13 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	protected int dexterity;
 	protected int intelligence;
 	protected int armor;
-	protected int attack;
+	protected int attack;	
+	protected int level;
 	protected float strengthMulti = 1f;
 	protected float dexterityMulti = 1f;
 	protected float intelligenceMulti = 1f;
 	protected float armorMulti = 1f;
 	protected float attackMulti = 1f;
-	protected float level;
 	protected Equipment[] equipment = new Equipment[7];
 	protected Image image;
 	private ArrayList<Ailment> ailments = new ArrayList<>();
