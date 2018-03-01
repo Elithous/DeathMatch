@@ -2,14 +2,19 @@ package views.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import controllers.GameApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import models.player.PlayerSave;
+import models.quests.Quest;
+import views.interfaces.PlayerController;
 
-public class PartyManagementController {
+public class PartyManagementController implements PlayerController{
 
     @FXML
     private ResourceBundle resources;
@@ -190,4 +195,16 @@ public class PartyManagementController {
         assert hireImage != null : "fx:id=\"hireImage\" was not injected: check your FXML file 'party.fxml'.";
 
     }
+
+	@Override
+	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }
