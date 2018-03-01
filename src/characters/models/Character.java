@@ -1,7 +1,10 @@
 package characters.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Random;
 
+import characters.enums.AilmentType;
 import characters.enums.EquipmentSlot;
 import interfaces.IHasStats;
 import javafx.scene.image.Image;
@@ -10,7 +13,7 @@ import loot.models.Armor;
 import loot.models.Equipment;
 import loot.models.Weapon;
 
-public class Character implements IHasStats, Serializable
+public class Character implements IHasStats, Serializable, Comparable<Character>
 {
 	protected String name;
 	protected int currentHealth;
@@ -21,8 +24,14 @@ public class Character implements IHasStats, Serializable
 	protected int armor;
 	protected int attack;	
 	protected int level;
+	protected float strengthMulti = 1f;
+	protected float dexterityMulti = 1f;
+	protected float intelligenceMulti = 1f;
+	protected float armorMulti = 1f;
+	protected float attackMulti = 1f;
 	protected Equipment[] equipment = new Equipment[7];
 	protected Image image;
+	private ArrayList<Ailment> ailments = new ArrayList<>();
 
 	@Override
 	public int getMaxHealth() 
@@ -34,6 +43,43 @@ public class Character implements IHasStats, Serializable
 		
 		return result;
 	}
+	
+	public void addAilment(Ailment a)
+	{
+		ailments.add(a);
+		adjustMulti(a.type, a.multi);
+	}
+	
+	public void updateAilments()
+	{
+		for (int i = 0; i < ailments.size(); i++) 
+		{
+			ailments.get(i).decreaseTurns();
+			if (ailments.get(i).getTurnsLeft()<=0)
+			{
+				adjustMulti(ailments.get(i).type, 1f/ailments.get(i).multi);
+				ailments.remove(i);
+				i--;
+			}
+		}
+	}
+	
+	private void adjustMulti(AilmentType type, float multi)
+	{
+		switch(type)
+		{
+		case STR:	strengthMulti *= multi;
+			break;
+		case ARM:	armorMulti *= multi;
+			break;
+		case ATK:	attackMulti *= multi;
+			break;
+		case DEX:	dexterityMulti *= multi;
+			break;
+		case INT:	intelligenceMulti *= multi;
+			break;
+		}
+	}
 
 	@Override
 	public int getStrength() 
@@ -43,7 +89,7 @@ public class Character implements IHasStats, Serializable
 		for(Equipment e : equipment)
 			result += e.getStrength();
 		
-		return result;
+		return (int)(result * strengthMulti);
 	}
 
 	@Override
@@ -54,7 +100,7 @@ public class Character implements IHasStats, Serializable
 		for(Equipment e : equipment)
 			result += e.getDexterity();
 		
-		return result;
+		return (int)(result * dexterityMulti);
 	}
 
 	@Override
@@ -65,7 +111,7 @@ public class Character implements IHasStats, Serializable
 		for(Equipment e : equipment)
 			result += e.getIntelligence();
 		
-		return result;
+		return (int)(result * intelligenceMulti);
 	}
 
 	@Override
@@ -76,7 +122,7 @@ public class Character implements IHasStats, Serializable
 		for(Equipment e : equipment)
 			result += e.getArmor();
 		
-		return result;
+		return (int)(result * armorMulti);
 	}
 
 	@Override
@@ -139,6 +185,10 @@ public class Character implements IHasStats, Serializable
 	
 	public boolean equip(EquipmentSlot slot, Equipment item)
 	{
+		if (item.getRequiredDexterity() > getDexterity()) return false;
+		if (item.getRequiredStrength() > getStrength()) return false;
+		if (item.getRequiredIntelligence() > getIntelligence()) return false;
+		
 		if (item instanceof Weapon)
 		{
 			if (slot == EquipmentSlot.MAIN_HAND) 
@@ -183,12 +233,28 @@ public class Character implements IHasStats, Serializable
 	@Override
 	public int getAttack() 
 	{
-		return attack;
+		int result = attack;
+		
+		for(Equipment e : equipment)
+			result += e.getAttack();
+		
+		return (int)(result * attackMulti);
 	}
 
 	@Override
 	public void setAttack(int attack) 
 	{
 		this.attack = attack;
+	}
+
+	@Override
+	public int compareTo(Character o) 
+	{
+		int myDex = this.getDexterity();
+		int otherDex = o.getDexterity();
+		
+		if (myDex>otherDex) return 1;
+		else if (myDex<otherDex) return -1;
+		else return (new Random().nextInt(2)==0? 1 : -1);
 	}
 }

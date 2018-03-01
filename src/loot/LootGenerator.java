@@ -18,10 +18,14 @@ public class LootGenerator
 {
 	private static String[][] names = new String[][]
 			{
-				{},
-				{"Lance of Cassius", "Wooden Spear", "Ugandan Spear", "Metal Spear", "Naginata", "Halberd", "Elite Guard Lance", "Darksteel Spear", "Holy Lance"}
+				{"Strength of Zeus", "Shortsword", "Sword", "Greatsword", "Thief's Dagger", "Improved Sword", "Reinforced Shortsword", "Reinforced Sword", "Reinforced Greatsword", "Hammer Blade", "Great Blade", "Stabbing Sword", "Spiked Sword", "Sword of Canyons", "Sword of Storms", "Sword of Illness", "Sword of Winter", "Shortsword of Darkness", "Sword of a Thousand Fires", "Poseidons' Gift"},
+				{"Lance of Cassius", "Wooden Spear", "Ugandan Spear", "Metal Spear", "Naginata", "Halberd", "Elite Guard Lance", "Darksteel Spear", "Holy Lance"},
+				{"Axe of St. Helens", "Axe", "Double-Sided Axe", "Darksteel Axe", "Darksteel Double-Sided Axe", "Ugandan Axe", "Executor Axe", "Saw Axe", "Axe of Harvest", "Axe of the Forest"},
+				{"King's Crown", "Wood Shield", "Wood Emblem Shield", "Reinforced Shield", "Reinforced Tower Shield", "Bone Shield", "Dark Bone Shield", "Iron Shield", "Iron Pie Shield", "Iron Emblem Shield", "Iron Tower Shield", "Darksteel Shield", "King's Guard Shield"},
+				{"Phoenix Bow", "Wood Bow", "Hardwood Bow", "Darkwood Bow", "Precision Bow", "Gold Bow", "Ugandan Bow", "King's Bow", "Golden Wood Bow", "Bow of Winter", "Bow of Illness", "Bow of a Thousand Fires", "Fallen Angel Bow", "Risen Angel Bow"},
+				{"Wand of the Sun", "Spellcasting 101", "Advanced Spellcasting", "Expert Spellcasting", "Udandan Wand", "Corrupted Magic", "Secrets of the Dark Arts", "Wand of the Hero", "Gold Wand", "King's Wand", "Grand Paladin's Book", "Grand Paladin's Wand"}
 			};
-	private static String[] paths = new String[] {"","../../Assets/Weapons/Spear"};
+	private static String[] paths = new String[] {"file:Assets/Weapons/Sword/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
 	
 	private static final int WEAPON_RATIO = 10;
 	private static final int ARMOR_RATIO = 10;
@@ -36,8 +40,13 @@ public class LootGenerator
 	private static final int LEGENDARY_RATIO = 1;
 	
 	private static final int AMOUNT_OF_SPEARS = 9;
+	private static final int AMOUNT_OF_SWORDS = names[0].length;
+	private static final int AMOUNT_OF_AXES = names[2].length;
+	private static final int AMOUNT_OF_SHIELDS = names[3].length;
+	private static final int AMOUNT_OF_BOWS = names[4].length;
+	private static final int AMOUNT_OF_MAGIC = names[5].length;
 	
-	private static final int VALUE_PER_ATTACK_POINT = 10;	
+	private static final int VALUE_PER_ATTACK_POINT = 3;
 
 	public static LootGeneratorResult generateLoot(Quest quest)
 	{
@@ -87,9 +96,34 @@ public class LootGenerator
 
 		switch(choice)
 		{
-			// Add others
+			case 0: 
+				boolean isTwoHanded = false;
+				if (type == 3 || type == 8 || type == 10) {
+					isTwoHanded = true;
+				}
+				weapon = new Weapon(isTwoHanded, AttackType.STRENGTH);
+				if (type >= AMOUNT_OF_SWORDS) {
+					type = AMOUNT_OF_SWORDS - 1;
+				}
+				break;
 			case 1: weapon = new Weapon(true, AttackType.DEXTERITY);
 					if (type>=AMOUNT_OF_SPEARS) type = AMOUNT_OF_SPEARS-1;
+				break;
+			case 2: 
+				weapon = new Weapon(true, AttackType.STRENGTH);
+				type = type >= AMOUNT_OF_AXES ? AMOUNT_OF_AXES - 1 : type;
+				break;
+			case 3: 
+				weapon = new Weapon(false, AttackType.STRENGTH);
+				type = type >= AMOUNT_OF_SHIELDS ? AMOUNT_OF_SHIELDS - 1 : type;
+				break;
+			case 4:
+				weapon = new Weapon(true, AttackType.DEXTERITY);
+				type = type >= AMOUNT_OF_BOWS ? AMOUNT_OF_BOWS - 1 : type;
+				break;
+			case 5:
+				weapon = new Weapon(false, AttackType.INTELLIGENCE);
+				type = type >= AMOUNT_OF_MAGIC ? AMOUNT_OF_MAGIC - 1 :type;
 				break;
 			default: weapon = null;
 		}
@@ -97,14 +131,14 @@ public class LootGenerator
 		weapon.setName(names[choice][type+1]);
 		int attack = getAttackFromType(type);
 		weapon.setAttackMin((int)(attack*.8f+rand.nextDouble()*.2f));
-		weapon.setAttackMin((int)(attack*1.2f-rand.nextDouble()*.2f));
+		weapon.setAttackMax((int)(attack*1.2f-rand.nextDouble()*.2f));
 		
 		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
-		if (choice < NORMAL_RATIO)
+		if (rarity < NORMAL_RATIO)
 			weapon.setRarity(Rarity.NORMAL);
-		else if (choice < NORMAL_RATIO + RARE_RATIO)
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
 			weapon.setRarity(Rarity.RARE);
-		else if (choice < NORMAL_RATIO + RARE_RATIO)
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
 			weapon.setRarity(Rarity.EPIC);
 		else weapon.setRarity(Rarity.LEGENDARY);
 		
@@ -113,6 +147,7 @@ public class LootGenerator
 		for (int i = 0; i < weapon.getRarity().ordinal(); i++)
 			addRandomBonus(weapon);
 		
+		System.out.println(paths[choice]+0+".png");
 		if (weapon.getRarity() == Rarity.LEGENDARY)
 		{
 			weapon.setName(names[choice][0]);

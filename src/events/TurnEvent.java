@@ -1,16 +1,21 @@
 package events;
 
 import characters.enums.BattleChoice;
+import characters.models.Character;
+import lib.Event;
+import loot.models.Consumable;
 
-public class TurnEvent
+public class TurnEvent extends Event 
 {
-	public final characters.models.Character TARGET;
-	public final BattleChoice CHOICE;
+	public final Character character;
+	public final BattleChoice choice;
+	public final Consumable item;
 	
-	public TurnEvent(characters.models.Character target, BattleChoice choice)
+	public TurnEvent(Character character, BattleChoice choice, Consumable item)
 	{
-		TARGET = target;
-		CHOICE = choice;
-	}
+		this.character = character;
+		this.choice = choice;
+		this.item = item;
+	}	
 
 }
