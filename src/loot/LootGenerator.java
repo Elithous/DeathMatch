@@ -19,6 +19,7 @@ public class LootGenerator
 	private static String[][] names = new String[][]
 			{
 				{"Strength of Zeus", "Shortsword", "Sword", "Greatsword", "Thief's Dagger", "Improved Sword", "Renforced Shortsword", "Renforced Sword", "Renforced Greatsword", "Hammer Blade", "The Great Blade", "Stabbing Sword", "Spiked Sword", "Sword of Canyons", "Sword of Storms", "Sword of Illness", "Sword of Winter", "Shortsword of Darkness", "Sword of a Thousand Fires", "Poseidons' Gift"},
+				{"Strength of Zeus", "Shortsword", "Sword", "Greatsword", "Thief's Dagger", "Improved Sword", "Reinforced Shortsword", "Reinforced Sword", "Reinforced Greatsword", "Hammer Blade", "Great Blade", "Stabbing Sword", "Spiked Sword", "Sword of Canyons", "Sword of Storms", "Sword of Illness", "Sword of Winter", "Shortsword of Darkness", "Sword of a Thousand Fires", "Poseidons' Gift"},
 				{"Lance of Cassius", "Wooden Spear", "Ugandan Spear", "Metal Spear", "Naginata", "Halberd", "Elite Guard Lance", "Darksteel Spear", "Holy Lance"},
 				{"Axe of St. Helens", "Axe", "Double-Sided Axe", "Darksteel Axe", "Darksteel Double-Sided Axe", "Ugandan Axe", "Executor Axe", "Saw Axe", "Axe of Harvest", "Axe of the Forest"},
 				{"King's Crown", "Wood Shield", "Wood Emblem Shield", "Reinforced Shield", "Reinforced Tower Shield", "Bone Shield", "Dark Bone Shield", "Iron Shield", "Iron Pie Shield", "Iron Emblem Shield", "Iron Tower Shield", "Darksteel Shield", "King's Guard Shield"},

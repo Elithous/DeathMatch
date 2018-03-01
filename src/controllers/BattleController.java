@@ -1,10 +1,13 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Queue;
 
+import characters.enums.AilmentType;
+import characters.models.Ailment;
 import characters.models.Monster;
-import characters.models.TurnChoice;
 import events.TurnEvent;
 import lib.Event;
 import lib.IEventListener;
@@ -23,9 +26,12 @@ public class BattleController implements IEventListener
 		this.playerSave = playerSave;
 		this.quest = quest;
 		
-		ArrayList<Character> all = new ArrayList<>();
-		//all.addAll(c) (playerSave.getPlayers());
-		//TODO create a queue!
+		ArrayList<characters.models.Character> all = new ArrayList<>();
+		all.addAll(Arrays.asList(playerSave.getPlayers()));
+		all.addAll(Arrays.asList(quest.monsters));
+		
+		Collections.sort(all);
+		characterOrder.addAll(all);
 		
 		takeTurn();
 	}
@@ -45,15 +51,25 @@ public class BattleController implements IEventListener
 			if (deadInRow > characterOrder.size()) throw new IllegalArgumentException("All characters are dead, wtf??");
 		}
 		
+		characterOrder.peek().updateAilments();
 		if (characterOrder.peek() instanceof Monster)
 			applyTurn(((Monster) characterOrder.peek()).decideNextTurn(playerSave.getPlayers()));
 		else
 			isWaitingForInput = true;
 	}
 	
-	private void applyTurn(TurnChoice turnChoice)
+	private void applyTurn(TurnEvent te)
 	{
-		//TODO actaully apply turn
+		switch (te.choice)
+		{
+		case ATTACK:	te.character.adjustHealth(characterOrder.poll().getAttack());
+			break;
+		case DEFEND: 	te.character.addAilment(new Ailment(AilmentType.ARM, 1.5f, 1));
+			break;
+		case USE_ITEM:	te.item.use(te.character);
+						playerSave.getInventory().removeConsumeable(te.item);
+						break;
+		}
 		
 		characterOrder.add(characterOrder.poll());
 	}
@@ -63,7 +79,7 @@ public class BattleController implements IEventListener
 	{
 		if (e instanceof TurnEvent) 
 		{
-			applyTurn(new TurnChoice( ( (TurnEvent) e).character, ((TurnEvent) e).choice));
+			applyTurn((TurnEvent) e);
 		}
 	}
 	
