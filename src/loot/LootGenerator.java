@@ -129,7 +129,7 @@ public class LootGenerator
 		//SETTING ATTACK
 		weapon.setName(names[choice][type+1]);
 		int attack = getAttackFromType(type);
-		if (type==3) // if shield?
+		if (choice==3) // if shield?
 		{
 			weapon.setArmor(attack/2);
 			attack/=10;
