@@ -29,7 +29,7 @@ public class GameApp extends Application implements IEventListener
 			this.stage = stage;
 			Parent root = loadFXML(ScreenType.MAIN, null);
 			stage.setScene(new Scene(root));
-			//stage.setFullScreen(true);
+			stage.setFullScreen(true);
 			stage.show();
 		}
 		
