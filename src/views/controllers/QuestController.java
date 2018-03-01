@@ -48,16 +48,18 @@ public class QuestController implements PlayerController {
 		
 
 		StackPane parent = (StackPane) contentBox.getParent();
-		parent.setStyle("-fx-background-color: black;");
 		SimpleDoubleProperty titleFontSize = new SimpleDoubleProperty();
 
 		titleFontSize.bind(parent.heightProperty().divide(25));
-		title.styleProperty().bind(Bindings.concat("-fx-font-size: ", titleFontSize.asString(), ";"));
+		title.styleProperty().bind(Bindings.concat("-fx-font-size: ", titleFontSize.asString(), ";-fx-background-color: black;"));
 
 		questBox.setSpacing(20);
+		questBox.setStyle("-fx-background-color: black;");
+		questBox.prefHeightProperty().bind(contentBox.heightProperty().multiply(.7));
 		
 		contentBox.prefWidthProperty().bind(parent.widthProperty());
 		contentBox.prefHeightProperty().bind(parent.heightProperty());
+		
 	}
 
 	@Override
@@ -68,8 +70,11 @@ public class QuestController implements PlayerController {
 		
 		for (int i = 0; i < questItems.length; i++) {
 			questItems[i] = new QuestListItem(new Quest(mons, 0));
+			//questItems[i]
 		}
-		questBox.getChildren().addAll(questItems);		
+		questBox.getChildren().addAll(questItems);
+		
+		
 	}
 
 	@Override
