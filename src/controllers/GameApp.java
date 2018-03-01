@@ -30,7 +30,7 @@ public class GameApp extends Application implements IEventListener
 			stage.setFullScreen(true);
 			stage.show();
 			
-			Weapon weap = LootGenerator.generateWeapon(1000, 10);
+			//Weapon weap = LootGenerator.generateWeapon(1000, 10);
 			//System.out.println(weap.getName());
 			//System.out.println("foo");
 		}
