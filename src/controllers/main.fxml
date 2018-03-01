@@ -8,19 +8,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" prefHeight="464.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.MainMenuController">
+<StackPane fx:id="stackPane" prefHeight="464.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.MainMenuController">
    <children>
       <ImageView fx:id="backgroundImage" fitHeight="464.0" fitWidth="665.0" pickOnBounds="true">
          <image>
             <Image url="https://image.freepik.com/free-psd/abstract-background-design_1297-87.jpg" />
          </image>
       </ImageView>
-      <VBox alignment="CENTER" prefHeight="464.0" prefWidth="683.0" spacing="10.0">
+      <VBox fx:id="contentBox" alignment="CENTER" prefHeight="464.0" prefWidth="683.0" spacing="10.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="49.0" prefWidth="329.0" text="Title" textAlignment="CENTER">
-               <font>
-                  <Font size="32.0" />
-               </font>
+            <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="49.0" prefWidth="329.0" text="Title" textAlignment="CENTER">
             </Label>
             <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#newGameButtonAction" prefHeight="25.0" prefWidth="104.0" text="New Game" />
             <Button fx:id="loadGameButton" mnemonicParsing="false" onAction="#loadGameButtonAction" prefHeight="25.0" prefWidth="103.0" text="Load Game" />
