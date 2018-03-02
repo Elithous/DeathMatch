@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.util.HashMap;
 
+import characters.models.Hero;
 import events.ChangeScreenEvent;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,6 @@ import lib.Event;
 import lib.FileUtil;
 import lib.IEventListener;
 import loot.LootGenerator;
-import loot.models.Consumable;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.enums.ScreenType;
@@ -28,9 +28,8 @@ public class GameApp extends Application implements IEventListener
 		@Override
 		public void start(Stage stage) throws IOException 
 		{
-			Consumable weap = LootGenerator.generateConsumable(500, 30);
-			System.out.println(weap.getName() + " "+weap.getEffectOnHealth());
-
+			Hero hero = HeroGenerator.generateHero(10);
+			System.out.println(hero.getName() + " str "+hero.getStrength() + " dex "+ hero.getDexterity()+" int "+hero.getIntelligence()+ " lvl "+hero.getLevel());
 			
 			this.stage = stage;
 			Parent root = loadFXML(ScreenType.MAIN, null);

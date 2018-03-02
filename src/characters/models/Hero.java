@@ -1,9 +1,11 @@
 package characters.models;
 
+import controllers.HeroGenerator;
+
 public class Hero extends Character
 {
 	private int currentExp;
-	private int requiredExp;
+	private int requiredExp = 10;
 	private final float LEVELUP_MULTIPLIER = 1.5f;
 	
 	public int getCurrentExp()
@@ -25,6 +27,7 @@ public class Hero extends Character
 			currentExp -= requiredExp;
 			requiredExp = (int)Math.floor(requiredExp * LEVELUP_MULTIPLIER);
 			level++;
+			HeroGenerator.levelUpHero(this);
 		}
 	}
 }

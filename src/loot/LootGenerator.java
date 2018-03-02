@@ -172,7 +172,6 @@ public class LootGenerator
 		for (int i = 0; i < weapon.getRarity().ordinal(); i++)
 			addRandomBonus(weapon);
 		
-		System.out.println(paths[choice]+0+".png");
 		if (weapon.getRarity() == Rarity.LEGENDARY)
 		{
 			weapon.setName(names[choice][0]);
