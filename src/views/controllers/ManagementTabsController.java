@@ -52,7 +52,7 @@ public class ManagementTabsController implements PlayerController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		tabPane.tabMinWidthProperty().bind((tabPane.widthProperty().subtract(40)).divide(2));
+		tabPane.tabMinWidthProperty().bind((tabPane.widthProperty().subtract(50)).divide(2));
 		
 	}
 

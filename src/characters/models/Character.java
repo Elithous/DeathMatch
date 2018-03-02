@@ -23,7 +23,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	protected int intelligence;
 	protected int armor;
 	protected int attack;	
-	protected int level;
+	protected int level = 1;
 	protected float strengthMulti = 1f;
 	protected float dexterityMulti = 1f;
 	protected float intelligenceMulti = 1f;
@@ -33,6 +33,11 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	protected Image image;
 	private ArrayList<Ailment> ailments = new ArrayList<>();
 
+	public int getLevel()
+	{
+		return level;
+	}
+	
 	@Override
 	public int getMaxHealth() 
 	{
@@ -87,7 +92,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = strength;
 		
 		for(Equipment e : equipment)
-			result += e.getStrength();
+			if (e!=null)result += e.getStrength();
 		
 		return (int)(result * strengthMulti);
 	}
@@ -98,7 +103,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = dexterity;
 		
 		for(Equipment e : equipment)
-			result += e.getDexterity();
+			if (e!=null)result += e.getDexterity();
 		
 		return (int)(result * dexterityMulti);
 	}
@@ -109,7 +114,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = intelligence;
 		
 		for(Equipment e : equipment)
-			result += e.getIntelligence();
+			if (e!=null)result += e.getIntelligence();
 		
 		return (int)(result * intelligenceMulti);
 	}
