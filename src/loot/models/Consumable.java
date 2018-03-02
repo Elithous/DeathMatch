@@ -5,11 +5,6 @@ public class Consumable extends Loot
 
 	private int effectOnHealth;
 	
-	public Consumable(int effectOnHealth) 
-	{
-		this.setEffectOnHealth(effectOnHealth);
-	}
-
 	public int getEffectOnHealth() 
 	{
 		return effectOnHealth;

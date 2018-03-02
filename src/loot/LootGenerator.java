@@ -11,6 +11,7 @@ import loot.models.Armor;
 import loot.models.Consumable;
 import loot.models.Equipment;
 import loot.models.Loot;
+import loot.models.RevivePotion;
 import loot.models.Weapon;
 import models.quests.Quest;
 
@@ -25,12 +26,18 @@ public class LootGenerator
 				{"Phoenix Bow", "Wood Bow", "Hardwood Bow", "Darkwood Bow", "Precision Bow", "Gold Bow", "Ugandan Bow", "King's Bow", "Golden Wood Bow", "Bow of Winter", "Bow of Illness", "Bow of a Thousand Fires", "Fallen Angel Bow", "Risen Angel Bow"},
 				{"Wand of the Sun", "Spellcasting 101", "Advanced Spellcasting", "Expert Spellcasting", "Udandan Wand", "Corrupted Magic", "Secrets of the Dark Arts", "Wand of the Hero", "Gold Wand", "King's Wand", "Grand Paladin's Book", "Grand Paladin's Wand"}
 			};
+	private static String[][] consumableNames = new String[][] {{"Revive Potion", "Small Health Potion", "Medium Health Potion", "Large Health Potion"},
+																{"Ugandan Knife", "Shuriken", "Tomahawk", "Einstein's Big Toy"}};		
+	
 	private static String[] paths = new String[] {"file:Assets/Weapons/Sword/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
+	private static String consumablePaths[] = new String[] {"file:Assets/Consumables/Potion", "file:Assets/Consumables/Damage"};
 	
 	private static final int WEAPON_RATIO = 10;
 	private static final int ARMOR_RATIO = 10;
 	private static final int RING_RATIO = 5;
 	private static final int CONSUMABLES_RATIO = 15;
+	private static final float POTION_TO_DAMAGE_RATIO = .5f;
+	
 	
 	private static final int VALUE_PER_DIFFICULTY = 10;
 	
@@ -47,6 +54,8 @@ public class LootGenerator
 	private static final int AMOUNT_OF_MAGIC = names[5].length;
 	
 	private static final int VALUE_PER_ATTACK_POINT = 3;
+	private static final int VALUE_PER_HEALTH_POINT = 2;
+	private static final float REVIVE_POTION_CHANCE = .2f;	
 
 	public static LootGeneratorResult generateLoot(Quest quest)
 	{
@@ -211,11 +220,67 @@ public class LootGenerator
 		return null;
 	}
 	
-	public static Consumable generateConsumable(int value, int level) {
-		//TODO
-		return null;
+	public static Consumable generateConsumable(int value, int level) 
+	{
+		if (new Random().nextFloat() < POTION_TO_DAMAGE_RATIO)
+			return generatePotion(value, level);
+		else 
+			return generateDamage(value, level);
+	}
+
+	private static Consumable generateDamage(int value, int level)
+	{
+		Consumable item;
+		
+		int type = level/8;
+		if (type < 0) type = 0;
+		if (type > names[1].length-1) type = names[1].length-1;
+		
+		item = new Consumable();
+		
+		//SETTING ATTACK
+		item.setName(consumableNames[1][type]);
+		item.setEffectOnHealth(getHealthForPotions(level));
+		
+		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
+		
+		item.setImage(new Image(paths[1]+type+".png"));
+		
+		return item;
+	}
+
+	public static Consumable generatePotion(int value, int level)
+	{
+		Random rand = new Random();
+		Consumable item;
+		
+		int type = level/8 + 1;
+		if (type < 1) type = 1;
+		if (type > names[0].length) type = names[0].length;
+		if (rand.nextFloat() < REVIVE_POTION_CHANCE) type = 0;
+		else type--;
+		
+		if (type == 0) item = new RevivePotion();
+		else item = new Consumable();
+		
+		//SETTING ATTACK
+		item.setName(consumableNames[0][type]);
+		item.setEffectOnHealth(getHealthForPotions(level));
+		
+		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
+		
+		item.setImage(new Image(paths[0]+type+".png"));
+		
+		return item;
 	}
 	
+	private static int getHealthForPotions(int type) 
+	{
+		int result = 5 * (int)Math.pow(2, ((float)type)/5);
+		result = (int) (result * .8f + new Random().nextFloat() * result * .4f);
+		return result;
+	}
+
 	private static int getAttackFromLevel(int type)
 	{
 		return 10 * (int)Math.pow(2, ((float)type)/5);
