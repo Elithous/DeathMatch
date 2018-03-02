@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import controllers.GameApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
@@ -26,7 +26,7 @@ public class PartyManagementController implements PlayerController{
     private URL location;
 
     @FXML
-    private ListView<?> equipmentList;
+    private ScrollPane equipmentList;
 
     @FXML
     private VBox containerVBox;

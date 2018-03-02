@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -15,7 +15,7 @@
          <children>
             <HBox fx:id="topHBox" prefHeight="310.0" prefWidth="600.0">
                <children>
-                  <ListView fx:id="equipmentList" onDragDetected="#equipmentListDragStart" onDragDropped="#equipmentListDragDropped" prefHeight="300.0" prefWidth="225.0" />
+                  <ScrollPane fx:id="equipmentList" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="227.0" />
                   <Pane fx:id="playerPane" prefHeight="300.0" prefWidth="374.0" style="-fx-border-color: black;">
                      <children>
                         <ImageView fx:id="currentPlayerImage" fitHeight="100.0" fitWidth="97.0" layoutX="163.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
