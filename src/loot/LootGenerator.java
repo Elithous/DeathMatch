@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.scene.image.Image;
+import loot.enums.ArmorType;
 import loot.enums.AttackType;
 import loot.enums.Rarity;
 import loot.enums.WeaponType;
@@ -26,10 +27,17 @@ public class LootGenerator
 				{"Phoenix Bow", "Wood Bow", "Hardwood Bow", "Darkwood Bow", "Precision Bow", "Gold Bow", "Ugandan Bow", "King's Bow", "Golden Wood Bow", "Bow of Winter", "Bow of Illness", "Bow of a Thousand Fires", "Fallen Angel Bow", "Risen Angel Bow"},
 				{"Wand of the Sun", "Spellcasting 101", "Advanced Spellcasting", "Expert Spellcasting", "Udandan Wand", "Corrupted Magic", "Secrets of the Dark Arts", "Wand of the Hero", "Gold Wand", "King's Wand", "Grand Paladin's Book", "Grand Paladin's Wand"}
 			};
+	private static String[][] armorNames = 
+		{
+				{"Angel's Helm", "Leather Hat", "Iron Helm", "Knight's Helm", "Crusader's Helm", "Cobalt Helm", "Intimidating Steel Mask", "Tribal Steel Helm", "Samurai Helm", "King's Guard Helm", "King's Personal Guard Helm", "Winged Helm", "Waster's Helm", "Champion's Helm", "Legend's Helm", "Ethereal Helm"},
+				{"Angel's Chest Plate", "Leather Shirt", "Iron Chest Plate", "Knight's Chest Plate", "Crusader's Chest Plate", "Cobalt Chest Plate", "Intimidating Steel Chest Plate", "Tribal Steel Chest Plate", "Samurai Chest Plate", "King's Guard Chest Plate", "King's Personal Guard Chest Plate", "Winged Chest Plate", "Master's Chest Plate", "Champion's Chest Plate", "Legend's Chest Plate", "Ethereal Plate"},
+				{"Angel's Boots", "Leather Boots", "Iron Boots", "Knight's Boots", "Crusader's Boots", "Tundra Explorer's Boots", "Intimidating Boots", "Tribal Steel Boots", "Samurai Boots", "King's Guard Boots", "King's Personal Guard Boots", "Winged Boots"}
+		};
+	private static String[] paths = new String[] {"file:Assets/Weapons/Sword/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
+	private static String[] armorPaths = {"file:Assets/Armor/Helm/Helm", "file:Assets/Armor/Body/Body", "file:Assets/Armor/Legs/Legs"};
 	private static String[][] consumableNames = new String[][] {{"Revive Potion", "Small Health Potion", "Medium Health Potion", "Large Health Potion"},
 																{"Ugandan Knife", "Shuriken", "Tomahawk", "Einstein's Big Toy"}};		
 	
-	private static String[] paths = new String[] {"file:Assets/Weapons/Sword/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
 	private static String consumablePaths[] = new String[] {"file:Assets/Consumables/Potion", "file:Assets/Consumables/Damage"};
 	
 	private static final int WEAPON_RATIO = 10;
@@ -54,8 +62,9 @@ public class LootGenerator
 	private static final int AMOUNT_OF_MAGIC = names[5].length;
 	
 	private static final int VALUE_PER_ATTACK_POINT = 3;
+	private static final int VALUE_PER_ARMOR_POINT = 5;
 	private static final int VALUE_PER_HEALTH_POINT = 2;
-	private static final float REVIVE_POTION_CHANCE = .2f;	
+	private static final float REVIVE_POTION_CHANCE = .2f;
 
 	public static LootGeneratorResult generateLoot(Quest quest)
 	{
@@ -89,7 +98,73 @@ public class LootGenerator
 	public static Armor generateArmor(int value, int level) 
 	{
 		//TODO
-		return null;
+		Random rand = new Random();
+		int armorType = rand.nextInt(ArmorType.values().length - 1);
+		Armor armor;
+		
+		int armorGrade = level/3 - 1 + rand.nextInt(3);
+		armorGrade = armorGrade < 1 ? 1 : armorGrade;
+		
+		switch (armorType) {
+			case 0: //Helm
+				armor = new Armor(ArmorType.HELM);
+				armorGrade = armorGrade >= armorNames[0].length ? armorNames[0].length - 1 : armorGrade;
+				break;
+			case 1: //Body
+				armor = new Armor(ArmorType.BODY);
+				armorGrade = armorGrade >= armorNames[1].length ? armorNames[1].length - 1 : armorGrade;
+				break;
+			case 2:
+				armor = new Armor(ArmorType.LEGS);
+				armorGrade = armorGrade >= armorNames[2].length ? armorNames[2].length - 1 : armorGrade;
+				break;
+			default: armor = null;
+		}
+		
+		armor.setName(armorNames[armorType][armorGrade]);
+		
+		int armorAmount = getArmorFromLevel(level);
+		
+		armor.setArmor(armorAmount);
+		
+		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
+		if (rarity < NORMAL_RATIO)
+			armor.setRarity(Rarity.NORMAL);
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+			armor.setRarity(Rarity.RARE);
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+			armor.setRarity(Rarity.EPIC);
+		else armor.setRarity(Rarity.LEGENDARY);
+		
+		int attribute = rand.nextInt(3);
+		
+		int required = armorAmount * 2 / 5;
+		
+		switch (attribute) {
+			case 0: //Strength
+				armor.setRequiredStrength(required);
+				break;
+			case 1: //Dex
+				armor.setRequiredDexterity(required);
+			case 2: //Intel
+				armor.setRequiredIntelligence(required);
+		}
+		
+		armor.setValue((int)(armor.getArmor() * VALUE_PER_ARMOR_POINT * (1 + .5f*armor.getRarity().ordinal())));
+		
+		for (int i = 0; i < armor.getRarity().ordinal(); i++)
+			addRandomBonus(armor);
+		
+//		System.out.println(paths[armorType]+0+".png");
+		if (armor.getRarity() == Rarity.LEGENDARY)
+		{
+			armor.setName(armorNames[armorType][0]);
+			armor.setImage(new Image(armorPaths[armorType]+0+".png"));
+		}
+		else {
+			armor.setImage(new Image(paths[armorType]+(armorGrade+1)+".png"));
+		}
+		return armor;
 	}
 	
 	
@@ -101,7 +176,7 @@ public class LootGenerator
 		Weapon weapon;
 		
 		int type = level/3 -1 + rand.nextInt(3);
-		if (type < 0) type = 0;
+		if (type < 1) type = 1;
 
 		switch(choice)
 		{
@@ -283,5 +358,9 @@ public class LootGenerator
 	private static int getAttackFromLevel(int type)
 	{
 		return 10 * (int)Math.pow(2, ((float)type)/5);
+	}
+	
+	private static int getArmorFromLevel(int level) {
+		return (int)Math.pow(2, ((double) level) / 5) * 2;
 	}
 }
