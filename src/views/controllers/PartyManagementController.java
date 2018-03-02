@@ -10,6 +10,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.interfaces.PlayerController;
@@ -25,6 +28,18 @@ public class PartyManagementController implements PlayerController{
     @FXML
     private ListView<?> equipmentList;
 
+    @FXML
+    private VBox containerVBox;
+    
+    @FXML 
+    private HBox topHBox;
+    
+    @FXML
+    private HBox bottomHBox;
+    
+    @FXML
+    private Pane playerPane;
+    
     @FXML
     private ImageView currentPlayerImage;
 
@@ -193,8 +208,41 @@ public class PartyManagementController implements PlayerController{
         assert player3Image != null : "fx:id=\"player3Image\" was not injected: check your FXML file 'party.fxml'.";
         assert player4Image != null : "fx:id=\"player4Image\" was not injected: check your FXML file 'party.fxml'.";
         assert hireImage != null : "fx:id=\"hireImage\" was not injected: check your FXML file 'party.fxml'.";
-
+        // assert topHBox != null : "fx:id=\"topHBox\" was not injected: check your FXML file 'party.fxml'.";
+        // assert playerPane != null : "fx:id=\"playerPane\" was not injected: check your FXML file 'party.fxml'.";
         
+        topHBox.prefHeightProperty().bind(containerVBox.heightProperty().multiply(.8));
+        bottomHBox.prefHeightProperty().bind(containerVBox.heightProperty().multiply(.2));
+        bottomHBox.prefWidthProperty().bind(containerVBox.widthProperty());
+        
+        playerPane.prefWidthProperty().bind(topHBox.widthProperty().multiply(.6));
+        playerPane.prefHeightProperty().bind(topHBox.heightProperty());
+        
+        equipmentList.prefWidthProperty().bind(topHBox.widthProperty().multiply(.4));
+        
+        // Bind the image objects in playerPane to positions and sizes
+        currentPlayerImage.fitWidthProperty().bind(playerPane.widthProperty().divide(5));
+        currentPlayerImage.fitHeightProperty().bind(currentPlayerImage.fitWidthProperty());
+        currentPlayerImage.layoutXProperty().bind(playerPane.widthProperty().subtract(currentPlayerImage.fitWidthProperty().divide(2)).divide(2));
+        currentPlayerImage.layoutYProperty().bind(playerPane.heightProperty().subtract(currentPlayerImage.fitHeightProperty().divide(2)).divide(2));
+        
+        // helmSlot.fitWidthProperty();
+        //
+        
+        //Bind the image objects in bottomHBox to the height and spacing correctly
+        player1Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
+        player1Image.fitWidthProperty().bind(player1Image.fitHeightProperty());
+        player2Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
+        player2Image.fitWidthProperty().bind(player2Image.fitHeightProperty());
+        player3Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
+        player3Image.fitWidthProperty().bind(player3Image.fitHeightProperty());
+        player4Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
+        player4Image.fitWidthProperty().bind(player4Image.fitHeightProperty());
+        hireImage.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.4));
+        hireImage.fitWidthProperty().bind(hireImage.fitHeightProperty());
+        
+        bottomHBox.spacingProperty().bind(bottomHBox.heightProperty().divide(2));
+        //
         
     }
 
