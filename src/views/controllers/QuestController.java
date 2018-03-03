@@ -95,6 +95,11 @@ public class QuestController extends EventPublisher implements PlayerController 
 				
 				@Override
 				public void handle(Event event) {
+<<<<<<< HEAD
+=======
+					// TODO pass the correct quest from QuestListItem possibly using event.getSource()
+					
+>>>>>>> f108f649a6f9cf95c9b2f59d977078bdfb1a6648
 					ChangeScreenEvent cSEvent = new ChangeScreenEvent(ScreenType.BATTLE, quest, playerSave);
 					notifyListeners(cSEvent);
 				}

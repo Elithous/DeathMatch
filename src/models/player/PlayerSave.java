@@ -6,8 +6,8 @@ import characters.models.Hero;
 
 public class PlayerSave implements Serializable{
 
-	private Hero[] players;
-	private Inventory invintory;
+	private Hero[] players = new Hero[4];
+	private Inventory inventory = new Inventory();
 	
 	public Hero[] getPlayers() 
 	{
@@ -32,18 +32,19 @@ public class PlayerSave implements Serializable{
 	
 	public boolean addPlayer(Hero heroN) 
 	{
-		for (Hero hero : players) 
+		for (int i = 0; i < players.length; i++) 
 		{
-			if (hero == null) 
+			if (players[i] == null) 
 			{
-				hero = heroN;
+				players[i] = heroN;
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public Inventory getInventory() {
-		return invintory;
+	public Inventory getInventory()
+	{
+		return inventory;
 	}
 }

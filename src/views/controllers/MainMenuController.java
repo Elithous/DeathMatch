@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import controllers.GameApp;
+import controllers.HeroGenerator;
 import events.ChangeScreenEvent;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -59,13 +60,16 @@ public class MainMenuController extends EventPublisher implements PlayerControll
 	}
 
 	@FXML
-	void loadGameButtonAction(ActionEvent event) {
-
+	void loadGameButtonAction(ActionEvent event) 
+	{
+		ChangeScreenEvent cSEvent = new ChangeScreenEvent(ScreenType.MANAGEMENT, null, (GameApp.load()==null? HeroGenerator.createNewGame() : GameApp.load()));
+		notifyListeners(cSEvent);
 	}
 
 	@FXML
-	void newGameButtonAction(ActionEvent event) {
-		ChangeScreenEvent cSEvent = new ChangeScreenEvent(ScreenType.MANAGEMENT, null, null);
+	void newGameButtonAction(ActionEvent event) 
+	{
+		ChangeScreenEvent cSEvent = new ChangeScreenEvent(ScreenType.MANAGEMENT, null, HeroGenerator.createNewGame());
 		notifyListeners(cSEvent);
 	}
 
