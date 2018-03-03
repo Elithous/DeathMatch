@@ -3,7 +3,6 @@ package loot;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javafx.scene.image.Image;
 import loot.enums.ArmorType;
 import loot.enums.AttackType;
 import loot.enums.Rarity;

@@ -3,15 +3,12 @@ package views.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-<<<<<<< HEAD
-import controllers.GameApp;
-=======
 import characters.models.Hero;
 import characters.models.Monster;
 import controllers.GameApp;
+import events.ChangeScreenEvent;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
->>>>>>> f108f649a6f9cf95c9b2f59d977078bdfb1a6648
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -23,20 +20,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import lib.EventPublisher;
 import models.player.PlayerSave;
 import models.quests.Quest;
+import views.enums.ScreenType;
 import views.interfaces.PlayerController;
-<<<<<<< HEAD
-
-public class BattleScreenController implements PlayerController {
-=======
 import views.models.CharacterImageView;
 
-public class BattleScreenController implements PlayerController {
+public class BattleScreenController extends EventPublisher implements PlayerController {
 
+	private PlayerSave playerSave;
+	private Quest quest;
+	
 	private CharacterImageView[] players = new CharacterImageView[4];
 	private CharacterImageView[] enemies = new CharacterImageView[4];
->>>>>>> f108f649a6f9cf95c9b2f59d977078bdfb1a6648
 
 	@FXML
 	private ResourceBundle resources;
@@ -117,12 +114,13 @@ public class BattleScreenController implements PlayerController {
 
 	@FXML
 	void itemsButtonClicked(ActionEvent event) {
-
+		itemsMenuBox.setVisible(!itemsMenuBox.isVisible());
 	}
 
 	@FXML
 	void skipButtonClicked(ActionEvent event) {
-
+		// TEMPORARY CODE
+		this.notifyListeners(new ChangeScreenEvent(ScreenType.WIN, quest, playerSave));
 	}
 
 	@FXML
@@ -168,6 +166,9 @@ public class BattleScreenController implements PlayerController {
 			playerImage = !playerImage;
 		}
 		
+		itemsMenuBox.prefWidthProperty().bind(sideBox.widthProperty());
+		itemsMenuBox.prefHeightProperty().bind(sideBox.heightProperty());
+		
 		// Scale Buttons
 		SimpleDoubleProperty textFontSize = new SimpleDoubleProperty();
 		textFontSize.bind(selectionBox.heightProperty().divide(11));
@@ -187,11 +188,12 @@ public class BattleScreenController implements PlayerController {
 		currentPlayerName.layoutYProperty().bind(currentPlayerImage.fitHeightProperty().add(currentPlayerName.heightProperty()));
 	}
 	
-	private PlayerSave ps;
-	private Quest q;
-
 	@Override
 	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
+		this.addListener(app);
+		this.playerSave = playerSave;
+		this.quest = quest;
+		
 		for (int i = 0; i < players.length; i++) {
 			// players[i] = new CharacterImageView(playerSave.getPlayers()[i]);
 			Hero temp = new Hero();
@@ -221,8 +223,6 @@ public class BattleScreenController implements PlayerController {
 				}
 			}
 		}
-		ps = playerSave;
-		q = quest;
 		update();
 	}
 
@@ -230,16 +230,5 @@ public class BattleScreenController implements PlayerController {
 	public void update() 
 	{
 		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
-		
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
 }
