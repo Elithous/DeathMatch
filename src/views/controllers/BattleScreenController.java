@@ -112,16 +112,21 @@ public class BattleScreenController implements PlayerController {
 	void initialize() {
 
 	}
+	
+	private PlayerSave ps;
+	private Quest q;
 
 	@Override
 	public void init(PlayerSave playerSave, Quest quest, GameApp app) 
 	{
-		
+		ps = playerSave;
+		q = quest;
+		update();
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
+	public void update() 
+	{
 		
 	}
 }

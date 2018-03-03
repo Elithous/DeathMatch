@@ -91,6 +91,7 @@ public class HeroGenerator
 		ps.getInventory().addEquipment(LootGenerator.generateArmor(100, 1));
 		ps.getInventory().addEquipment(LootGenerator.generateArmor(100, 1));
 		ps.getInventory().addEquipment(LootGenerator.generateArmor(100, 1));
+		ps.getPlayers()[1].equip(EquipmentSlot.MAIN_HAND, LootGenerator.generateWeapon(100, 1));
 		
 		return ps;
 	}

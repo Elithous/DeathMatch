@@ -23,6 +23,48 @@
                               <Image url="@../../Assets/empty%20sprite.png" />
                            </image>
                         </ImageView>
+                        
+                        
+                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="197.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/emptyChar.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="140.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/emptyChar.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="197.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/emptyChar.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="254.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/emptyChar.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="140.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/emptyChar.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="152.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/emptyChar.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="242.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/emptyChar.png" />
+                           </image>
+                        </ImageView>
+                        
+                        
+                        
+                        
+                        
                         <ImageView fx:id="helmSlot" fitHeight="27.0" fitWidth="23.0" layoutX="197.0" layoutY="88.0" onDragDetected="#helmSlotDragStart" onDragDropped="#helmSlotDragDropped" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../Assets/emptyChar.png" />
@@ -57,7 +99,7 @@
                            <image>
                               <Image url="@../../Assets/emptyChar.png" />
                            </image>
-                        </ImageView>
+                        </ImageView>                         
                         <Label fx:id="currentPlayerName" alignment="CENTER" layoutX="140.0" layoutY="52.0" prefHeight="17.0" prefWidth="116.0" text="Name" />
                         <Label fx:id="currentPlayerStats" alignment="CENTER" layoutX="26.0" layoutY="99.0" prefHeight="130.0" prefWidth="97.0" text="stats" />
                      </children>

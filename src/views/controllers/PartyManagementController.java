@@ -3,6 +3,7 @@ package views.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import characters.enums.EquipmentSlot;
 import controllers.GameApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -257,6 +258,15 @@ public class PartyManagementController implements PlayerController
 		currentPlayerImage.setImage(ps.getPlayers()[currentPlayer].getImage());
 		currentPlayerName.setText(ps.getPlayers()[currentPlayer].getName());
 		currentPlayerStats.setText(ps.getPlayers()[currentPlayer].loadStats());
+		
+		this.mainArmSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND).getImage() : null);
+		this.sideArmSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.OFFHAND)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.OFFHAND).getImage() : null);
+		this.helmSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.HELM)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.HELM).getImage() : null);
+		this.legsSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.LEGS)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.LEGS).getImage() : null);
+		this.bodySlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.BODY)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.BODY).getImage() : null);
+		this.ring1Slot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING1)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING1).getImage() : null);
+		this.ring2Slot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING2)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING2).getImage() : null);
+		
 		if (ps.getPlayers()[0] != null) player1Image.setImage(ps.getPlayers()[0].getImage());
 		if (ps.getPlayers()[1] != null) player2Image.setImage(ps.getPlayers()[1].getImage());
 		if (ps.getPlayers()[2] != null) player3Image.setImage(ps.getPlayers()[2].getImage());
