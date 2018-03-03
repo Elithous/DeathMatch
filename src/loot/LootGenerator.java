@@ -290,7 +290,7 @@ public class LootGenerator
 		}
 		
 		ring.setName(ringNames[choice]);
-		ring.setImage(new Image(armorPaths[3]+choice+".png"));
+		ring.setImage(armorPaths[3]+choice+".png");
 
 		if(ring.getRarity()==Rarity.NORMAL) {
 
