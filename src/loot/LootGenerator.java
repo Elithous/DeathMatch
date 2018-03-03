@@ -158,7 +158,7 @@ public class LootGenerator
 			weapon.setRarity(Rarity.NORMAL);
 		else if (rarity < NORMAL_RATIO + RARE_RATIO)
 			weapon.setRarity(Rarity.RARE);
-		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+		else if (rarity < NORMAL_RATIO + RARE_RATIO + EPIC_RATIO)
 			weapon.setRarity(Rarity.EPIC);
 		else weapon.setRarity(Rarity.LEGENDARY);
 		
@@ -190,13 +190,13 @@ public class LootGenerator
 			ring.setRarity(Rarity.NORMAL);
 		else if (rarity < NORMAL_RATIO + RARE_RATIO)
 			ring.setRarity(Rarity.RARE);
-		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+		else if (rarity < NORMAL_RATIO + RARE_RATIO+ EPIC_RATIO)
 			ring.setRarity(Rarity.EPIC);
 		else ring.setRarity(Rarity.LEGENDARY);
 		
 		 
 		switch(ring.getRarity()) {
-		case EPIC: choice = rand.nextInt(10) +8;
+		case EPIC: choice = rand.nextInt(2) +8;
 			break;
 		case LEGENDARY: choice = rand.nextInt(2);
 			break;
@@ -210,98 +210,64 @@ public class LootGenerator
 		ring.setName(ringNames[choice]);
 		ring.setImage(new Image(paths[6]+choice+".png"));
 
-		if(choice < 5 && choice > 1) {
+		if(ring.getRarity()==Rarity.NORMAL) {
 
 			int plus = 	rand.nextInt(6) +1;
+			int plus1 = 	rand.nextInt(6) +1;
+			int plus2 = 	rand.nextInt(6) +1;
 			
-			switch(choice) {
-			case 2 : 
 				ring.setDexterity(plus);
-			break;
-			case 3 : 
-				ring.setStrength(plus);	
-			break;
-			case 4 :
-				ring.setIntelligence(plus);
-			break;
+				ring.setStrength(plus2);	
+				ring.setIntelligence(plus1);
 			}
-		}
 			
-			if(choice < 8 && choice > 4) {
+			if(ring.getRarity()==Rarity.RARE) {
 				int plus = 	rand.nextInt(11) +5;
-				int plus1 = 	rand.nextInt(11) +5;
-				
-				ring.setRarity(Rarity.RARE);
-
-				switch(choice) {
-				case 5 : 
-					ring.setIntelligence(plus);
-					ring.setAttack(plus1);
-				break;
-				
-				case 6 : 
-					ring.setDexterity(plus);
+				int plus1 = rand.nextInt(11) +5;
+				int plus2 = rand.nextInt(11) +5;
+				int plus3 = rand.nextInt(11) +5;
+ 
+					ring.setIntelligence(plus2);
+					ring.setDexterity(plus3);
 					ring.setArmor(plus1);
-				break;
-				
-				case 7 :
 					ring.setStrength(plus);	
-					ring.setMaxHealth(plus1);
-				break;
-				}	
+	
 		}
 			
-			if(choice==8 || choice==9) {
-				int plus = rand.nextInt(16) +10;
-				int plus1 = rand.nextInt(16) +10;
-				int plus2 = rand.nextInt(16) +10;
-				
-				ring.setRarity(Rarity.EPIC);
-				
-				if(choice==8) {
+			if(ring.getRarity()==Rarity.EPIC) {
+				int plus = rand.nextInt(16) +5;
+				int plus1 = rand.nextInt(16) +5;
+				int plus2 = rand.nextInt(16) +5;
+				int plus3 = rand.nextInt(16) +5;
+				int plus4 = rand.nextInt(16) +5;
+				int plus5 = rand.nextInt(16) +5;
+
 					ring.setIntelligence(plus);
 					ring.setAttack(plus1);
 					ring.setDexterity(plus2);
-				}
-				
-				if(choice==9) {	
 					ring.setMaxHealth(plus);
 					ring.setStrength(plus1);
 					ring.setArmor(plus2);
-				}
 			}
 			
-			if(choice==0 || choice==1) {
+			if(ring.getRarity()==Rarity.LEGENDARY) {
 				int plus = rand.nextInt(21) +10;
 				int plus1 = rand.nextInt(21) +10;
 				int plus2 = rand.nextInt(21) +10;
 				int plus3 = rand.nextInt(21) +10;
 				int plus4 = rand.nextInt(21) +10;
 				int plus5 = rand.nextInt(21) +10;
-				
-				ring.setRarity(Rarity.EPIC);
-				
-				if(choice==1) {
+
 					ring.setIntelligence(plus);
 					ring.setAttack(plus1);
 					ring.setDexterity(plus2);
 					ring.setMaxHealth(plus3);
 					ring.setStrength(plus4);
 					ring.setArmor(plus5);
-				}
-				
-				if(choice==0) {	
-					ring.setMaxHealth(plus);
-					ring.setStrength(plus1);
-					ring.setArmor(plus2);
-					ring.setIntelligence(plus3);
-					ring.setAttack(plus4);
-					ring.setDexterity(plus5);
-				}
 			}
-	
+			
+			ring.setValue((ring.getIntelligence() + ring.getDexterity() + ring.getStrength()) *25);
 
-		
 		return ring;
 	}	
 	

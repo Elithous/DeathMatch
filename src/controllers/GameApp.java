@@ -14,6 +14,7 @@ import lib.FileUtil;
 import lib.IEventListener;
 import loot.LootGenerator;
 import loot.models.Armor;
+import loot.models.Weapon;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.enums.ScreenType;
@@ -29,15 +30,17 @@ public class GameApp extends Application implements IEventListener
 		public void start(Stage stage) throws IOException 
 		{
 			Armor Ring = LootGenerator.generateRing(500, 30);
-			System.out.println(Ring.getName() );
+			System.out.println(Ring.getName() + " " + Ring.getRarity() +"\n" 
+			+ Ring.getIntelligence() +", " + Ring.getDexterity()+ ", " + Ring.getStrength()  
+			+ "\n" + Ring.getValue() );
 
 			
-			this.stage = stage;
-			Parent root = loadFXML(ScreenType.MAIN, null);
-			stage.setScene(new Scene(root));
-			stage.setFullScreen(true);
-			stage.setFullScreenExitHint("");
-			stage.show();
+//			this.stage = stage;
+//			Parent root = loadFXML(ScreenType.MAIN, null);
+//			stage.setScene(new Scene(root));
+//			stage.setFullScreen(true);
+//			stage.setFullScreenExitHint("");
+//			stage.show();
 //			
 		}
 		
