@@ -9,11 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<<<<<<< HEAD
 <StackPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.PartyManagementController">
-=======
-<StackPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.PartyManagementController">
->>>>>>> f108f649a6f9cf95c9b2f59d977078bdfb1a6648
    <children>
       <VBox fx:id="containerVBox" prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -29,37 +25,37 @@
                         </ImageView>
                         
                         
-                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="197.0" layoutY="88.0" preserveRatio="true">
+                        <ImageView fx:id="helmBack" fitHeight="27.0" fitWidth="23.0" layoutX="197.0" layoutY="88.0" preserveRatio="true">
                            <image>
                               <Image url="@../../Assets/emptyChar.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="140.0" layoutY="177.0" preserveRatio="true">
+                        <ImageView fx:id="bodyBack" fitHeight="27.0" fitWidth="23.0" layoutX="140.0" layoutY="177.0" preserveRatio="true">
                            <image>
                               <Image url="@../../Assets/emptyChar.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="197.0" layoutY="229.0" preserveRatio="true">
+                        <ImageView fx:id="legsBack" fitHeight="27.0" fitWidth="23.0" layoutX="197.0" layoutY="229.0" preserveRatio="true">
                            <image>
                               <Image url="@../../Assets/emptyChar.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="254.0" layoutY="137.0" preserveRatio="true">
+                        <ImageView fx:id="sideArmBack" fitHeight="27.0" fitWidth="23.0" layoutX="254.0" layoutY="137.0" preserveRatio="true">
                            <image>
                               <Image url="@../../Assets/emptyChar.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="140.0" layoutY="137.0" preserveRatio="true">
+                        <ImageView fx:id="mainArmBack" fitHeight="27.0" fitWidth="23.0" layoutX="140.0" layoutY="137.0" preserveRatio="true">
                            <image>
                               <Image url="@../../Assets/emptyChar.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="152.0" layoutY="229.0" preserveRatio="true">
+                        <ImageView fx:id="ring1Back" fitHeight="27.0" fitWidth="23.0" layoutX="152.0" layoutY="229.0" preserveRatio="true">
                            <image>
                               <Image url="@../../Assets/emptyChar.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="27.0" fitWidth="23.0" layoutX="242.0" layoutY="229.0" preserveRatio="true">
+                        <ImageView fx:id="ring2Back" fitHeight="27.0" fitWidth="23.0" layoutX="242.0" layoutY="229.0" preserveRatio="true">
                            <image>
                               <Image url="@../../Assets/emptyChar.png" />
                            </image>

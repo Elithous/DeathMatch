@@ -3,7 +3,6 @@ package loot;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javafx.scene.image.Image;
 import loot.enums.ArmorType;
 import loot.enums.AttackType;
 import loot.enums.Rarity;
@@ -290,7 +289,7 @@ public class LootGenerator
 		}
 		
 		ring.setName(ringNames[choice]);
-		ring.setImage(new Image(paths[6]+choice+".png"));
+		ring.setImage(paths[6]+choice+".png");
 
 		if(ring.getRarity()==Rarity.NORMAL) {
 

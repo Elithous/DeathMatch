@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 
 import characters.enums.EquipmentSlot;
 import controllers.GameApp;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -12,17 +14,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-<<<<<<< HEAD
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-=======
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import loot.models.Equipment;
->>>>>>> f108f649a6f9cf95c9b2f59d977078bdfb1a6648
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.interfaces.PlayerController;
@@ -55,6 +51,27 @@ public class PartyManagementController implements PlayerController
     
     @FXML
     private ImageView currentPlayerImage;
+    
+    @FXML
+    private ImageView helmBack;
+
+    @FXML
+    private ImageView bodyBack;
+
+    @FXML
+    private ImageView legsBack;
+
+    @FXML
+    private ImageView sideArmBack;
+
+    @FXML
+    private ImageView mainArmBack;
+
+    @FXML
+    private ImageView ring1Back;
+
+    @FXML
+    private ImageView ring2Back;
 
     @FXML
     private ImageView helmSlot;
@@ -284,31 +301,7 @@ public class PartyManagementController implements PlayerController
     }
 
     @FXML
-<<<<<<< HEAD
     void initialize() {
-        assert equipmentList != null : "fx:id=\"equipmentList\" was not injected: check your FXML file 'party.fxml'.";
-        assert currentPlayerImage != null : "fx:id=\"currentPlayerImage\" was not injected: check your FXML file 'party.fxml'.";
-        assert helmSlot != null : "fx:id=\"helmSlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert bodySlot != null : "fx:id=\"bodySlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert legsSlot != null : "fx:id=\"legsSlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert sideArmSlot != null : "fx:id=\"sideArmSlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert mainArmSlot != null : "fx:id=\"mainArmSlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert ring1Slot != null : "fx:id=\"ring1Slot\" was not injected: check your FXML file 'party.fxml'.";
-        assert ring2Slot != null : "fx:id=\"ring2Slot\" was not injected: check your FXML file 'party.fxml'.";
-        assert currentPlayerName != null : "fx:id=\"currentPlayerName\" was not injected: check your FXML file 'party.fxml'.";
-        assert currentPlayerStats != null : "fx:id=\"currentPlayerStats\" was not injected: check your FXML file 'party.fxml'.";
-        assert player1Image != null : "fx:id=\"player1Image\" was not injected: check your FXML file 'party.fxml'.";
-        assert player2Image != null : "fx:id=\"player2Image\" was not injected: check your FXML file 'party.fxml'.";
-        assert player3Image != null : "fx:id=\"player3Image\" was not injected: check your FXML file 'party.fxml'.";
-        assert player4Image != null : "fx:id=\"player4Image\" was not injected: check your FXML file 'party.fxml'.";
-        assert hireImage != null : "fx:id=\"hireImage\" was not injected: check your FXML file 'party.fxml'.";
-        // assert topHBox != null : "fx:id=\"topHBox\" was not injected: check your FXML file 'party.fxml'.";
-        // assert playerPane != null : "fx:id=\"playerPane\" was not injected: check your FXML file 'party.fxml'.";
-        
-=======
-    void initialize() 
-    {
->>>>>>> f108f649a6f9cf95c9b2f59d977078bdfb1a6648
         topHBox.prefHeightProperty().bind(containerVBox.heightProperty().multiply(.8));
         bottomHBox.prefHeightProperty().bind(containerVBox.heightProperty().multiply(.2));
         bottomHBox.prefWidthProperty().bind(containerVBox.widthProperty());
@@ -317,42 +310,106 @@ public class PartyManagementController implements PlayerController
         playerPane.prefHeightProperty().bind(topHBox.heightProperty());
         
         equipmentList.prefWidthProperty().bind(topHBox.widthProperty().multiply(.4));
-<<<<<<< HEAD
         
         // Bind the image objects in playerPane to positions and sizes
         currentPlayerImage.fitWidthProperty().bind(playerPane.widthProperty().divide(5));
         currentPlayerImage.fitHeightProperty().bind(currentPlayerImage.fitWidthProperty());
-        currentPlayerImage.layoutXProperty().bind(playerPane.widthProperty().subtract(currentPlayerImage.fitWidthProperty().divide(2)).divide(2));
-        currentPlayerImage.layoutYProperty().bind(playerPane.heightProperty().subtract(currentPlayerImage.fitHeightProperty().divide(2)).divide(2));
+        currentPlayerImage.layoutXProperty().bind(playerPane.widthProperty().divide(2).subtract(currentPlayerImage.fitWidthProperty().divide(2)));
+        currentPlayerImage.layoutYProperty().bind(playerPane.heightProperty().divide(2).subtract(currentPlayerImage.fitHeightProperty().divide(2)));
         
-        // helmSlot.fitWidthProperty();
-        //
         
-        //Bind the image objects in bottomHBox to the height and spacing correctly
-        player1Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
-        player1Image.fitWidthProperty().bind(player1Image.fitHeightProperty());
-        player2Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
-        player2Image.fitWidthProperty().bind(player2Image.fitHeightProperty());
-        player3Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
-        player3Image.fitWidthProperty().bind(player3Image.fitHeightProperty());
-        player4Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
-        player4Image.fitWidthProperty().bind(player4Image.fitHeightProperty());
-        hireImage.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.4));
-        hireImage.fitWidthProperty().bind(hireImage.fitHeightProperty());
+        SimpleDoubleProperty playerMidX = new SimpleDoubleProperty();
+        SimpleDoubleProperty playerMidY = new SimpleDoubleProperty();
+        playerMidX.bind(currentPlayerImage.layoutXProperty().add(currentPlayerImage.fitWidthProperty().divide(2)));
+        playerMidY.bind(currentPlayerImage.layoutYProperty().add(currentPlayerImage.fitHeightProperty().divide(2)));
         
-        bottomHBox.spacingProperty().bind(bottomHBox.heightProperty().divide(2));
-        //
-=======
+        // Bind each slot location to the player
+        helmSlot.fitWidthProperty().bind(playerPane.widthProperty().divide(20));
+        helmSlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
+        helmSlot.layoutXProperty().bind(playerMidX.subtract(helmSlot.fitWidthProperty().divide(2)));
+        helmSlot.layoutYProperty().bind(currentPlayerImage.layoutYProperty().subtract(helmSlot.fitHeightProperty().multiply(1.2)));
         
-        // Bind the image objects in playerPane to positions and sizes
-        currentPlayerImage.fitWidthProperty().bind(playerPane.widthProperty().divide(5));
-        currentPlayerImage.fitHeightProperty().bind(currentPlayerImage.fitWidthProperty());
-        currentPlayerImage.layoutXProperty().bind(playerPane.widthProperty().subtract(currentPlayerImage.fitWidthProperty().divide(2)).divide(2));
-        currentPlayerImage.layoutYProperty().bind(playerPane.heightProperty().subtract(currentPlayerImage.fitHeightProperty().divide(2)).divide(2));
->>>>>>> f108f649a6f9cf95c9b2f59d977078bdfb1a6648
+        bodySlot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
+        bodySlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
+        bodySlot.layoutXProperty().bind(currentPlayerImage.layoutXProperty().subtract(bodySlot.fitWidthProperty().multiply(1.2)));
+        bodySlot.layoutYProperty().bind(playerMidY.subtract(bodySlot.fitHeightProperty().divide(2)));
         
-        // helmSlot.fitWidthProperty();
-        //
+        legsSlot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
+        legsSlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
+        legsSlot.layoutXProperty().bind(playerMidX.subtract(legsSlot.fitWidthProperty().divide(2)));
+        legsSlot.layoutYProperty().bind(currentPlayerImage.layoutYProperty().add(currentPlayerImage.fitHeightProperty()).add(legsSlot.fitHeightProperty().multiply(1.2)));
+        
+        mainArmSlot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
+        mainArmSlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
+        mainArmSlot.layoutXProperty().bind(currentPlayerImage.layoutXProperty().subtract(mainArmSlot.fitWidthProperty().multiply(1.2)));
+        mainArmSlot.layoutYProperty().bind(playerMidY.subtract(currentPlayerImage.fitHeightProperty().divide(3)).subtract(mainArmSlot.fitHeightProperty().divide(2)));
+        
+        sideArmSlot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
+        sideArmSlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
+        sideArmSlot.layoutXProperty().bind(currentPlayerImage.layoutXProperty().add(currentPlayerImage.fitWidthProperty()).add(sideArmSlot.fitWidthProperty().multiply(0.2)));
+        sideArmSlot.layoutYProperty().bind(playerMidY.subtract(currentPlayerImage.fitHeightProperty().divide(3)).subtract(sideArmSlot.fitHeightProperty().divide(2)));
+        
+        ring1Slot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
+        ring1Slot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
+        ring1Slot.layoutXProperty().bind(playerMidX.subtract(ring1Slot.fitWidthProperty().multiply(2.1)));
+        ring1Slot.layoutYProperty().bind(currentPlayerImage.layoutYProperty().add(currentPlayerImage.fitHeightProperty()).add(ring1Slot.fitHeightProperty().multiply(1.2)));
+        
+        ring2Slot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
+        ring2Slot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
+        ring2Slot.layoutXProperty().bind(playerMidX.add(ring1Slot.fitWidthProperty().multiply(2.1)));
+        ring2Slot.layoutYProperty().bind(currentPlayerImage.layoutYProperty().add(currentPlayerImage.fitHeightProperty()).add(ring2Slot.fitHeightProperty().multiply(1.2)));
+        
+        // Bind each slot back image to the slot
+        helmBack.fitWidthProperty().bind(helmSlot.fitWidthProperty());
+        helmBack.fitHeightProperty().bind(helmSlot.fitHeightProperty());
+        helmBack.layoutXProperty().bind(helmSlot.layoutXProperty());
+        helmBack.layoutYProperty().bind(helmSlot.layoutYProperty());
+
+        bodyBack.fitWidthProperty().bind(bodySlot.fitWidthProperty());
+        bodyBack.fitHeightProperty().bind(bodySlot.fitHeightProperty());
+        bodyBack.layoutXProperty().bind(bodySlot.layoutXProperty());
+        bodyBack.layoutYProperty().bind(bodySlot.layoutYProperty());
+
+        legsBack.fitWidthProperty().bind(legsSlot.fitWidthProperty());
+        legsBack.fitHeightProperty().bind(legsSlot.fitHeightProperty());
+        legsBack.layoutXProperty().bind(legsSlot.layoutXProperty());
+        legsBack.layoutYProperty().bind(legsSlot.layoutYProperty());
+
+        mainArmBack.fitWidthProperty().bind(mainArmSlot.fitWidthProperty());
+        mainArmBack.fitHeightProperty().bind(mainArmSlot.fitHeightProperty());
+        mainArmBack.layoutXProperty().bind(mainArmSlot.layoutXProperty());
+        mainArmBack.layoutYProperty().bind(mainArmSlot.layoutYProperty());
+
+        sideArmBack.fitWidthProperty().bind(sideArmSlot.fitWidthProperty());
+        sideArmBack.fitHeightProperty().bind(sideArmSlot.fitHeightProperty());
+        sideArmBack.layoutXProperty().bind(sideArmSlot.layoutXProperty());
+        sideArmBack.layoutYProperty().bind(sideArmSlot.layoutYProperty());
+
+        ring1Back.fitWidthProperty().bind(ring1Slot.fitWidthProperty());
+        ring1Back.fitHeightProperty().bind(ring1Slot.fitHeightProperty());
+        ring1Back.layoutXProperty().bind(ring1Slot.layoutXProperty());
+        ring1Back.layoutYProperty().bind(ring1Slot.layoutYProperty());
+
+        ring2Back.fitWidthProperty().bind(ring2Slot.fitWidthProperty());
+        ring2Back.fitHeightProperty().bind(ring2Slot.fitHeightProperty());
+        ring2Back.layoutXProperty().bind(ring2Slot.layoutXProperty());
+        ring2Back.layoutYProperty().bind(ring2Slot.layoutYProperty());
+        
+        // Text size for the name label and the stats label
+        SimpleDoubleProperty nameTextSize = new SimpleDoubleProperty();
+        nameTextSize.bind(playerPane.heightProperty().divide(15));
+        currentPlayerName.styleProperty().bind(Bindings.concat("-fx-font-size: ", nameTextSize.asString(), ";"));
+        currentPlayerName.layoutXProperty().bind(playerPane.widthProperty().divide(2).subtract(currentPlayerName.widthProperty().divide(2)));
+        currentPlayerName.layoutYProperty().bind(playerPane.heightProperty().multiply(.1));
+        currentPlayerName.prefWidthProperty().bind(playerPane.widthProperty());
+
+        SimpleDoubleProperty statsTextSize = new SimpleDoubleProperty();
+        statsTextSize.bind(playerPane.heightProperty().divide(30));
+        currentPlayerStats.styleProperty().bind(Bindings.concat("-fx-font-size: ", statsTextSize.asString(), ";"));
+        currentPlayerStats.prefHeightProperty().bind(playerPane.heightProperty().multiply(.5));
+        currentPlayerStats.prefWidthProperty().bind(playerPane.widthProperty().multiply(.2));
+        currentPlayerStats.layoutXProperty().bind(playerPane.widthProperty().multiply(.05));
+        currentPlayerStats.layoutYProperty().bind(playerPane.heightProperty().divide(2).subtract(currentPlayerStats.heightProperty().divide(2)));
         
         //Bind the image objects in bottomHBox to the height and spacing correctly
         player1Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
