@@ -4,7 +4,6 @@ import interfaces.IHasStats;
 
 public class Equipment extends Loot implements IHasStats{
 
-	private boolean isEquipped;
 	protected int maxHealth;
 	protected int strength;
 	protected int dexterity;
@@ -14,6 +13,44 @@ public class Equipment extends Loot implements IHasStats{
 	protected int requiredDexterity;
 	protected int requiredIntelligence;
 	private int attack;
+	
+	public boolean isEquipped()
+	{
+		return isEquipped;
+	}
+
+	public void setEquipped(boolean isEquipped) 
+	{
+		this.isEquipped = isEquipped;
+	}
+	
+	@Override
+	public boolean equals(Object obj) 
+	{
+	    if (this == obj)
+	        return true;
+	    if (obj == null)
+	        return false;
+	    if (!(obj instanceof Equipment))
+	        return false;
+	    Equipment other = (Equipment) obj;
+	    
+
+	    if (!this.name.equals(other.name)) return false;
+	    if (this.isEquipped != other.isEquipped) return false;
+		if (!this.imageURL.equals(other.imageURL)) return false;
+	    if (this.value != other.value) return false;
+	    if (this.armor != other.armor) return false;
+	    if (this.requiredStrength != other.requiredStrength) return false;
+	    if (this.requiredDexterity != other.requiredDexterity) return false;
+	    if (this.requiredIntelligence != other.requiredIntelligence) return false;
+
+	    
+	    return true;
+	}
+
+	protected boolean isEquipped = false;
+
 
 	public int getRequiredStrength() 
 	{
@@ -94,14 +131,6 @@ public class Equipment extends Loot implements IHasStats{
 	@Override
 	public void setArmor(int armor) {
 		this.armor = armor;
-	}
-
-	public boolean isEquipped() {
-		return isEquipped;
-	}
-
-	public void setEquipped(boolean isEquipped) {
-		this.isEquipped = isEquipped;
 	}
 
 	@Override

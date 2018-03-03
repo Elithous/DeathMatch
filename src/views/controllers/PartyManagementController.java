@@ -10,7 +10,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -18,7 +20,7 @@ import loot.models.Equipment;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.interfaces.PlayerController;
-import views.models.LootListItem;
+import views.models.EquipmentListItem;
 
 public class PartyManagementController implements PlayerController
 {
@@ -94,7 +96,15 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void bodySlotDragDropped(DragEvent event) {
-
+        receiveDrop(event.getDragboard(), EquipmentSlot.BODY);
+        event.setDropCompleted(true);
+        event.consume();
+    }
+    
+    @FXML
+    void bodySlotDragOver(DragEvent event) {
+		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
     }
 
     @FXML
@@ -108,13 +118,16 @@ public class PartyManagementController implements PlayerController
     }
 
     @FXML
-    void equipmentListDragStart(MouseEvent event) {
-
-    }
-
-    @FXML
     void helmSlotDragDropped(DragEvent event) {
-
+        receiveDrop(event.getDragboard(), EquipmentSlot.HELM);
+        event.setDropCompleted(true);
+        event.consume();
+    }
+    
+    @FXML
+    void helmSlotDragOver(DragEvent event) {
+		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
     }
 
     @FXML
@@ -129,7 +142,15 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void legsSlotDragDropped(DragEvent event) {
-
+        receiveDrop(event.getDragboard(), EquipmentSlot.LEGS);
+        event.setDropCompleted(true);
+        event.consume();
+    }
+    
+    @FXML
+    void legsSlotDragOver(DragEvent event) {
+		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
     }
 
     @FXML
@@ -138,8 +159,17 @@ public class PartyManagementController implements PlayerController
     }
 
     @FXML
-    void mainArmSlotDragDropped(DragEvent event) {
-
+    void mainArmSlotDragDropped(DragEvent event) 
+    {
+        receiveDrop(event.getDragboard(), EquipmentSlot.MAIN_HAND);
+        event.setDropCompleted(true);
+        event.consume();
+    }
+    
+    @FXML
+    void mainArmSlotDragOver(DragEvent event) {
+		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
     }
 
     @FXML
@@ -174,7 +204,15 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void ring1SlotDragDropped(DragEvent event) {
-
+        receiveDrop(event.getDragboard(), EquipmentSlot.RING1);
+        event.setDropCompleted(true);
+        event.consume();
+    }
+    
+    @FXML
+    void ring1SlotDragOver(DragEvent event) {
+		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
     }
 
     @FXML
@@ -184,7 +222,15 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void ring2SlotDragDropped(DragEvent event) {
-
+        receiveDrop(event.getDragboard(), EquipmentSlot.RING2);
+        event.setDropCompleted(true);
+        event.consume();
+    }
+    
+    @FXML
+    void ring2SlotDragOver(DragEvent event) {
+		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
     }
 
     @FXML
@@ -194,12 +240,41 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void sideArmSlotDragDropped(DragEvent event) {
-
+        receiveDrop(event.getDragboard(), EquipmentSlot.OFFHAND);
+        event.setDropCompleted(true);
+        event.consume();
+    }
+    
+    @FXML
+    void sideArmSlotDragOver(DragEvent event) {
+		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
     }
 
     @FXML
     void sideArmSlotDragStart(MouseEvent event) {
 
+    }
+    
+    private void receiveDrop(Dragboard d, EquipmentSlot es)
+    {
+    	Equipment e = (Equipment) d.getContent(EquipmentListItem.lootDataFormat);
+    	
+    	System.out.println("e is "+e);
+    	
+    	for (Equipment eq : ps.getInventory().getEquipment())
+    	{
+    		if (eq.equals(e))
+    		{
+    			e = eq;
+    			System.out.println("foundd the same");
+    		}
+    	}
+    	System.out.println("e is "+e);
+
+    	
+    	System.out.println("Equip successful - "+ps.getPlayers()[currentPlayer].equip(es, (Equipment)e));
+    	update();
     }
 
     @FXML
@@ -249,9 +324,11 @@ public class PartyManagementController implements PlayerController
 	public void update() 
 	{
 		VBox content = new VBox();
+    	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
 		for (Equipment e : ps.getInventory().getEquipment())
 		{
-			LootListItem li = new LootListItem(e);
+			System.out.println(e);
+			EquipmentListItem li = new EquipmentListItem(e);
 			content.getChildren().add(li);
 		}
 		equipmentList.setContent(content);

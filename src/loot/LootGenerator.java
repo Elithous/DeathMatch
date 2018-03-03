@@ -158,10 +158,10 @@ public class LootGenerator
 		if (armor.getRarity() == Rarity.LEGENDARY)
 		{
 			armor.setName(armorNames[armorType][0]);
-			armor.setImage(new Image(armorPaths[armorType]+0+".png"));
+			armor.setImage(armorPaths[armorType]+0+".png");
 		}
 		else {
-			armor.setImage(new Image(armorPaths[armorType]+(armorGrade+1)+".png"));
+			armor.setImage(armorPaths[armorType]+(armorGrade+1)+".png");
 		}
 		return armor;
 	}
@@ -249,10 +249,10 @@ public class LootGenerator
 		if (weapon.getRarity() == Rarity.LEGENDARY)
 		{
 			weapon.setName(names[choice][0]);
-			weapon.setImage(new Image(paths[choice]+0+".png"));
+			weapon.setImage(paths[choice]+0+".png");
 		}
 		else 
-			weapon.setImage(new Image(paths[choice]+(type+1)+".png"));
+			weapon.setImage(paths[choice]+(type+1)+".png");
 		
 		return weapon;
 	}
@@ -318,7 +318,7 @@ public class LootGenerator
 		
 		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
 		
-		item.setImage(new Image(paths[1]+type+".png"));
+		item.setImage(paths[1]+type+".png");
 		
 		return item;
 	}
@@ -343,7 +343,7 @@ public class LootGenerator
 		
 		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
 		
-		item.setImage(new Image(paths[0]+type+".png"));
+		item.setImage(paths[0]+type+".png");
 		
 		return item;
 	}

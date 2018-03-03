@@ -190,6 +190,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	
 	public boolean equip(EquipmentSlot slot, Equipment item)
 	{
+		if (item.isEquipped()) return false;
 		if (item.getRequiredDexterity() > getDexterity()) return false;
 		if (item.getRequiredStrength() > getStrength()) return false;
 		if (item.getRequiredIntelligence() > getIntelligence()) return false;
@@ -198,14 +199,25 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		{
 			if (slot == EquipmentSlot.MAIN_HAND) 
 			{
+				if (equipment[slot.ordinal()]!=null) equipment[slot.ordinal()].setEquipped(false);
 				equipment[slot.ordinal()] = item;
-				if (((Weapon)item).isTwoHanded) equipment[EquipmentSlot.OFFHAND.ordinal()] = null;
+				equipment[slot.ordinal()].setEquipped(true);
+				if (((Weapon)item).isTwoHanded) 
+				{
+					if (equipment[EquipmentSlot.OFFHAND.ordinal()]!=null)equipment[EquipmentSlot.OFFHAND.ordinal()].setEquipped(false);
+					equipment[EquipmentSlot.OFFHAND.ordinal()] = null;
+				}
 				return true;
 			}
 			if (slot == EquipmentSlot.OFFHAND)
 			{
-				if (((Weapon)item).isTwoHanded) return false;
-				else equipment[slot.ordinal()] = item;
+				if (((Weapon)item).isTwoHanded || (equipment[EquipmentSlot.MAIN_HAND.ordinal()]!=null && ((Weapon)equipment[EquipmentSlot.MAIN_HAND.ordinal()]).isTwoHanded)) return false;
+				else 
+				{
+					if (equipment[slot.ordinal()]!=null) equipment[slot.ordinal()].setEquipped(false);
+					equipment[slot.ordinal()] = item;
+					equipment[slot.ordinal()].setEquipped(true);
+				}
 				return true;
 			}
 		}
@@ -217,7 +229,9 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 				(slot == EquipmentSlot.LEGS && armor.armorType == ArmorType.LEGS) ||
 				((slot == EquipmentSlot.RING1 || slot == EquipmentSlot.RING2) && armor.armorType == ArmorType.RING))
 			{
-				equipment[slot.ordinal()] = armor;
+				if (equipment[slot.ordinal()]!=null) equipment[slot.ordinal()].setEquipped(false);
+				equipment[slot.ordinal()] = item;
+				equipment[slot.ordinal()].setEquipped(true);
 				return true;
 			}
 		}
