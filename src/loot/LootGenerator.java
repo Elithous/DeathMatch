@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.scene.image.Image;
+import loot.enums.ArmorType;
 import loot.enums.AttackType;
 import loot.enums.Rarity;
 import loot.enums.WeaponType;
@@ -25,7 +26,10 @@ public class LootGenerator
 				{"Phoenix Bow", "Wood Bow", "Hardwood Bow", "Darkwood Bow", "Precision Bow", "Gold Bow", "Ugandan Bow", "King's Bow", "Golden Wood Bow", "Bow of Winter", "Bow of Illness", "Bow of a Thousand Fires", "Fallen Angel Bow", "Risen Angel Bow"},
 				{"Wand of the Sun", "Spellcasting 101", "Advanced Spellcasting", "Expert Spellcasting", "Udandan Wand", "Corrupted Magic", "Secrets of the Dark Arts", "Wand of the Hero", "Gold Wand", "King's Wand", "Grand Paladin's Book", "Grand Paladin's Wand"}
 			};
-	private static String[] paths = new String[] {"file:Assets/Weapons/Sword/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
+	
+	private static String[] ringNames = new String[] {"Ring of Death", "Ring of Life","Ring of Water","Ring of Fire","Ring of Grass","Ring of Poison","Ring of Ice","Ring of Lava", "Ring of Darkness","Ring of Light"};
+			
+	private static String[] paths = new String[] {"file:Assets/Weapons/Sword/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic", "file:Assets/Armor/Rings/Ring"};
 	
 	private static final int WEAPON_RATIO = 10;
 	private static final int ARMOR_RATIO = 10;
@@ -102,12 +106,10 @@ public class LootGenerator
 					isTwoHanded = true;
 				}
 				weapon = new Weapon(isTwoHanded, AttackType.STRENGTH);
-				if (type >= AMOUNT_OF_SWORDS) {
-					type = AMOUNT_OF_SWORDS - 1;
-				}
+				if (type >= AMOUNT_OF_SWORDS) type = AMOUNT_OF_SWORDS - 1;
 				break;
 			case 1: weapon = new Weapon(true, AttackType.DEXTERITY);
-					if (type>=AMOUNT_OF_SPEARS) type = AMOUNT_OF_SPEARS-1;
+				if (type>=AMOUNT_OF_SPEARS) type = AMOUNT_OF_SPEARS-1;
 				break;
 			case 2: 
 				weapon = new Weapon(true, AttackType.STRENGTH);
@@ -128,10 +130,28 @@ public class LootGenerator
 			default: weapon = null;
 		}
 		
-		weapon.setName(names[choice][type+1]);
-		int attack = getAttackFromType(type);
+		//SETTING ATTACK
+		weapon.setName(names[choice][type]);
+		int attack = getAttackFromLevel(level);
+		if (choice==3) // if shield?
+		{
+			weapon.setArmor(attack/2);
+			attack/=10;
+		}
 		weapon.setAttackMin((int)(attack*.8f+rand.nextDouble()*.2f));
 		weapon.setAttackMax((int)(attack*1.2f-rand.nextDouble()*.2f));
+		
+		// SETTING REQUIREMENTS
+		int required = attack *2/5;
+		switch(weapon.attackType)
+		{
+		case STRENGTH:	weapon.setRequiredStrength(required);
+			break;
+		case DEXTERITY: weapon.setRequiredDexterity(required);
+			break;
+		case INTELLIGENCE: weapon.setRequiredIntelligence(required);
+			break;
+		}
 		
 		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
 		if (rarity < NORMAL_RATIO)
@@ -158,6 +178,133 @@ public class LootGenerator
 		
 		return weapon;
 	}
+	
+	public static Armor generateRing(int value, int level) {
+		
+		Random rand = new Random();
+		int choice = -1;
+		Armor ring = new Armor(ArmorType.RING);
+	
+		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
+		if (rarity < NORMAL_RATIO)
+			ring.setRarity(Rarity.NORMAL);
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+			ring.setRarity(Rarity.RARE);
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+			ring.setRarity(Rarity.EPIC);
+		else ring.setRarity(Rarity.LEGENDARY);
+		
+		 
+		switch(ring.getRarity()) {
+		case EPIC: choice = rand.nextInt(10) +8;
+			break;
+		case LEGENDARY: choice = rand.nextInt(2);
+			break;
+		case NORMAL: choice = rand.nextInt(5) +2;
+			break;
+		case RARE: choice = rand.nextInt(3) +6;
+			break;
+		
+		}
+		
+		ring.setName(ringNames[choice]);
+		ring.setImage(new Image(paths[6]+choice+".png"));
+
+		if(choice < 5 && choice > 1) {
+
+			int plus = 	rand.nextInt(6) +1;
+			
+			switch(choice) {
+			case 2 : 
+				ring.setDexterity(plus);
+			break;
+			case 3 : 
+				ring.setStrength(plus);	
+			break;
+			case 4 :
+				ring.setIntelligence(plus);
+			break;
+			}
+		}
+			
+			if(choice < 8 && choice > 4) {
+				int plus = 	rand.nextInt(11) +5;
+				int plus1 = 	rand.nextInt(11) +5;
+				
+				ring.setRarity(Rarity.RARE);
+
+				switch(choice) {
+				case 5 : 
+					ring.setIntelligence(plus);
+					ring.setAttack(plus1);
+				break;
+				
+				case 6 : 
+					ring.setDexterity(plus);
+					ring.setArmor(plus1);
+				break;
+				
+				case 7 :
+					ring.setStrength(plus);	
+					ring.setMaxHealth(plus1);
+				break;
+				}	
+		}
+			
+			if(choice==8 || choice==9) {
+				int plus = rand.nextInt(16) +10;
+				int plus1 = rand.nextInt(16) +10;
+				int plus2 = rand.nextInt(16) +10;
+				
+				ring.setRarity(Rarity.EPIC);
+				
+				if(choice==8) {
+					ring.setIntelligence(plus);
+					ring.setAttack(plus1);
+					ring.setDexterity(plus2);
+				}
+				
+				if(choice==9) {	
+					ring.setMaxHealth(plus);
+					ring.setStrength(plus1);
+					ring.setArmor(plus2);
+				}
+			}
+			
+			if(choice==0 || choice==1) {
+				int plus = rand.nextInt(21) +10;
+				int plus1 = rand.nextInt(21) +10;
+				int plus2 = rand.nextInt(21) +10;
+				int plus3 = rand.nextInt(21) +10;
+				int plus4 = rand.nextInt(21) +10;
+				int plus5 = rand.nextInt(21) +10;
+				
+				ring.setRarity(Rarity.EPIC);
+				
+				if(choice==1) {
+					ring.setIntelligence(plus);
+					ring.setAttack(plus1);
+					ring.setDexterity(plus2);
+					ring.setMaxHealth(plus3);
+					ring.setStrength(plus4);
+					ring.setArmor(plus5);
+				}
+				
+				if(choice==0) {	
+					ring.setMaxHealth(plus);
+					ring.setStrength(plus1);
+					ring.setArmor(plus2);
+					ring.setIntelligence(plus3);
+					ring.setAttack(plus4);
+					ring.setDexterity(plus5);
+				}
+			}
+	
+
+		
+		return ring;
+	}	
+	
 	
 	private static void addRandomBonus(Equipment item) 
 	{
@@ -189,18 +336,13 @@ public class LootGenerator
 			item.setName("Sharpened " + item.getName()); break;
 		}
 	}
-
-	public static Weapon generateRing(int value, int level) {
-		//TODO
-		return null;
-	}
 	
 	public static Consumable generateConsumable(int value, int level) {
 		//TODO
 		return null;
 	}
 	
-	private static int getAttackFromType(int type)
+	private static int getAttackFromLevel(int type)
 	{
 		return 10 * (int)Math.pow(2, ((float)type)/5);
 	}

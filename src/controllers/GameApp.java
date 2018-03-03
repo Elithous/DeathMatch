@@ -13,7 +13,7 @@ import lib.Event;
 import lib.FileUtil;
 import lib.IEventListener;
 import loot.LootGenerator;
-import loot.models.Weapon;
+import loot.models.Armor;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.enums.ScreenType;
@@ -28,8 +28,8 @@ public class GameApp extends Application implements IEventListener
 		@Override
 		public void start(Stage stage) throws IOException 
 		{
-			Weapon weap = LootGenerator.generateWeapon(500, 20);
-			System.out.println(weap.getName() + " "+weap.getAttack());
+			Armor Ring = LootGenerator.generateRing(500, 30);
+			System.out.println(Ring.getName() );
 
 			
 			this.stage = stage;
@@ -38,7 +38,7 @@ public class GameApp extends Application implements IEventListener
 			stage.setFullScreen(true);
 			stage.setFullScreenExitHint("");
 			stage.show();
-			
+//			
 		}
 		
 		@Override

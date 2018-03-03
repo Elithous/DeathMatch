@@ -6,5 +6,6 @@ public enum WeaponType
 	SPEAR,
 	SHIELD,
 	BOW,
-	AXE
+	AXE, 
+	MAGIC
 }

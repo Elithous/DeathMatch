@@ -5,19 +5,25 @@ import java.util.ResourceBundle;
 
 import characters.models.Monster;
 import controllers.GameApp;
+import events.ChangeScreenEvent;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import lib.EventPublisher;
 import models.player.PlayerSave;
 import models.quests.Quest;
+import views.enums.ScreenType;
 import views.interfaces.PlayerController;
 import views.models.QuestListItem;
 
-public class QuestController implements PlayerController {
+public class QuestController extends EventPublisher implements PlayerController {
 	private static int amountOfQuests = 5;
 
 	private QuestListItem[] questItems = new QuestListItem[amountOfQuests];
@@ -39,7 +45,7 @@ public class QuestController implements PlayerController {
 
 	@FXML
 	void questListClicked(MouseEvent event) {
-
+		
 	}
 
 	@FXML
@@ -51,10 +57,9 @@ public class QuestController implements PlayerController {
 		SimpleDoubleProperty titleFontSize = new SimpleDoubleProperty();
 
 		titleFontSize.bind(parent.heightProperty().divide(25));
-		title.styleProperty().bind(Bindings.concat("-fx-font-size: ", titleFontSize.asString(), ";-fx-background-color: black;"));
+		title.styleProperty().bind(Bindings.concat("-fx-font-size: ", titleFontSize.asString(), ";"));
 
 		questBox.setSpacing(20);
-		questBox.setStyle("-fx-background-color: black;");
 		questBox.prefHeightProperty().bind(contentBox.heightProperty().multiply(.7));
 		
 		contentBox.prefWidthProperty().bind(parent.widthProperty());
@@ -64,17 +69,38 @@ public class QuestController implements PlayerController {
 
 	@Override
 	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
+		this.addListener(app);
+		
 		// TODO get quests and put them in questItems array
 		Monster[] mons = {new Monster()};
 		mons[0].setName("Test");
 		
 		for (int i = 0; i < questItems.length; i++) {
 			questItems[i] = new QuestListItem(new Quest(mons, 0));
-			//questItems[i]
+			questItems[i].getPlayButton().prefWidthProperty().bind(questBox.heightProperty().divide(5));
+
+			//SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();
+			SimpleDoubleProperty textFontSize = new SimpleDoubleProperty();
+			
+			textFontSize.bind(questBox.heightProperty().divide(20));
+			questItems[i].getQuestName().styleProperty().bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";"));
+			
+			//buttonFontSize.bind(questBox.heightProperty().divide(20));
+			questItems[i].getPlayButton().styleProperty().bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";"));	
+			
+			questItems[i].getQuestIcon().fitHeightProperty().bind(textFontSize);
+			questItems[i].getQuestIcon().fitWidthProperty().bind(textFontSize);
+			
+			questItems[i].getPlayButton().addEventHandler(ActionEvent.ACTION, new EventHandler<Event>() {
+				
+				@Override
+				public void handle(Event event) {
+					ChangeScreenEvent cSEvent = new ChangeScreenEvent(ScreenType.BATTLE, quest, playerSave);
+					notifyListeners(cSEvent);
+				}
+			});
 		}
 		questBox.getChildren().addAll(questItems);
-		
-		
 	}
 
 	@Override
