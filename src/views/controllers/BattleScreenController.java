@@ -108,7 +108,7 @@ public class BattleScreenController implements PlayerController {
 
 	@FXML
 	void itemsButtonClicked(ActionEvent event) {
-
+		itemsMenuBox.setVisible(!itemsMenuBox.isVisible());
 	}
 
 	@FXML
@@ -158,6 +158,9 @@ public class BattleScreenController implements PlayerController {
 			image.setFitHeight(Double.MAX_VALUE);
 			playerImage = !playerImage;
 		}
+		
+		itemsMenuBox.prefWidthProperty().bind(sideBox.widthProperty());
+		itemsMenuBox.prefHeightProperty().bind(sideBox.heightProperty());
 		
 		// Scale Buttons
 		SimpleDoubleProperty textFontSize = new SimpleDoubleProperty();
