@@ -9,9 +9,9 @@ import loot.models.Loot;
 
 public class Inventory implements Serializable{
 
-	private ArrayList<Equipment> equipment;
-	private ArrayList<Consumable> consumables;
-	private ArrayList<Loot> loot;
+	private ArrayList<Equipment> equipment = new ArrayList<>();
+	private ArrayList<Consumable> consumables = new ArrayList<>();
+	private ArrayList<Loot> loot = new ArrayList<>();
 	private int gold;
 	
 	public ArrayList<Equipment> getEquipment() {
@@ -19,11 +19,11 @@ public class Inventory implements Serializable{
 	}
 	
 	public void addEquipment(Equipment equipment) {
-		//TODO
+		this.equipment.add(equipment);
 	}
 	
 	public void removeEquipment(Equipment equipment) {
-		//TODO
+		this.equipment.remove(equipment);
 	}
 	
 	public ArrayList<Consumable> getConsumables() {
@@ -31,25 +31,24 @@ public class Inventory implements Serializable{
 	}
 	
 	public void addConsumeable(Consumable consumable) {
-		//TODO
+		this.consumables.add(consumable);
 	}
 	
 	public void removeConsumeable(Consumable consumable) {
-		//TODO
+		this.consumables.add(consumable);
 	}
 	
 	public ArrayList<Loot> getLoot() {
 		return loot;
-		//TODO
 	}
 	
 	public void addLoot(Loot loot) {
-		//TODO
+		this.loot.add(loot);
 	}
 	
 	public void removeLoot(Loot loot) 
 	{
-		//TODO
+		this.loot.remove(loot);
 	}
 	
 	public int getGold() {

@@ -23,7 +23,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	protected int intelligence;
 	protected int armor;
 	protected int attack;	
-	protected int level;
+	protected int level = 1;
 	protected float strengthMulti = 1f;
 	protected float dexterityMulti = 1f;
 	protected float intelligenceMulti = 1f;
@@ -33,13 +33,18 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	protected Image image;
 	private ArrayList<Ailment> ailments = new ArrayList<>();
 
+	public int getLevel()
+	{
+		return level;
+	}
+	
 	@Override
 	public int getMaxHealth() 
 	{
 		int result = maxHealth;
 		
 		for(Equipment e : equipment)
-			result += e.getMaxHealth();
+			if (e!=null)result += e.getMaxHealth();
 		
 		return result;
 	}
@@ -87,7 +92,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = strength;
 		
 		for(Equipment e : equipment)
-			result += e.getStrength();
+			if (e!=null)result += e.getStrength();
 		
 		return (int)(result * strengthMulti);
 	}
@@ -98,7 +103,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = dexterity;
 		
 		for(Equipment e : equipment)
-			result += e.getDexterity();
+			if (e!=null)result += e.getDexterity();
 		
 		return (int)(result * dexterityMulti);
 	}
@@ -109,7 +114,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = intelligence;
 		
 		for(Equipment e : equipment)
-			result += e.getIntelligence();
+			if (e!=null)result += e.getIntelligence();
 		
 		return (int)(result * intelligenceMulti);
 	}
@@ -120,7 +125,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = armor;
 		
 		for(Equipment e : equipment)
-			result += e.getArmor();
+			if (e!=null)result += e.getArmor();
 		
 		return (int)(result * armorMulti);
 	}
@@ -185,6 +190,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	
 	public boolean equip(EquipmentSlot slot, Equipment item)
 	{
+		if (item.isEquipped()) return false;
 		if (item.getRequiredDexterity() > getDexterity()) return false;
 		if (item.getRequiredStrength() > getStrength()) return false;
 		if (item.getRequiredIntelligence() > getIntelligence()) return false;
@@ -193,14 +199,25 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		{
 			if (slot == EquipmentSlot.MAIN_HAND) 
 			{
+				if (equipment[slot.ordinal()]!=null) equipment[slot.ordinal()].setEquipped(false);
 				equipment[slot.ordinal()] = item;
-				if (((Weapon)item).isTwoHanded) equipment[EquipmentSlot.OFFHAND.ordinal()] = null;
+				equipment[slot.ordinal()].setEquipped(true);
+				if (((Weapon)item).isTwoHanded) 
+				{
+					if (equipment[EquipmentSlot.OFFHAND.ordinal()]!=null)equipment[EquipmentSlot.OFFHAND.ordinal()].setEquipped(false);
+					equipment[EquipmentSlot.OFFHAND.ordinal()] = null;
+				}
 				return true;
 			}
 			if (slot == EquipmentSlot.OFFHAND)
 			{
-				if (((Weapon)item).isTwoHanded) return false;
-				else equipment[slot.ordinal()] = item;
+				if (((Weapon)item).isTwoHanded || (equipment[EquipmentSlot.MAIN_HAND.ordinal()]!=null && ((Weapon)equipment[EquipmentSlot.MAIN_HAND.ordinal()]).isTwoHanded)) return false;
+				else 
+				{
+					if (equipment[slot.ordinal()]!=null) equipment[slot.ordinal()].setEquipped(false);
+					equipment[slot.ordinal()] = item;
+					equipment[slot.ordinal()].setEquipped(true);
+				}
 				return true;
 			}
 		}
@@ -212,7 +229,9 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 				(slot == EquipmentSlot.LEGS && armor.armorType == ArmorType.LEGS) ||
 				((slot == EquipmentSlot.RING1 || slot == EquipmentSlot.RING2) && armor.armorType == ArmorType.RING))
 			{
-				equipment[slot.ordinal()] = armor;
+				if (equipment[slot.ordinal()]!=null) equipment[slot.ordinal()].setEquipped(false);
+				equipment[slot.ordinal()] = item;
+				equipment[slot.ordinal()].setEquipped(true);
 				return true;
 			}
 		}
@@ -226,7 +245,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	
 	public void setImage(Image imageN)
 	{
-		if (image != null)
+		if (imageN != null)
 			image = imageN;
 	}
 
@@ -236,7 +255,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = attack;
 		
 		for(Equipment e : equipment)
-			result += e.getAttack();
+			if (e!=null)result += e.getAttack();
 		
 		return (int)(result * attackMulti);
 	}
@@ -256,5 +275,23 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		if (myDex>otherDex) return 1;
 		else if (myDex<otherDex) return -1;
 		else return (new Random().nextInt(2)==0? 1 : -1);
+	}
+
+	public String loadStats()
+	{
+		StringBuilder sb = new StringBuilder("Stats:\n");
+		sb.append("Level ").append(this.getLevel()).append("\n");
+		if (this instanceof Hero)
+		{
+			sb.append("Exp: ").append(((Hero)this).getCurrentExp()).append("/").append(((Hero)this).getRequiredExp()).append("\n");
+		}
+		sb.append("HP: ").append(this.getMaxHealth()).append("\n");
+		sb.append("Strength: ").append(this.getStrength()).append("\n");
+		sb.append("Dexterity: ").append(this.getDexterity()).append("\n");
+		sb.append("Intelligence: ").append(this.getIntelligence()).append("\n");
+		sb.append("Armor: ").append(this.getArmor()).append("\n");
+		sb.append("Attack: ").append(this.getAttack()).append("\n");
+		
+		return sb.toString();
 	}
 }

@@ -10,8 +10,9 @@ public class Loot implements Serializable
 	protected String name;
 	protected String description;
 	protected int value;
-	protected Image image;
-	
+	protected transient Image image;
+	protected String imageURL;
+
 	public Rarity getRarity() {
 		return rarity;
 	}
@@ -46,12 +47,16 @@ public class Loot implements Serializable
 		this.value = value;
 	}
 	
-	public Image getImage() {
+	public Image getImage() 
+	{
+		if (image == null) image = new Image(imageURL);
 		return image;
 	}
 	
-	public void setImage(Image image) {
-		this.image = image;
+	public void setImage(String url) 
+	{
+		this.image = new Image(url);
+		if (image != null) imageURL = url;
 	}
 	
 	

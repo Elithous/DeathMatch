@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.scene.image.Image;
+import loot.enums.ArmorType;
 import loot.enums.AttackType;
 import loot.enums.Rarity;
 import loot.enums.WeaponType;
@@ -11,6 +12,7 @@ import loot.models.Armor;
 import loot.models.Consumable;
 import loot.models.Equipment;
 import loot.models.Loot;
+import loot.models.RevivePotion;
 import loot.models.Weapon;
 import models.quests.Quest;
 
@@ -25,12 +27,29 @@ public class LootGenerator
 				{"Phoenix Bow", "Wood Bow", "Hardwood Bow", "Darkwood Bow", "Precision Bow", "Gold Bow", "Ugandan Bow", "King's Bow", "Golden Wood Bow", "Bow of Winter", "Bow of Illness", "Bow of a Thousand Fires", "Fallen Angel Bow", "Risen Angel Bow"},
 				{"Wand of the Sun", "Spellcasting 101", "Advanced Spellcasting", "Expert Spellcasting", "Udandan Wand", "Corrupted Magic", "Secrets of the Dark Arts", "Wand of the Hero", "Gold Wand", "King's Wand", "Grand Paladin's Book", "Grand Paladin's Wand"}
 			};
+
+	private static String[] ringNames = new String[] {"Ring of Death", "Ring of Life","Ring of Water","Ring of Fire","Ring of Grass","Ring of Poison","Ring of Ice","Ring of Lava", "Ring of Darkness","Ring of Light"};
+
+	private static String[][] armorNames = 
+		{
+				{"Angel's Helm", "Leather Hat", "Iron Helm", "Knight's Helm", "Crusader's Helm", "Cobalt Helm", "Intimidating Steel Mask", "Tribal Steel Helm", "Samurai Helm", "King's Guard Helm", "King's Personal Guard Helm", "Winged Helm", "Waster's Helm", "Champion's Helm", "Legend's Helm", "Ethereal Helm"},
+				{"Angel's Chest Plate", "Leather Shirt", "Iron Chest Plate", "Knight's Chest Plate", "Crusader's Chest Plate", "Cobalt Chest Plate", "Intimidating Steel Chest Plate", "Tribal Steel Chest Plate", "Samurai Chest Plate", "King's Guard Chest Plate", "King's Personal Guard Chest Plate", "Winged Chest Plate", "Master's Chest Plate", "Champion's Chest Plate", "Legend's Chest Plate", "Ethereal Plate"},
+				{"Angel's Boots", "Leather Boots", "Iron Boots", "Knight's Boots", "Crusader's Boots", "Tundra Explorer's Boots", "Intimidating Boots", "Tribal Steel Boots", "Samurai Boots", "King's Guard Boots", "King's Personal Guard Boots", "Winged Boots"}
+		};
 	private static String[] paths = new String[] {"file:Assets/Weapons/Sword/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
+	private static String[] armorPaths = {"file:Assets/Armor/Helm/Helm", "file:Assets/Armor/Body/Body", "file:Assets/Armor/Legs/Legs" ,"file:Assets/Armor/Rings/Ring"};
+	private static String[][] consumableNames = new String[][] {{"Revive Potion", "Small Health Potion", "Medium Health Potion", "Large Health Potion"},
+																{"Ugandan Knife", "Shuriken", "Tomahawk", "Einstein's Big Toy"}};		
+	private static String consumablePaths[] = new String[] {"file:Assets/Consumables/Potion", "file:Assets/Consumables/Damage"};
+	
+	
 	
 	private static final int WEAPON_RATIO = 10;
 	private static final int ARMOR_RATIO = 10;
 	private static final int RING_RATIO = 5;
 	private static final int CONSUMABLES_RATIO = 15;
+	private static final float POTION_TO_DAMAGE_RATIO = .5f;
+	
 	
 	private static final int VALUE_PER_DIFFICULTY = 10;
 	
@@ -47,6 +66,9 @@ public class LootGenerator
 	private static final int AMOUNT_OF_MAGIC = names[5].length;
 	
 	private static final int VALUE_PER_ATTACK_POINT = 3;
+	private static final int VALUE_PER_ARMOR_POINT = 5;
+	private static final int VALUE_PER_HEALTH_POINT = 2;
+	private static final float REVIVE_POTION_CHANCE = .2f;
 
 	public static LootGeneratorResult generateLoot(Quest quest)
 	{
@@ -79,8 +101,73 @@ public class LootGenerator
 	
 	public static Armor generateArmor(int value, int level) 
 	{
-		//TODO
-		return null;
+		Random rand = new Random();
+		int armorType = rand.nextInt(ArmorType.values().length - 1);
+		Armor armor;
+		
+		int armorGrade = level/3 - 1 + rand.nextInt(3);
+		armorGrade = armorGrade < 1 ? 1 : armorGrade;
+		
+		switch (armorType) {
+			case 0: //Helm
+				armor = new Armor(ArmorType.HELM);
+				armorGrade = armorGrade >= armorNames[0].length ? armorNames[0].length - 1 : armorGrade;
+				break;
+			case 1: //Body
+				armor = new Armor(ArmorType.BODY);
+				armorGrade = armorGrade >= armorNames[1].length ? armorNames[1].length - 1 : armorGrade;
+				break;
+			case 2:
+				armor = new Armor(ArmorType.LEGS);
+				armorGrade = armorGrade >= armorNames[2].length ? armorNames[2].length - 1 : armorGrade;
+				break;
+			default: armor = null;
+		}
+		
+		armor.setName(armorNames[armorType][armorGrade]);
+		
+		int armorAmount = getArmorFromLevel(level);
+		
+		armor.setArmor(armorAmount);
+		
+		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
+		if (rarity < NORMAL_RATIO)
+			armor.setRarity(Rarity.NORMAL);
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+			armor.setRarity(Rarity.RARE);
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+			armor.setRarity(Rarity.EPIC);
+		else armor.setRarity(Rarity.LEGENDARY);
+		
+		int attribute = rand.nextInt(3);
+		
+		int required = armorAmount * 2 / 5;
+		
+		switch (attribute) {
+			case 0: //Strength
+				armor.setRequiredStrength(required);
+				break;
+			case 1: //Dex
+				armor.setRequiredDexterity(required);
+			case 2: //Intel
+				armor.setRequiredIntelligence(required);
+		}
+		
+		armor.setValue((int)(armor.getArmor() * VALUE_PER_ARMOR_POINT * (1 + .5f*armor.getRarity().ordinal())));
+		
+		for (int i = 0; i < armor.getRarity().ordinal(); i++)
+			addRandomBonus(armor);
+		
+//		System.out.println(paths[armorType]+0+".png");
+		if (armor.getRarity() == Rarity.LEGENDARY)
+		{
+			armor.setName(armorNames[armorType][0]);
+			armor.setImage(armorPaths[armorType]+0+".png");
+		}
+		else {
+			armor.setImage(armorPaths[armorType]+(armorGrade+1)+".png");
+		}
+		return armor;
 	}
 	
 	
@@ -92,7 +179,7 @@ public class LootGenerator
 		Weapon weapon;
 		
 		int type = level/3 -1 + rand.nextInt(3);
-		if (type < 0) type = 0;
+		if (type < 1) type = 1;
 
 		switch(choice)
 		{
@@ -105,7 +192,7 @@ public class LootGenerator
 				if (type >= AMOUNT_OF_SWORDS) type = AMOUNT_OF_SWORDS - 1;
 				break;
 			case 1: weapon = new Weapon(true, AttackType.DEXTERITY);
-					if (type>=AMOUNT_OF_SPEARS) type = AMOUNT_OF_SPEARS-1;
+				if (type>=AMOUNT_OF_SPEARS) type = AMOUNT_OF_SPEARS-1;
 				break;
 			case 2: 
 				weapon = new Weapon(true, AttackType.STRENGTH);
@@ -154,7 +241,7 @@ public class LootGenerator
 			weapon.setRarity(Rarity.NORMAL);
 		else if (rarity < NORMAL_RATIO + RARE_RATIO)
 			weapon.setRarity(Rarity.RARE);
-		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+		else if (rarity < NORMAL_RATIO + RARE_RATIO + EPIC_RATIO)
 			weapon.setRarity(Rarity.EPIC);
 		else weapon.setRarity(Rarity.LEGENDARY);
 		
@@ -163,17 +250,109 @@ public class LootGenerator
 		for (int i = 0; i < weapon.getRarity().ordinal(); i++)
 			addRandomBonus(weapon);
 		
-		System.out.println(paths[choice]+0+".png");
 		if (weapon.getRarity() == Rarity.LEGENDARY)
 		{
 			weapon.setName(names[choice][0]);
-			weapon.setImage(new Image(paths[choice]+0+".png"));
+			weapon.setImage(paths[choice]+0+".png");
 		}
 		else 
-			weapon.setImage(new Image(paths[choice]+(type+1)+".png"));
+			weapon.setImage(paths[choice]+(type+1)+".png");
 		
 		return weapon;
 	}
+	
+	public static Armor generateRing(int value, int level) {
+		
+		Random rand = new Random();
+		int choice = -1;
+		Armor ring = new Armor(ArmorType.RING);
+	
+		int rarity = rand.nextInt(NORMAL_RATIO+RARE_RATIO+EPIC_RATIO+LEGENDARY_RATIO);
+		if (rarity < NORMAL_RATIO)
+			ring.setRarity(Rarity.NORMAL);
+		else if (rarity < NORMAL_RATIO + RARE_RATIO)
+			ring.setRarity(Rarity.RARE);
+		else if (rarity < NORMAL_RATIO + RARE_RATIO+ EPIC_RATIO)
+			ring.setRarity(Rarity.EPIC);
+		else ring.setRarity(Rarity.LEGENDARY);
+		
+		 
+		switch(ring.getRarity()) {
+		case EPIC: choice = rand.nextInt(2) +8;
+			break;
+		case LEGENDARY: choice = rand.nextInt(2);
+			break;
+		case NORMAL: choice = rand.nextInt(5) +2;
+			break;
+		case RARE: choice = rand.nextInt(3) +6;
+			break;
+		
+		}
+		
+		ring.setName(ringNames[choice]);
+		ring.setImage(new Image(paths[6]+choice+".png"));
+
+		if(ring.getRarity()==Rarity.NORMAL) {
+
+			int plus = 	rand.nextInt(6) +1;
+			int plus1 = 	rand.nextInt(6) +1;
+			int plus2 = 	rand.nextInt(6) +1;
+			
+				ring.setDexterity(plus);
+				ring.setStrength(plus2);	
+				ring.setIntelligence(plus1);
+			}
+			
+			if(ring.getRarity()==Rarity.RARE) {
+				int plus = 	rand.nextInt(11) +5;
+				int plus1 = rand.nextInt(11) +5;
+				int plus2 = rand.nextInt(11) +5;
+				int plus3 = rand.nextInt(11) +5;
+ 
+					ring.setIntelligence(plus2);
+					ring.setDexterity(plus3);
+					ring.setArmor(plus1);
+					ring.setStrength(plus);	
+	
+		}
+			
+			if(ring.getRarity()==Rarity.EPIC) {
+				int plus = rand.nextInt(16) +5;
+				int plus1 = rand.nextInt(16) +5;
+				int plus2 = rand.nextInt(16) +5;
+				int plus3 = rand.nextInt(16) +5;
+				int plus4 = rand.nextInt(16) +5;
+				int plus5 = rand.nextInt(16) +5;
+
+					ring.setIntelligence(plus);
+					ring.setAttack(plus1);
+					ring.setDexterity(plus2);
+					ring.setMaxHealth(plus);
+					ring.setStrength(plus1);
+					ring.setArmor(plus2);
+			}
+			
+			if(ring.getRarity()==Rarity.LEGENDARY) {
+				int plus = rand.nextInt(21) +10;
+				int plus1 = rand.nextInt(21) +10;
+				int plus2 = rand.nextInt(21) +10;
+				int plus3 = rand.nextInt(21) +10;
+				int plus4 = rand.nextInt(21) +10;
+				int plus5 = rand.nextInt(21) +10;
+
+					ring.setIntelligence(plus);
+					ring.setAttack(plus1);
+					ring.setDexterity(plus2);
+					ring.setMaxHealth(plus3);
+					ring.setStrength(plus4);
+					ring.setArmor(plus5);
+			}
+			
+			ring.setValue((ring.getIntelligence() + ring.getDexterity() + ring.getStrength()) *25);
+
+		return ring;
+	}	
+	
 	
 	private static void addRandomBonus(Equipment item) 
 	{
@@ -206,18 +385,77 @@ public class LootGenerator
 		}
 	}
 
-	public static Weapon generateRing(int value, int level) {
-		//TODO
-		return null;
-	}
 	
-	public static Consumable generateConsumable(int value, int level) {
-		//TODO
-		return null;
+	public static Consumable generateConsumable(int value, int level) 
+	{
+		if (new Random().nextFloat() < POTION_TO_DAMAGE_RATIO)
+			return generatePotion(value, level);
+		else 
+			return generateDamage(value, level);
 	}
-	
+
+	private static Consumable generateDamage(int value, int level)
+	{
+		Consumable item;
+		
+		int type = level/8;
+		if (type < 0) type = 0;
+		if (type > names[1].length-1) type = names[1].length-1;
+		
+		item = new Consumable();
+		
+		//SETTING ATTACK
+		item.setName(consumableNames[1][type]);
+		item.setEffectOnHealth(getHealthForPotions(level));
+		
+		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
+		
+		item.setImage(paths[1]+type+".png");
+		
+		return item;
+	}
+
+	public static Consumable generatePotion(int value, int level)
+	{
+		Random rand = new Random();
+		Consumable item;
+		
+		int type = level/8 + 1;
+		if (type < 1) type = 1;
+		if (type > names[0].length) type = names[0].length;
+		if (rand.nextFloat() < REVIVE_POTION_CHANCE) type = 0;
+		else type--;
+		
+		if (type == 0) item = new RevivePotion();
+		else item = new Consumable();
+		
+		//SETTING ATTACK
+		item.setName(consumableNames[0][type]);
+		item.setEffectOnHealth(getHealthForPotions(level));
+		
+		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
+		
+		item.setImage(paths[0]+type+".png");
+		
+		return item;
+	}
+
+	private static int getHealthForPotions(int type) 
+	{
+		int result = 5 * (int)Math.pow(2, ((float)type)/5);
+		result = (int) (result * .8f + new Random().nextFloat() * result * .4f);
+		return result;
+	}
+
 	private static int getAttackFromLevel(int type)
 	{
 		return 10 * (int)Math.pow(2, ((float)type)/5);
+	}
+	
+	private static int getArmorFromLevel(int level) 
+	{
+		int armor = (int)Math.pow(2, ((double) level) / 5) * 2;
+		armor = (int)(armor * .8f + armor * .4f * new Random().nextFloat());
+		return armor;
 	}
 }
