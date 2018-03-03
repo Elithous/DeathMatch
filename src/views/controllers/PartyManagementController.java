@@ -6,18 +6,22 @@ import java.util.ResourceBundle;
 import controllers.GameApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import loot.models.Equipment;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.interfaces.PlayerController;
+import views.models.LootListItem;
 
-public class PartyManagementController implements PlayerController{
+public class PartyManagementController implements PlayerController
+{
+	private int currentPlayer = 0;
 
     @FXML
     private ResourceBundle resources;
@@ -26,7 +30,7 @@ public class PartyManagementController implements PlayerController{
     private URL location;
 
     @FXML
-    private ListView<?> equipmentList;
+    private ScrollPane equipmentList;
 
     @FXML
     private VBox containerVBox;
@@ -84,6 +88,8 @@ public class PartyManagementController implements PlayerController{
 
     @FXML
     private ImageView hireImage;
+    
+    private PlayerSave ps;
 
     @FXML
     void bodySlotDragDropped(DragEvent event) {
@@ -141,23 +147,28 @@ public class PartyManagementController implements PlayerController{
     }
 
     @FXML
-    void player1ImageClicked(MouseEvent event) {
-
+    void player1ImageClicked(MouseEvent event)
+    {
+    	currentPlayer = 0;
+    	update();
     }
 
     @FXML
     void player2ImageClicked(MouseEvent event) {
-
+    	currentPlayer = 1;
+    	update();
     }
 
     @FXML
     void player3ImageClicked(MouseEvent event) {
-
+    	currentPlayer = 2;
+    	update();
     }
 
     @FXML
     void player4ImageClicked(MouseEvent event) {
-
+    	currentPlayer = 3;
+    	update();
     }
 
     @FXML
@@ -191,26 +202,8 @@ public class PartyManagementController implements PlayerController{
     }
 
     @FXML
-    void initialize() {
-        assert equipmentList != null : "fx:id=\"equipmentList\" was not injected: check your FXML file 'party.fxml'.";
-        assert currentPlayerImage != null : "fx:id=\"currentPlayerImage\" was not injected: check your FXML file 'party.fxml'.";
-        assert helmSlot != null : "fx:id=\"helmSlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert bodySlot != null : "fx:id=\"bodySlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert legsSlot != null : "fx:id=\"legsSlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert sideArmSlot != null : "fx:id=\"sideArmSlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert mainArmSlot != null : "fx:id=\"mainArmSlot\" was not injected: check your FXML file 'party.fxml'.";
-        assert ring1Slot != null : "fx:id=\"ring1Slot\" was not injected: check your FXML file 'party.fxml'.";
-        assert ring2Slot != null : "fx:id=\"ring2Slot\" was not injected: check your FXML file 'party.fxml'.";
-        assert currentPlayerName != null : "fx:id=\"currentPlayerName\" was not injected: check your FXML file 'party.fxml'.";
-        assert currentPlayerStats != null : "fx:id=\"currentPlayerStats\" was not injected: check your FXML file 'party.fxml'.";
-        assert player1Image != null : "fx:id=\"player1Image\" was not injected: check your FXML file 'party.fxml'.";
-        assert player2Image != null : "fx:id=\"player2Image\" was not injected: check your FXML file 'party.fxml'.";
-        assert player3Image != null : "fx:id=\"player3Image\" was not injected: check your FXML file 'party.fxml'.";
-        assert player4Image != null : "fx:id=\"player4Image\" was not injected: check your FXML file 'party.fxml'.";
-        assert hireImage != null : "fx:id=\"hireImage\" was not injected: check your FXML file 'party.fxml'.";
-        // assert topHBox != null : "fx:id=\"topHBox\" was not injected: check your FXML file 'party.fxml'.";
-        // assert playerPane != null : "fx:id=\"playerPane\" was not injected: check your FXML file 'party.fxml'.";
-        
+    void initialize() 
+    {
         topHBox.prefHeightProperty().bind(containerVBox.heightProperty().multiply(.8));
         bottomHBox.prefHeightProperty().bind(containerVBox.heightProperty().multiply(.2));
         bottomHBox.prefWidthProperty().bind(containerVBox.widthProperty());
@@ -242,19 +235,31 @@ public class PartyManagementController implements PlayerController{
         hireImage.fitWidthProperty().bind(hireImage.fitHeightProperty());
         
         bottomHBox.spacingProperty().bind(bottomHBox.heightProperty().divide(2));
-        //
-        
     }
 
 	@Override
-	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
-		// TODO Auto-generated method stub
-		
+	public void init(PlayerSave playerSave, Quest quest, GameApp app)
+	{
+        ps = playerSave;
+        update();
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
+	public void update() 
+	{
+		VBox content = new VBox();
+		for (Equipment e : ps.getInventory().getEquipment())
+		{
+			LootListItem li = new LootListItem(e);
+			content.getChildren().add(li);
+		}
+		equipmentList.setContent(content);
+		currentPlayerImage.setImage(ps.getPlayers()[currentPlayer].getImage());
+		currentPlayerName.setText(ps.getPlayers()[currentPlayer].getName());
+		currentPlayerStats.setText(ps.getPlayers()[currentPlayer].loadStats());
+		if (ps.getPlayers()[0] != null) player1Image.setImage(ps.getPlayers()[0].getImage());
+		if (ps.getPlayers()[1] != null) player2Image.setImage(ps.getPlayers()[1].getImage());
+		if (ps.getPlayers()[2] != null) player3Image.setImage(ps.getPlayers()[2].getImage());
+		if (ps.getPlayers()[3] != null) player4Image.setImage(ps.getPlayers()[3].getImage());
 	}
 }

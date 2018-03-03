@@ -44,7 +44,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = maxHealth;
 		
 		for(Equipment e : equipment)
-			result += e.getMaxHealth();
+			if (e!=null)result += e.getMaxHealth();
 		
 		return result;
 	}
@@ -125,7 +125,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = armor;
 		
 		for(Equipment e : equipment)
-			result += e.getArmor();
+			if (e!=null)result += e.getArmor();
 		
 		return (int)(result * armorMulti);
 	}
@@ -231,7 +231,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	
 	public void setImage(Image imageN)
 	{
-		if (image != null)
+		if (imageN != null)
 			image = imageN;
 	}
 
@@ -241,7 +241,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		int result = attack;
 		
 		for(Equipment e : equipment)
-			result += e.getAttack();
+			if (e!=null)result += e.getAttack();
 		
 		return (int)(result * attackMulti);
 	}
@@ -261,5 +261,23 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		if (myDex>otherDex) return 1;
 		else if (myDex<otherDex) return -1;
 		else return (new Random().nextInt(2)==0? 1 : -1);
+	}
+
+	public String loadStats()
+	{
+		StringBuilder sb = new StringBuilder("Stats:\n");
+		sb.append("Level ").append(this.getLevel()).append("\n");
+		if (this instanceof Hero)
+		{
+			sb.append("Exp: ").append(((Hero)this).getCurrentExp()).append("/").append(((Hero)this).getRequiredExp()).append("\n");
+		}
+		sb.append("HP: ").append(this.getMaxHealth()).append("\n");
+		sb.append("Strength: ").append(this.getStrength()).append("\n");
+		sb.append("Dexterity: ").append(this.getDexterity()).append("\n");
+		sb.append("Intelligence: ").append(this.getIntelligence()).append("\n");
+		sb.append("Armor: ").append(this.getArmor()).append("\n");
+		sb.append("Attack: ").append(this.getAttack()).append("\n");
+		
+		return sb.toString();
 	}
 }

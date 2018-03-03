@@ -9,9 +9,9 @@ import loot.models.Loot;
 
 public class Inventory implements Serializable{
 
-	private ArrayList<Equipment> equipment;
-	private ArrayList<Consumable> consumables;
-	private ArrayList<Loot> loot;
+	private ArrayList<Equipment> equipment = new ArrayList<>();
+	private ArrayList<Consumable> consumables = new ArrayList<>();
+	private ArrayList<Loot> loot = new ArrayList<>();
 	private int gold;
 	
 	public ArrayList<Equipment> getEquipment() {

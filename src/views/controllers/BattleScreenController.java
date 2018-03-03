@@ -110,29 +110,12 @@ public class BattleScreenController implements PlayerController {
 
 	@FXML
 	void initialize() {
-		assert backgroundImage != null : "fx:id=\"backgroundImage\" was not injected: check your FXML file 'battle.fxml'.";
-		assert player1Box != null : "fx:id=\"player1Box\" was not injected: check your FXML file 'battle.fxml'.";
-		assert player2Box != null : "fx:id=\"player2Box\" was not injected: check your FXML file 'battle.fxml'.";
-		assert player3Box != null : "fx:id=\"player3Box\" was not injected: check your FXML file 'battle.fxml'.";
-		assert player4Box != null : "fx:id=\"player4Box\" was not injected: check your FXML file 'battle.fxml'.";
-		assert enemy1Box != null : "fx:id=\"enemy1Box\" was not injected: check your FXML file 'battle.fxml'.";
-		assert enemy2Box != null : "fx:id=\"enemy2Box\" was not injected: check your FXML file 'battle.fxml'.";
-		assert enemy3Box != null : "fx:id=\"enemy3Box\" was not injected: check your FXML file 'battle.fxml'.";
-		assert enemy4Box != null : "fx:id=\"enemy4Box\" was not injected: check your FXML file 'battle.fxml'.";
-		assert currentPlayerImage != null : "fx:id=\"currentPlayerImage\" was not injected: check your FXML file 'battle.fxml'.";
-		assert currentPlayerName != null : "fx:id=\"currentPlayerName\" was not injected: check your FXML file 'battle.fxml'.";
-		assert playerOrder1Image != null : "fx:id=\"playerOrder1Image\" was not injected: check your FXML file 'battle.fxml'.";
-		assert playerOrder2Image != null : "fx:id=\"playerOrder2Image\" was not injected: check your FXML file 'battle.fxml'.";
-		assert playerOrder3Image != null : "fx:id=\"playerOrder3Image\" was not injected: check your FXML file 'battle.fxml'.";
-		assert playerOrder4Image != null : "fx:id=\"playerOrder4Image\" was not injected: check your FXML file 'battle.fxml'.";
-		assert itemsMenuBox != null : "fx:id=\"itemsMenuBox\" was not injected: check your FXML file 'battle.fxml'.";
-		assert itemList1 != null : "fx:id=\"itemList1\" was not injected: check your FXML file 'battle.fxml'.";
-		assert itemList2 != null : "fx:id=\"itemList2\" was not injected: check your FXML file 'battle.fxml'.";
 
 	}
 
 	@Override
-	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
+	public void init(PlayerSave playerSave, Quest quest, GameApp app) 
+	{
 		
 	}
 

@@ -97,7 +97,6 @@ public class LootGenerator
 	
 	public static Armor generateArmor(int value, int level) 
 	{
-		//TODO
 		Random rand = new Random();
 		int armorType = rand.nextInt(ArmorType.values().length - 1);
 		Armor armor;
@@ -162,7 +161,7 @@ public class LootGenerator
 			armor.setImage(new Image(armorPaths[armorType]+0+".png"));
 		}
 		else {
-			armor.setImage(new Image(paths[armorType]+(armorGrade+1)+".png"));
+			armor.setImage(new Image(armorPaths[armorType]+(armorGrade+1)+".png"));
 		}
 		return armor;
 	}
@@ -289,7 +288,8 @@ public class LootGenerator
 		}
 	}
 
-	public static Weapon generateRing(int value, int level) {
+	public static Weapon generateRing(int value, int level) 
+	{
 		//TODO
 		return null;
 	}
@@ -360,7 +360,10 @@ public class LootGenerator
 		return 10 * (int)Math.pow(2, ((float)type)/5);
 	}
 	
-	private static int getArmorFromLevel(int level) {
-		return (int)Math.pow(2, ((double) level) / 5) * 2;
+	private static int getArmorFromLevel(int level) 
+	{
+		int armor = (int)Math.pow(2, ((double) level) / 5) * 2;
+		armor = (int)(armor * .8f + armor * .4f * new Random().nextFloat());
+		return armor;
 	}
 }
