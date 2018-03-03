@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import characters.models.Hero;
 import characters.models.Monster;
 import controllers.GameApp;
+import events.ChangeScreenEvent;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
@@ -19,13 +20,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import lib.EventPublisher;
 import models.player.PlayerSave;
 import models.quests.Quest;
+import views.enums.ScreenType;
 import views.interfaces.PlayerController;
 import views.models.CharacterImageView;
 
-public class BattleScreenController implements PlayerController {
+public class BattleScreenController extends EventPublisher implements PlayerController {
 
+	private PlayerSave playerSave;
+	private Quest quest;
+	
 	private CharacterImageView[] players = new CharacterImageView[4];
 	private CharacterImageView[] enemies = new CharacterImageView[4];
 
@@ -113,7 +119,8 @@ public class BattleScreenController implements PlayerController {
 
 	@FXML
 	void skipButtonClicked(ActionEvent event) {
-
+		// TEMPORARY CODE
+		this.notifyListeners(new ChangeScreenEvent(ScreenType.WIN, quest, playerSave));
 	}
 
 	@FXML
@@ -183,6 +190,10 @@ public class BattleScreenController implements PlayerController {
 
 	@Override
 	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
+		this.addListener(app);
+		this.playerSave = playerSave;
+		this.quest = quest;
+		
 		for (int i = 0; i < players.length; i++) {
 			// players[i] = new CharacterImageView(playerSave.getPlayers()[i]);
 			Hero temp = new Hero();
