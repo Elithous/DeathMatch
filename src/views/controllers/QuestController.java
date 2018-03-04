@@ -3,7 +3,6 @@ package views.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import characters.models.Monster;
 import controllers.GameApp;
 import events.ChangeScreenEvent;
 import javafx.beans.binding.Bindings;
@@ -14,13 +13,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import lib.EventPublisher;
 import models.player.PlayerSave;
 import models.quests.Quest;
+import models.quests.QuestGenerator;
 import views.enums.ScreenType;
 import views.interfaces.PlayerController;
 import views.models.QuestListItem;
@@ -74,12 +73,10 @@ public class QuestController extends EventPublisher implements PlayerController 
 		this.addListener(app);
 		
 		// TODO get quests and put them in questItems array
-		Monster[] mons = {new Monster(), null, null, null};
-		mons[0].setImage(new Image("file:Assets/empty sprite.png"));
-		mons[0].setName("Test");
+		Quest[] quests = QuestGenerator.generateQuests(playerSave);
 		
 		for (int i = 0; i < questItems.length; i++) {
-			questItems[i] = new QuestListItem(new Quest(mons, 0));
+			questItems[i] = new QuestListItem(quests[i]);
 			questItems[i].getPlayButton().prefWidthProperty().bind(questBox.heightProperty().divide(5));
 
 			//SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();

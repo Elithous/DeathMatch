@@ -53,6 +53,6 @@ public class CharacterImageView extends VBox {
 	}
 	
 	public void update() {
-		// getHealth().setProgress(getCharacter().getCurrentHealth() / getCharacter().getMaxHealth());
+		getHealth().setProgress(getCharacter().getCurrentHealth() / getCharacter().getMaxHealth());
 	}
 }

@@ -11,7 +11,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import loot.models.Equipment;
-import loot.models.Loot;
 
 public class EquipmentListItem extends HBox
 {

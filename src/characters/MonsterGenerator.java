@@ -11,8 +11,6 @@ import javafx.scene.image.Image;
 import loot.LootGenerator;
 import loot.enums.ArmorType;
 import loot.models.Armor;
-import loot.models.Equipment;
-import loot.models.Weapon;
 
 public class MonsterGenerator {
 
@@ -108,7 +106,7 @@ public class MonsterGenerator {
 			path += rand.nextInt(4);
 		}
 		
-		monsterBase.setImage(new Image(path));
+		monsterBase.setImage(new Image(path + ".png"));
 		
 		setStatsForMonster(monsterBase, level);
 		return monsterBase;

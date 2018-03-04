@@ -15,16 +15,18 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lib.EventPublisher;
+import loot.LootGenerator;
+import loot.LootGeneratorResult;
+import loot.models.Loot;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.enums.ScreenType;
 import views.interfaces.PlayerController;
+import views.models.ViewOnlyLootListItem;
 
 public class WinController extends EventPublisher implements PlayerController{
 
 	private PlayerSave playerSave;
-	
-	private Quest quest;
 	
 	@FXML
 	private Pane contentPane;
@@ -49,7 +51,7 @@ public class WinController extends EventPublisher implements PlayerController{
 
     @FXML
     void continueButtonClicked(ActionEvent event) {
-    	ChangeScreenEvent cSEvent = new ChangeScreenEvent(ScreenType.WIN, null, playerSave);
+    	ChangeScreenEvent cSEvent = new ChangeScreenEvent(ScreenType.MANAGEMENT, null, playerSave);
     	this.notifyListeners(cSEvent);
     }
 
@@ -72,16 +74,23 @@ public class WinController extends EventPublisher implements PlayerController{
     	continueButton.prefWidthProperty().bind(vBox.widthProperty().divide(5));
     	
     	lootList.prefWidthProperty().bind(vBox.widthProperty().multiply(.8));
-    	lootList.prefHeightProperty().bind(vBox.heightProperty().subtract(vBox.spacingProperty()).multiply(.7));
-    	System.out.println(" Test");
-    	
+    	lootList.prefHeightProperty().bind(vBox.heightProperty().multiply(.7));
     }
 
 	@Override
 	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
 		this.addListener(app);
 		this.playerSave = playerSave;
-		this.quest = quest;
+		LootGeneratorResult loot = LootGenerator.generateLoot(quest);
+		
+		VBox content = new VBox();
+		for(Loot lootAdd : loot.loot) {
+			playerSave.getInventory().addLoot(lootAdd);
+
+			ViewOnlyLootListItem li = new ViewOnlyLootListItem(lootAdd);
+			content.getChildren().add(li);
+		}
+		lootList.setContent(content);
 	}
 
 	@Override

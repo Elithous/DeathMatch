@@ -196,11 +196,11 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		this.playerSave = playerSave;
 		this.quest = quest;
 
-		for (int i = 0; i < players.length; i++) {
+		for (int i = 0; i < playerSave.getPlayers().length; i++) {
 			players[i] = new CharacterImageView(playerSave.getPlayers()[i]);
 		}
 
-		for (int i = 0; i < enemies.length; i++) {
+		for (int i = 0; i < quest.monsters.length; i++) {
 			enemies[i] = new CharacterImageView(quest.monsters[i]);
 		}
 
@@ -210,19 +210,27 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 			for (Node node2 : box.getChildren()) {
 				VBox box2 = node2 instanceof VBox ? (VBox) node2 : new VBox();
 				if (count < 4) {
-					if (enemies[count] != null)
+					if (enemies[count] != null) {
 						enemies[count].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
-					box2.getChildren().add(enemies[count++]);
-					if (enemies[count] != null)
+						box2.getChildren().add(enemies[count]);
+					}
+					count++;
+					if (enemies[count] != null) {
 						enemies[count].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
-					box2.getChildren().add(enemies[count++]);
+						box2.getChildren().add(enemies[count]);
+					}
+					count++;
 				} else {
-					if (players[count % 4] != null)
+					if (players[count % 4] != null) {
 						players[count % 4].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
-					box2.getChildren().add(players[count++ % 4]);
-					if (players[count % 4] != null)
+						box2.getChildren().add(players[count % 4]);
+					}
+					count++;
+					if (players[count % 4] != null) {
 						players[count % 4].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
-					box2.getChildren().add(players[count++ % 4]);
+						box2.getChildren().add(players[count % 4]);
+					}
+					count++;
 				}
 			}
 		}
