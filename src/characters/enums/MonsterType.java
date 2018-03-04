@@ -2,8 +2,13 @@ package characters.enums;
 
 public enum MonsterType 
 {
-	GOBLIN,
-	SLIME,
-	DRAGON,
-	SKELETON
+	Slime,
+	Skeleton,
+	Goblin,
+	Mage,
+	Monster,
+	Imp,
+	RatKing,
+	Dragon,
+	Boss,
 }
