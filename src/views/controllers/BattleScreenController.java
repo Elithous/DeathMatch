@@ -1,6 +1,7 @@
 package views.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import controllers.GameApp;
@@ -12,18 +13,19 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lib.EventPublisher;
+import loot.models.Consumable;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.enums.ScreenType;
 import views.interfaces.PlayerController;
 import views.models.CharacterImageView;
+import views.models.ConsumableListItem;
 
 public class BattleScreenController extends EventPublisher implements PlayerController {
 
@@ -82,13 +84,13 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	private ImageView playerOrder4Image;
 
 	@FXML
-	private HBox itemsMenuBox;
+	private ScrollPane itemsMenuBox;
 
 	@FXML
-	private ListView<?> itemList1;
-
+	private VBox itemList1;
+	
 	@FXML
-	private ListView<?> itemList2;
+	private VBox itemList2;
 
 	@FXML
 	void attackButtonClicked(ActionEvent event) {
@@ -97,16 +99,6 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 
 	@FXML
 	void defendButtonClicked(ActionEvent event) {
-
-	}
-
-	@FXML
-	void itemList1Clicked(MouseEvent event) {
-
-	}
-
-	@FXML
-	void itemList2Clicked(MouseEvent event) {
 
 	}
 
@@ -188,6 +180,9 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 				.bind(currentPlayerPane.widthProperty().subtract(currentPlayerName.widthProperty()).divide(2));
 		currentPlayerName.layoutYProperty()
 				.bind(currentPlayerImage.fitHeightProperty().add(currentPlayerName.heightProperty()));
+
+		 itemList1.prefWidthProperty().bind(itemsMenuBox.widthProperty().divide(2));
+		 itemList2.prefWidthProperty().bind(itemsMenuBox.widthProperty().divide(2));
 	}
 
 	@Override
@@ -247,6 +242,19 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		for (CharacterImageView cIV : players) {
 			if (cIV != null) {
 				cIV.update();
+			}
+		}
+		
+		itemList1.getChildren().removeAll(itemList1.getChildren());
+		itemList2.getChildren().removeAll(itemList2.getChildren());
+		
+		ArrayList<Consumable> items = playerSave.getInventory().getConsumables();
+		for(int i = 0; i < items.size(); i++) {
+			ConsumableListItem e = new ConsumableListItem(items.get(i));
+			if(i % 2 == 0) {
+				itemList1.getChildren().add(e);
+			} else {
+				itemList2.getChildren().add(e);
 			}
 		}
 	}

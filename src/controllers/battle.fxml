@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -116,12 +116,16 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox fx:id="itemsMenuBox" prefHeight="131.0" prefWidth="358.0" visible="false">
-                     <children>
-                        <ListView fx:id="itemList1" onMouseClicked="#itemList1Clicked" />
-                        <ListView fx:id="itemList2" onMouseClicked="#itemList2Clicked" />
-                     </children>
-                  </HBox>
+                  <ScrollPane fx:id="itemsMenuBox" hbarPolicy="NEVER" prefHeight="131.0" prefWidth="358.0" visible="false">
+                     <content>
+                        <HBox prefHeight="123.0" prefWidth="359.0">
+                           <children>
+                              <VBox fx:id="itemList1" prefHeight="123.0" prefWidth="176.0" />
+                              <VBox fx:id="itemList2" prefHeight="123.0" prefWidth="178.0" />
+                           </children>
+                        </HBox>
+                     </content>
+                  </ScrollPane>
                </children>
             </Pane>
          </children></HBox>
