@@ -58,11 +58,8 @@ public class MonsterGenerator {
 		Monster monsterBase = baseMonsters.get(monsterType);
 		
 		if (monsterType == MonsterType.Goblin || monsterType == MonsterType.Skeleton || monsterType == MonsterType.Imp || monsterType == MonsterType.Mage) {
-			Weapon weapon;
-			do {
-			weapon = LootGenerator.generateWeapon(level * 5, level);
-			System.out.println("Check");
-			} while(!monsterBase.equip(EquipmentSlot.MAIN_HAND, weapon));
+			
+			monsterBase.equip(EquipmentSlot.MAIN_HAND, LootGenerator.generateWeapon(level * 5, level));
 			//Armor Chance
 			if (rand.nextInt(100) + 1 > 50) {
 				Armor armorPeice;
