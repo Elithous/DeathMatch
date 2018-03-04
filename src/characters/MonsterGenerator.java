@@ -54,11 +54,15 @@ public class MonsterGenerator {
 		//TODO
 		int levelRange = 30 / MonsterType.values().length;
 		Random rand = new Random();
-		MonsterType monsterType = MonsterType.values()[level / levelRange];
+		MonsterType monsterType = MonsterType.values()[(level / levelRange >= MonsterType.values().length ? MonsterType.values().length - 1 : level / levelRange)];
 		Monster monsterBase = baseMonsters.get(monsterType);
-		if (monsterType == MonsterType.Goblin || monsterType == MonsterType.Skeleton || monsterType == MonsterType.Monster) {
-			monsterBase.equip(EquipmentSlot.MAIN_HAND, LootGenerator.generateWeapon(level * 5, level));
-			
+		
+		if (monsterType == MonsterType.Goblin || monsterType == MonsterType.Skeleton || monsterType == MonsterType.Imp || monsterType == MonsterType.Mage) {
+			Weapon weapon;
+			do {
+			weapon = LootGenerator.generateWeapon(level * 5, level);
+			System.out.println("Check");
+			} while(!monsterBase.equip(EquipmentSlot.MAIN_HAND, weapon));
 			//Armor Chance
 			if (rand.nextInt(100) + 1 > 50) {
 				Armor armorPeice;
@@ -147,9 +151,13 @@ public class MonsterGenerator {
 	private static void setStatsForMonster(Monster monster, int level) {
 		monster.setLevel(level);
 		
+		monster.setMaxHealth(25);
+		monster.setStrength(10);
+		monster.setDexterity(10);
+		monster.setIntelligence(10);
 		
 		for(int x = 1; x <= level; x++) {
-			monster.setMaxHealth((int)(monster.getMaxHealth() * (1.07f * new Random().nextFloat()*.2f)));
+			monster.setMaxHealth((int)(monster.getMaxHealth() * 1.2f));
 			monster.adjustHealth(monster.getMaxHealth());
 //			if (monster.getEquipment(EquipmentSlot.MAIN_HAND) == null)
 //			{
