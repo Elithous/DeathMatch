@@ -15,7 +15,7 @@
          <children>
             <HBox fx:id="topHBox" prefHeight="310.0" prefWidth="600.0">
                <children>
-                  <ScrollPane fx:id="equipmentList" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="227.0" />
+                  <ScrollPane fx:id="equipmentList" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="227.0" onDragOver="#listDragOver" onDragDropped="#listDragDropped"/>
                   <Pane fx:id="playerPane" prefHeight="300.0" prefWidth="374.0" style="-fx-border-color: black;">
                      <children>
                         <ImageView fx:id="currentPlayerImage" fitHeight="100.0" fitWidth="97.0" layoutX="163.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">

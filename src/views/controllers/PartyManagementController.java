@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -131,13 +132,46 @@ public class PartyManagementController implements PlayerController
     }
 
     @FXML
-    void bodySlotDragStart(MouseEvent event) {
+    void bodySlotDragStart(MouseEvent event) 
+    {
+    	if (ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.BODY)==null) return;
 
+    	Dragboard db = bodySlot.startDragAndDrop(TransferMode.ANY);
+        
+        db.setDragView(bodySlot.snapshot(null, null));
+        
+        ClipboardContent content = new ClipboardContent();
+        content.put(EquipmentListItem.lootDataFormat, ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.BODY));
+        content.putString(EquipmentSlot.BODY.toString());
+        db.setContent(content);
+        
+        event.consume();
     }
 
     @FXML
-    void equipmentListDragDropped(DragEvent event) {
-
+    void listDragDropped(DragEvent event) 
+    {
+    	Equipment e = (Equipment) event.getDragboard().getContent(EquipmentListItem.lootDataFormat);
+    	
+    	for (Equipment eq : ps.getInventory().getEquipment())
+    	{
+    		if (eq.equals(e))
+    		{
+    			e = eq;
+    		}
+    	}	
+    	ps.getPlayers()[currentPlayer].equip(EquipmentSlot.valueOf(event.getDragboard().getString()), null);
+    	
+       	update();
+        event.setDropCompleted(true);
+        event.consume();
+    }
+    
+    @FXML
+    void listDragOver(DragEvent event) 
+    {
+		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
     }
 
     @FXML
@@ -154,8 +188,20 @@ public class PartyManagementController implements PlayerController
     }
 
     @FXML
-    void helmSlotDragStart(MouseEvent event) {
+    void helmSlotDragStart(MouseEvent event) 
+    {
+    	if (ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.HELM)==null) return;
 
+    	Dragboard db = helmSlot.startDragAndDrop(TransferMode.ANY);
+        
+        db.setDragView(helmSlot.snapshot(null, null));
+        
+        ClipboardContent content = new ClipboardContent();
+        content.put(EquipmentListItem.lootDataFormat, ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.HELM));
+        content.putString(EquipmentSlot.HELM.toString());
+        db.setContent(content);
+        
+        event.consume();
     }
 
     @FXML
@@ -177,8 +223,20 @@ public class PartyManagementController implements PlayerController
     }
 
     @FXML
-    void legsSlotDragStart(MouseEvent event) {
+    void legsSlotDragStart(MouseEvent event) 
+    {
+    	if (ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.LEGS)==null) return;
 
+    	Dragboard db = legsSlot.startDragAndDrop(TransferMode.ANY);
+        
+        db.setDragView(legsSlot.snapshot(null, null));
+        
+        ClipboardContent content = new ClipboardContent();
+        content.put(EquipmentListItem.lootDataFormat, ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.LEGS));
+        content.putString(EquipmentSlot.LEGS.toString());
+        db.setContent(content);
+        
+        event.consume();
     }
 
     @FXML
@@ -197,7 +255,18 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void mainArmSlotDragStart(MouseEvent event) {
+    	if (ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND)==null) return;
 
+    	Dragboard db = mainArmSlot.startDragAndDrop(TransferMode.ANY);
+        
+        db.setDragView(mainArmSlot.snapshot(null, null));
+        
+        ClipboardContent content = new ClipboardContent();
+        content.put(EquipmentListItem.lootDataFormat, ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
+        content.putString(EquipmentSlot.MAIN_HAND.toString());
+        db.setContent(content);
+        
+        event.consume();
     }
 
     @FXML
@@ -240,7 +309,18 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void ring1SlotDragStart(MouseEvent event) {
+    	if (ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING1)==null) return;
 
+    	Dragboard db = ring1Slot.startDragAndDrop(TransferMode.ANY);
+        
+        db.setDragView(ring1Slot.snapshot(null, null));
+        
+        ClipboardContent content = new ClipboardContent();
+        content.put(EquipmentListItem.lootDataFormat, ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING1));
+        content.putString(EquipmentSlot.RING1.toString());
+        db.setContent(content);
+        
+        event.consume();
     }
 
     @FXML
@@ -258,7 +338,18 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void ring2SlotDragStart(MouseEvent event) {
+    	if (ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING2)==null) return;
 
+    	Dragboard db = ring2Slot.startDragAndDrop(TransferMode.ANY);
+        
+        db.setDragView(ring2Slot.snapshot(null, null));
+        
+        ClipboardContent content = new ClipboardContent();
+        content.put(EquipmentListItem.lootDataFormat, ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING2));
+        content.putString(EquipmentSlot.RING2.toString());
+        db.setContent(content);
+        
+        event.consume();
     }
 
     @FXML
@@ -276,25 +367,31 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void sideArmSlotDragStart(MouseEvent event) {
+    	if (ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.OFFHAND)==null) return;
 
+    	Dragboard db = sideArmSlot.startDragAndDrop(TransferMode.ANY);
+        
+        db.setDragView(sideArmSlot.snapshot(null, null));
+        
+        ClipboardContent content = new ClipboardContent();
+        content.put(EquipmentListItem.lootDataFormat, ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.OFFHAND));
+        content.putString(EquipmentSlot.OFFHAND.toString());
+        db.setContent(content);
+        
+        event.consume();
     }
     
     private void receiveDrop(Dragboard d, EquipmentSlot es)
     {
     	Equipment e = (Equipment) d.getContent(EquipmentListItem.lootDataFormat);
     	
-    	System.out.println("e is "+e);
-    	
     	for (Equipment eq : ps.getInventory().getEquipment())
     	{
     		if (eq.equals(e))
     		{
     			e = eq;
-    			System.out.println("foundd the same");
     		}
     	}
-    	System.out.println("e is "+e);
-
     	
     	System.out.println("Equip successful - "+ps.getPlayers()[currentPlayer].equip(es, (Equipment)e));
     	update();
