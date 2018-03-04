@@ -190,6 +190,13 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	
 	public boolean equip(EquipmentSlot slot, Equipment item)
 	{
+		if (item == null)
+		{
+			equipment[slot.ordinal()].setEquipped(false);
+			equipment[slot.ordinal()] = null;		
+			return true;	
+		}
+		
 		if (item.isEquipped()) return false;
 		if (item.getRequiredDexterity() > getDexterity()) return false;
 		if (item.getRequiredStrength() > getStrength()) return false;
