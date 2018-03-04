@@ -14,4 +14,8 @@ public class Monster extends Character
 		return new TurnEvent(hero, BattleChoice.ATTACK, null);
 
 	}
+	
+	public void setLevel(int level) {
+		this.level = level;
+	}
 }

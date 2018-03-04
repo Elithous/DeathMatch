@@ -30,8 +30,8 @@ public class GameApp extends Application implements IEventListener
 		public void start(Stage stage) throws IOException 
 		{
 
-			Armor hero = LootGenerator.generateArmor(500, 35);
-			System.out.println(hero.getName() + " str "+hero.getStrength() + " dex "+ hero.getDexterity()+" int "+hero.getIntelligence()+ " armor " + hero.getArmor());
+			Armor hero = LootGenerator.generateRing(500, 35);
+			System.out.println(hero.getName() + " str "+hero.getStrength() + " dex "+ hero.getDexterity()+" int "+hero.getIntelligence() + hero.getRarity());
 			
 			this.stage = stage;
 			Parent root = loadFXML(ScreenType.MAIN, null, null);
