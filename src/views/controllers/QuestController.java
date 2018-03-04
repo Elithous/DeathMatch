@@ -12,7 +12,9 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -72,7 +74,8 @@ public class QuestController extends EventPublisher implements PlayerController 
 		this.addListener(app);
 		
 		// TODO get quests and put them in questItems array
-		Monster[] mons = {new Monster()};
+		Monster[] mons = {new Monster(), null, null, null};
+		mons[0].setImage(new Image("file:Assets/empty sprite.png"));
 		mons[0].setName("Test");
 		
 		for (int i = 0; i < questItems.length; i++) {
@@ -95,7 +98,7 @@ public class QuestController extends EventPublisher implements PlayerController 
 				
 				@Override
 				public void handle(Event event) {
-					// TODO pass the correct quest from QuestListItem possibly using event.getSource()
+					Quest quest = ((QuestListItem)((Button) event.getSource()).getParent()).getQuest();
 					ChangeScreenEvent cSEvent = new ChangeScreenEvent(ScreenType.BATTLE, quest, playerSave);
 					notifyListeners(cSEvent);
 				}

@@ -3,8 +3,6 @@ package views.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import characters.models.Hero;
-import characters.models.Monster;
 import controllers.GameApp;
 import events.ChangeScreenEvent;
 import javafx.beans.binding.Bindings;
@@ -31,7 +29,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 
 	private PlayerSave playerSave;
 	private Quest quest;
-	
+
 	private CharacterImageView[] players = new CharacterImageView[4];
 	private CharacterImageView[] enemies = new CharacterImageView[4];
 
@@ -165,44 +163,45 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 			image.setFitHeight(Double.MAX_VALUE);
 			playerImage = !playerImage;
 		}
-		
+
 		itemsMenuBox.prefWidthProperty().bind(sideBox.widthProperty());
 		itemsMenuBox.prefHeightProperty().bind(sideBox.heightProperty());
-		
+
 		// Scale Buttons
 		SimpleDoubleProperty textFontSize = new SimpleDoubleProperty();
 		textFontSize.bind(selectionBox.heightProperty().divide(11));
-		for(Node node : optionsVBox.getChildren()) {
+		for (Node node : optionsVBox.getChildren()) {
 			Button button = node instanceof Button ? (Button) node : new Button();
 			button.styleProperty().bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";"));
 			button.prefWidthProperty().bind(optionsVBox.widthProperty().multiply(.8));
 		}
-		
-		//Scale currentPlayer stuff
+
+		// Scale currentPlayer stuff
 		currentPlayerImage.fitHeightProperty().bind(currentPlayerPane.heightProperty().multiply(.6));
 		currentPlayerImage.fitWidthProperty().bind(currentPlayerImage.fitHeightProperty());
-		currentPlayerImage.layoutXProperty().bind(currentPlayerPane.widthProperty().subtract(currentPlayerImage.fitWidthProperty()).divide(2));
-		
-		currentPlayerName.styleProperty().bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";-fx-border-color: black;"));
-		currentPlayerName.layoutXProperty().bind(currentPlayerPane.widthProperty().subtract(currentPlayerName.widthProperty()).divide(2));
-		currentPlayerName.layoutYProperty().bind(currentPlayerImage.fitHeightProperty().add(currentPlayerName.heightProperty()));
+		currentPlayerImage.layoutXProperty()
+				.bind(currentPlayerPane.widthProperty().subtract(currentPlayerImage.fitWidthProperty()).divide(2));
+
+		currentPlayerName.styleProperty()
+				.bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";-fx-border-color: black;"));
+		currentPlayerName.layoutXProperty()
+				.bind(currentPlayerPane.widthProperty().subtract(currentPlayerName.widthProperty()).divide(2));
+		currentPlayerName.layoutYProperty()
+				.bind(currentPlayerImage.fitHeightProperty().add(currentPlayerName.heightProperty()));
 	}
-	
+
 	@Override
 	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
 		this.addListener(app);
 		this.playerSave = playerSave;
 		this.quest = quest;
-		
+
 		for (int i = 0; i < players.length; i++) {
-			// players[i] = new CharacterImageView(playerSave.getPlayers()[i]);
-			Hero temp = new Hero();
-			players[i] = new CharacterImageView(temp);
+			players[i] = new CharacterImageView(playerSave.getPlayers()[i]);
 		}
 
 		for (int i = 0; i < enemies.length; i++) {
-			// enemies[i] = new CharacterImageView(quest.monsters[i]);
-			enemies[i] = new CharacterImageView(new Monster());
+			enemies[i] = new CharacterImageView(quest.monsters[i]);
 		}
 
 		int count = 0;
@@ -212,14 +211,18 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 				VBox box2 = node2 instanceof VBox ? (VBox) node2 : new VBox();
 				if (count < 4) {
 					if (enemies[count] != null)
-						box2.getChildren().add(enemies[count++]);
+						enemies[count].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
+					box2.getChildren().add(enemies[count++]);
 					if (enemies[count] != null)
-						box2.getChildren().add(enemies[count++]);
+						enemies[count].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
+					box2.getChildren().add(enemies[count++]);
 				} else {
 					if (players[count % 4] != null)
-						box2.getChildren().add(players[count++ % 4]);
+						players[count % 4].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
+					box2.getChildren().add(players[count++ % 4]);
 					if (players[count % 4] != null)
-						box2.getChildren().add(players[count++ % 4]);
+						players[count % 4].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
+					box2.getChildren().add(players[count++ % 4]);
 				}
 			}
 		}
@@ -227,8 +230,16 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	}
 
 	@Override
-	public void update() 
-	{
-		// TODO Auto-generated method stub
+	public void update() {
+		for (CharacterImageView cIV : enemies) {
+			if (cIV != null) {
+				cIV.update();
+			}
+		}
+		for (CharacterImageView cIV : players) {
+			if (cIV != null) {
+				cIV.update();
+			}
+		}
 	}
 }
