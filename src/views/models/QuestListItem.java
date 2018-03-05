@@ -19,7 +19,7 @@ public class QuestListItem extends HBox {
 	{
 		this.setAlignment(Pos.CENTER);
 		this.setQuest(quest);
-		this.questIcon.setImage(/*quest.monsters[0].getImage() == null ? */new Image("file:../../Assets/emptyChar.png")/* : quest.monsters[0].getImage()*/);
+		this.questIcon.setImage(quest.monsters[0].getImage() == null ? new Image("file:../../Assets/emptyChar.png") : quest.monsters[0].getImage());
 		this.questName.setText(quest.difficulty + " " + quest.monsters[0].getName());
 		this.playButton.setText("Play");
 		this.getChildren().addAll(questIcon, questName, playButton);

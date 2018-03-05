@@ -9,6 +9,8 @@ import events.ChangeScreenEvent;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -181,8 +183,10 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		currentPlayerName.layoutYProperty()
 				.bind(currentPlayerImage.fitHeightProperty().add(currentPlayerName.heightProperty()));
 
-		 itemList1.prefWidthProperty().bind(itemsMenuBox.widthProperty().divide(2));
-		 itemList2.prefWidthProperty().bind(itemsMenuBox.widthProperty().divide(2));
+		((HBox) itemsMenuBox.getContent()).prefWidthProperty().bind(itemsMenuBox.widthProperty());
+		
+		itemList1.prefWidthProperty().bind(itemsMenuBox.widthProperty().divide(2));
+		itemList2.prefWidthProperty().bind(itemsMenuBox.widthProperty().divide(2));
 	}
 
 	@Override
@@ -245,6 +249,9 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 			}
 		}
 		
+		SimpleDoubleProperty itemHeight = new SimpleDoubleProperty();
+		itemHeight.bind(itemsMenuBox.heightProperty().divide(3));
+		
 		itemList1.getChildren().removeAll(itemList1.getChildren());
 		itemList2.getChildren().removeAll(itemList2.getChildren());
 		
@@ -256,6 +263,21 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 			} else {
 				itemList2.getChildren().add(e);
 			}
+			
+			e.prefHeightProperty().bind(itemHeight);
+			
+			e.getButton().addEventHandler(ActionEvent.ACTION, new EventHandler<Event>() {
+
+				@Override
+				public void handle(Event event) {
+					// send an event to battle controller with the item chosen. Let them handle it
+					System.out.println("Button clicked");
+				}
+			});
 		}
+		
+		SimpleDoubleProperty itemListHeight = new SimpleDoubleProperty();
+		itemListHeight.bind(itemHeight.multiply((items.size()/2) + (items.size() % 2)));
+		((HBox)itemsMenuBox.getContent()).prefHeightProperty().bind(itemListHeight);
 	}
 }
