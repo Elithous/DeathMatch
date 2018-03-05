@@ -61,10 +61,10 @@
             </Pane>
             <VBox fx:id="optionsVBox" alignment="CENTER" prefHeight="131.0" prefWidth="138.0" spacing="5.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#attackButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Attack" />
-                  <Button mnemonicParsing="false" onAction="#defendButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Defend" />
-                  <Button mnemonicParsing="false" onAction="#itemsButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Items" />
-                  <Button mnemonicParsing="false" onAction="#skipButtonClicked" prefHeight="25.0" prefWidth="100.0" text="Skip" />
+                  <Button mnemonicParsing="false" fx:id="attackButton" onAction="#attackButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Attack" />
+                  <Button mnemonicParsing="false" fx:id="defendButton" onAction="#defendButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Defend" />
+                  <Button mnemonicParsing="false" fx:id="itemsButton" onAction="#itemsButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Items" />
+                  <Button mnemonicParsing="false" fx:id="skipButton" onAction="#skipButtonClicked" prefHeight="25.0" prefWidth="100.0" text="Skip" />
                </children>
                <opaqueInsets>
                   <Insets />

@@ -3,6 +3,7 @@ package views.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import characters.models.Monster;
 import controllers.GameApp;
 import events.ChangeScreenEvent;
 import javafx.beans.binding.Bindings;
@@ -73,8 +74,6 @@ public class QuestController extends EventPublisher implements PlayerController 
 	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
 		this.addListener(app);
 		
-		// TODO get quests and put them in questItems array
-
 		Quest[] quests = QuestGenerator.generateQuests(playerSave);
 		
 		for (int i = 0; i < questItems.length; i++) {

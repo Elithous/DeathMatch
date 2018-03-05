@@ -2,7 +2,6 @@ package characters.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
 
 import characters.enums.AilmentType;
 import characters.enums.EquipmentSlot;
@@ -36,6 +35,11 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	public int getLevel()
 	{
 		return level;
+	}
+	
+	public void fullHeal()
+	{
+		currentHealth = getMaxHealth();
 	}
 	
 	@Override
@@ -278,10 +282,9 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	{
 		int myDex = this.getDexterity();
 		int otherDex = o.getDexterity();
-		
-		if (myDex>otherDex) return 1;
-		else if (myDex<otherDex) return -1;
-		else return (new Random().nextInt(2)==0? 1 : -1);
+		if (myDex > otherDex) return 1;
+		else if (myDex < otherDex) return -1;
+		else return this.getName().compareTo(o.getName());
 	}
 
 	public String loadStats()

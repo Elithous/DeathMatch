@@ -2,10 +2,18 @@ package views.controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import characters.enums.BattleChoice;
+import characters.models.Character;
+import characters.models.Hero;
+import characters.models.Monster;
+import controllers.BattleController;
 import controllers.GameApp;
 import events.ChangeScreenEvent;
+import events.TurnEvent;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
@@ -17,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -24,6 +33,7 @@ import lib.EventPublisher;
 import loot.models.Consumable;
 import models.player.PlayerSave;
 import models.quests.Quest;
+import views.enums.ActionType;
 import views.enums.ScreenType;
 import views.interfaces.PlayerController;
 import views.models.CharacterImageView;
@@ -33,7 +43,8 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 
 	private PlayerSave playerSave;
 	private Quest quest;
-
+	private BattleController batCon;
+	private ActionType action = ActionType.NONE;
 	private CharacterImageView[] players = new CharacterImageView[4];
 	private CharacterImageView[] enemies = new CharacterImageView[4];
 
@@ -60,6 +71,18 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 
 	@FXML
 	private HBox selectionBox;
+	
+	@FXML
+	private Button attackButton;
+	
+	@FXML
+	private Button defendButton;
+	
+	@FXML
+	private Button itemsButton;
+	
+	@FXML
+	private Button skipButton;
 
 	@FXML
 	private Pane battlePane;
@@ -95,18 +118,59 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	private VBox itemList2;
 
 	@FXML
-	void attackButtonClicked(ActionEvent event) {
+	void attackButtonClicked(ActionEvent event) 
+	{
+		if (action == ActionType.ATTACK)
+		{
+			action = ActionType.NONE;
+			attackButton.setDisable(false);
+			defendButton.setDisable(false);
+			itemsButton.setDisable(false);
+		}
+		else
+		if (batCon.isWaitingForInput() && action == ActionType.NONE) 
+		{
+			action = ActionType.ATTACK;
+			defendButton.setDisable(true);
+			itemsButton.setDisable(true);
+		}
+	}
+
+	@FXML
+	void defendButtonClicked(ActionEvent event) 
+	{
+		TurnEvent e = new TurnEvent(batCon.getOrder().peek(), BattleChoice.DEFEND, null);
+		notifyListeners(e);
+	}
+
+	@FXML
+	void itemList1Clicked(MouseEvent event) {
 
 	}
 
 	@FXML
-	void defendButtonClicked(ActionEvent event) {
+	void itemList2Clicked(MouseEvent event) {
 
 	}
 
 	@FXML
-	void itemsButtonClicked(ActionEvent event) {
-		itemsMenuBox.setVisible(!itemsMenuBox.isVisible());
+	void itemsButtonClicked(ActionEvent event) 
+	{
+		if (action == ActionType.ITEM)
+		{
+			action = ActionType.NONE;
+			attackButton.setDisable(false);
+			defendButton.setDisable(false);
+			itemsButton.setDisable(false);
+		}
+		else
+		if (batCon.isWaitingForInput() && action == ActionType.NONE) 
+		{
+			action = ActionType.ITEM;
+			itemsMenuBox.setVisible(!itemsMenuBox.isVisible());
+			attackButton.setDisable(true);
+			defendButton.setDisable(true);
+		}
 	}
 
 	@FXML
@@ -190,18 +254,25 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	}
 
 	@Override
-	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
+	public void init(PlayerSave playerSave, Quest quest, GameApp app) 
+	{
 		this.addListener(app);
 		this.playerSave = playerSave;
 		this.quest = quest;
+		batCon = new BattleController(playerSave, quest, this);
+		this.addListener(batCon);
+		
+		for (Hero c : playerSave.getPlayers())
+			if (c!= null) c.fullHeal();
+		for (Monster m : quest.monsters)
+			if (m!= null) m.fullHeal();
 
-
-		for (int i = 0; i < playerSave.getPlayers().length; i++) {
-			players[i] = new CharacterImageView(playerSave.getPlayers()[i]);
+		for (int i = 0; i < players.length; i++) {
+			players[i] = new CharacterImageView(playerSave.getPlayers()[i], this);
 		}
 
 		for (int i = 0; i < quest.monsters.length; i++) {
-			enemies[i] = new CharacterImageView(quest.monsters[i]);
+			enemies[i] = new CharacterImageView(quest.monsters[i], this);
 		}
 
 		int count = 0;
@@ -239,17 +310,62 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	}
 
 	@Override
-	public void update() {
-		for (CharacterImageView cIV : enemies) {
-			if (cIV != null) {
+	public void update()
+	{
+		action = ActionType.NONE;
+		attackButton.setDisable(false);
+		defendButton.setDisable(false);
+		itemsButton.setDisable(false);
+		itemsMenuBox.setVisible(false);
+		
+		for (CharacterImageView cIV : enemies) 
+		{
+			if (cIV != null)
+			if (cIV.getCharacter() != null) {
 				cIV.update();
 			}
 		}
-		for (CharacterImageView cIV : players) {
-			if (cIV != null) {
+		for (CharacterImageView cIV : players) 
+		{
+			if (cIV.getCharacter() != null) {
 				cIV.update();
 			}
 		}
+
+		currentPlayerImage.setImage(batCon.getOrder().peek().getImage());
+		currentPlayerName.setText(batCon.getOrder().peek().getName());
+		
+		List<characters.models.Character> list = (LinkedList<characters.models.Character>) batCon.getOrder();
+		int two = 2;
+		int three = 3;
+		int four = 4;
+		while (two >= list.size() || three >= list.size() || four >= list.size())
+		{
+			if (two >= list.size()) two -= list.size();
+			if (three >= list.size()) three -= list.size();
+			if (four >= list.size()) four -= list.size();
+		}
+		
+		playerOrder1Image.setImage(list.get(1).getImage());
+		playerOrder2Image.setImage(list.get(two).getImage());
+		playerOrder3Image.setImage(list.get(three).getImage());
+		playerOrder4Image.setImage(list.get(four).getImage());
+	}
+	
+	public void switchScreen(ChangeScreenEvent e)
+	{
+		notifyListeners(e);
+	}
+
+	public void characterClicked(Character character) 
+	{
+		if (action == ActionType.NONE) return;
+		TurnEvent e = null;
+		if (action == ActionType.ATTACK) e = new TurnEvent(character, BattleChoice.ATTACK, null);
+		else if (action == ActionType.DEFEND) e = new TurnEvent(character, BattleChoice.DEFEND, null);
+		else 
+			System.out.println("no item use yet");
+		notifyListeners(e);
 
 		SimpleDoubleProperty itemHeight = new SimpleDoubleProperty();
 		itemHeight.bind(itemsMenuBox.heightProperty().divide(3));
@@ -259,19 +375,20 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		
 		ArrayList<Consumable> items = playerSave.getInventory().getConsumables();
 		for(int i = 0; i < items.size(); i++) {
-			ConsumableListItem e = new ConsumableListItem(items.get(i));
+			ConsumableListItem cli = new ConsumableListItem(items.get(i));
 			if(i % 2 == 0) {
-				itemList1.getChildren().add(e);
+				itemList1.getChildren().add(cli);
 			} else {
-				itemList2.getChildren().add(e);
+				itemList2.getChildren().add(cli);
 			}
 			
-			e.prefHeightProperty().bind(itemHeight);
+			cli.prefHeightProperty().bind(itemHeight);
 			
-			e.getButton().addEventHandler(ActionEvent.ACTION, new EventHandler<Event>() {
+			cli.getButton().addEventHandler(ActionEvent.ACTION, new EventHandler<Event>() {
 
 				@Override
-				public void handle(Event event) {
+				public void handle(Event event) 
+				{
 					// send an event to battle controller with the item chosen. Let them handle it
 					System.out.println("Button clicked");
 				}

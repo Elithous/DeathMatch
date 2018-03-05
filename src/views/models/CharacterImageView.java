@@ -1,10 +1,13 @@
 package views.models;
 
 import characters.models.Character;
+import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import views.controllers.BattleScreenController;
 
 public class CharacterImageView extends VBox {
 
@@ -12,10 +15,12 @@ public class CharacterImageView extends VBox {
 	private ImageView characterImage;
 	private ProgressBar health = new ProgressBar();
 
-	public CharacterImageView(Character character) {
+	public CharacterImageView(Character character, BattleScreenController bsc) 
+	{
 		this.setCharacter(character);
-		if (character != null) {
-			setCharacterImage(new ImageView(character.getImage()));
+		if (character != null)
+		{
+			characterImage = new ImageView(character.getImage());
 			this.getChildren().addAll(health, characterImage);
 			this.characterImage.setPreserveRatio(true);
 			this.characterImage.fitHeightProperty().bind(this.heightProperty().multiply(.8));
@@ -24,7 +29,18 @@ public class CharacterImageView extends VBox {
 			this.health.prefWidthProperty().bind(this.widthProperty().multiply(.35));
 			this.health.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
 			this.health.setStyle("-fx-accent: green;");
-			health.setProgress(.5);
+			
+			characterImage.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() 
+			{
+			     @Override
+			     public void handle(MouseEvent event) 
+			     {
+			    	 bsc.characterClicked(character);
+			    	 event.consume();
+			     }
+			});
+			
+			update();
 		}
 	}
 
@@ -40,19 +56,24 @@ public class CharacterImageView extends VBox {
 		return characterImage;
 	}
 
-	public void setCharacterImage(ImageView characterImage) {
+	public void setCharacterImage(ImageView characterImage)
+	{
 		this.characterImage = characterImage;
 	}
 
-	public ProgressBar getHealth() {
+	public ProgressBar getHealth()
+	{
 		return health;
 	}
 
-	public void setHealth(ProgressBar health) {
+	public void setHealth(ProgressBar health)
+	{
 		this.health = health;
 	}
 	
-	public void update() {
-		getHealth().setProgress(getCharacter().getCurrentHealth() / getCharacter().getMaxHealth());
+	public void update() 
+	{
+		health.setProgress(((float)character.getCurrentHealth())/character.getMaxHealth());
+		this.characterImage.setImage(character.getImage());
 	}
 }
