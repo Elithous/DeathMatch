@@ -431,13 +431,13 @@ public class LootGenerator
 		
 		int p = rand.nextInt(4);
 		//SETTING ATTACK
-		item.setName(consumableNames[0][p]);
+		item.setName(consumableNames[0][type]);
 		item.setEffectOnHealth(getHealthForPotions(level));
 		
 		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
 		
 		
-		item.setImage(consumablePaths[0]+p+".png");
+		item.setImage(consumablePaths[0]+type+".png");
 		
 		return item;
 	}
