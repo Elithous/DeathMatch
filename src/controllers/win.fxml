@@ -2,21 +2,22 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.WinController">
    <children>
-      <VBox fx:id="vBox" alignment="CENTER" layoutX="128.0" prefHeight="400.0" prefWidth="344.0" spacing="10.0">
+      <VBox fx:id="vBox" alignment="CENTER" prefHeight="400.0" prefWidth="622.0" spacing="10.0">
          <children>
             <Label fx:id="title" alignment="CENTER" prefHeight="34.0" prefWidth="204.0" text="You won!">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <ListView fx:id="lootList" prefHeight="299.0" prefWidth="344.0" />
+            <ScrollPane fx:id="lootList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" />
             <Button fx:id="continueButton" mnemonicParsing="false" onAction="#continueButtonClicked" text="Continue" />
          </children>
       </VBox>
