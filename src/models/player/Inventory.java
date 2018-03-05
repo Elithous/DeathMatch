@@ -11,7 +11,6 @@ public class Inventory implements Serializable{
 
 	private ArrayList<Equipment> equipment = new ArrayList<>();
 	private ArrayList<Consumable> consumables = new ArrayList<>();
-	private ArrayList<Loot> loot = new ArrayList<>();
 	private int gold;
 	
 	public ArrayList<Equipment> getEquipment() {
@@ -39,16 +38,27 @@ public class Inventory implements Serializable{
 	}
 	
 	public ArrayList<Loot> getLoot() {
+		ArrayList<Loot> loot = new ArrayList<>();
+		loot.addAll(equipment);
+		loot.addAll(consumables);
 		return loot;
 	}
 	
 	public void addLoot(Loot loot) {
-		this.loot.add(loot);
+		if(loot instanceof Equipment) {
+			equipment.add((Equipment) loot);
+		} else {
+			consumables.add((Consumable) loot);
+		}
 	}
 	
 	public void removeLoot(Loot loot) 
 	{
-		this.loot.remove(loot);
+		if(loot instanceof Equipment) {
+			equipment.remove((Equipment) loot);
+		} else {
+			consumables.remove((Consumable) loot);
+		}
 	}
 	
 	public int getGold() {

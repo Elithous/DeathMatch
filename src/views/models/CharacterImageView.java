@@ -12,14 +12,12 @@ import views.controllers.BattleScreenController;
 public class CharacterImageView extends VBox {
 
 	private Character character;
-	private BattleScreenController bsc;
 	private ImageView characterImage;
 	private ProgressBar health = new ProgressBar();
 
 	public CharacterImageView(Character character, BattleScreenController bsc) 
 	{
 		this.setCharacter(character);
-		this.bsc = bsc;
 		if (character != null)
 		{
 			characterImage = new ImageView(character.getImage());

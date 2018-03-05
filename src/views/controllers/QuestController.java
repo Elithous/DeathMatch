@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import lib.EventPublisher;
 import models.player.PlayerSave;
 import models.quests.Quest;
+import models.quests.QuestGenerator;
 import views.enums.ScreenType;
 import views.interfaces.PlayerController;
 import views.models.QuestListItem;
@@ -73,14 +74,10 @@ public class QuestController extends EventPublisher implements PlayerController 
 	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
 		this.addListener(app);
 		
-		// TODO get quests and put them in questItems array
-		Monster[] mons = {new Monster(), null, null, null};
-		mons[0].setImage(new Image("file:Assets/empty sprite.png"));
-		mons[0].setName("Test");
-		mons[0].setMaxHealth(1337);
+		Quest[] quests = QuestGenerator.generateQuests(playerSave);
 		
 		for (int i = 0; i < questItems.length; i++) {
-			questItems[i] = new QuestListItem(new Quest(mons, 0));
+			questItems[i] = new QuestListItem(quests[i]);
 			questItems[i].getPlayButton().prefWidthProperty().bind(questBox.heightProperty().divide(5));
 
 			//SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();
