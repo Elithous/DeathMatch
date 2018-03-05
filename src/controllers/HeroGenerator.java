@@ -33,6 +33,7 @@ public class HeroGenerator
 		hired.setStrength((int)(10+rand.nextInt(10*((rand.nextFloat() < SUPERSTAT_CHANCE)? 2 : 1)) * (mainStat==AttackType.STRENGTH? 1.5f : 1) ));
 		hired.setDexterity((int)(10+rand.nextInt(10*((rand.nextFloat() < SUPERSTAT_CHANCE)? 2 : 1)) * (mainStat==AttackType.DEXTERITY? 1.5f : 1) ));
 		hired.setIntelligence((int)(10+rand.nextInt(10*((rand.nextFloat() < SUPERSTAT_CHANCE)? 2 : 1)) * (mainStat==AttackType.INTELLIGENCE? 1.5f : 1) ));
+		hired.setAttack(3+rand.nextInt(2));
 		
 		while(hired.getLevel() < level)
 		{

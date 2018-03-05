@@ -1,10 +1,17 @@
 package views.controllers;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import characters.enums.BattleChoice;
+import characters.models.Hero;
+import characters.models.Monster;
+import controllers.BattleController;
 import controllers.GameApp;
 import events.ChangeScreenEvent;
+import events.TurnEvent;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
@@ -29,6 +36,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 
 	private PlayerSave playerSave;
 	private Quest quest;
+	private BattleController batCon;
 
 	private CharacterImageView[] players = new CharacterImageView[4];
 	private CharacterImageView[] enemies = new CharacterImageView[4];
@@ -91,13 +99,23 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	private ListView<?> itemList2;
 
 	@FXML
-	void attackButtonClicked(ActionEvent event) {
-
+	void attackButtonClicked(ActionEvent event) 
+	{
+		if (batCon.isWaitingForInput()) 
+		{
+			TurnEvent e = new TurnEvent(batCon.getOrder().peek(), BattleChoice.ATTACK, null);
+			notifyListeners(e);
+		}
 	}
 
 	@FXML
-	void defendButtonClicked(ActionEvent event) {
-
+	void defendButtonClicked(ActionEvent event) 
+	{
+		if (batCon.isWaitingForInput()) 
+		{
+			TurnEvent e = new TurnEvent(batCon.getOrder().peek(), BattleChoice.DEFEND, null);
+			notifyListeners(e);
+		}
 	}
 
 	@FXML
@@ -191,10 +209,18 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	}
 
 	@Override
-	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
+	public void init(PlayerSave playerSave, Quest quest, GameApp app) 
+	{
 		this.addListener(app);
 		this.playerSave = playerSave;
 		this.quest = quest;
+		batCon = new BattleController(playerSave, quest, this);
+		this.addListener(batCon);
+		
+		for (Hero c : playerSave.getPlayers())
+			if (c!= null) c.fullHeal();
+		for (Monster m : quest.monsters)
+			if (m!= null) m.fullHeal();
 
 		for (int i = 0; i < players.length; i++) {
 			players[i] = new CharacterImageView(playerSave.getPlayers()[i]);
@@ -230,16 +256,37 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	}
 
 	@Override
-	public void update() {
-		for (CharacterImageView cIV : enemies) {
-			if (cIV != null) {
+	public void update()
+	{
+		for (CharacterImageView cIV : enemies) 
+		{
+			if (cIV.getCharacter() != null) {
 				cIV.update();
 			}
 		}
-		for (CharacterImageView cIV : players) {
-			if (cIV != null) {
+		for (CharacterImageView cIV : players) 
+		{
+			if (cIV.getCharacter() != null) {
 				cIV.update();
 			}
 		}
+		currentPlayerImage.setImage(batCon.getOrder().peek().getImage());
+		currentPlayerName.setText(batCon.getOrder().peek().getName());
+		
+		List<characters.models.Character> list = (LinkedList<characters.models.Character>)batCon.getOrder();
+		int two = 2;
+		int three = 3;
+		int four = 4;
+		while (two >= list.size() || three >= list.size() || four >= list.size())
+		{
+			if (two >= list.size()) two -= list.size();
+			if (three >= list.size()) three -= list.size();
+			if (four >= list.size()) four -= list.size();
+		}
+		
+		playerOrder1Image.setImage(list.get(1).getImage());
+		playerOrder2Image.setImage(list.get(two).getImage());
+		playerOrder3Image.setImage(list.get(three).getImage());
+		playerOrder4Image.setImage(list.get(four).getImage());
 	}
 }

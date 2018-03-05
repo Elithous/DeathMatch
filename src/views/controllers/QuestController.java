@@ -77,6 +77,7 @@ public class QuestController extends EventPublisher implements PlayerController 
 		Monster[] mons = {new Monster(), null, null, null};
 		mons[0].setImage(new Image("file:Assets/empty sprite.png"));
 		mons[0].setName("Test");
+		mons[0].setMaxHealth(1337);
 		
 		for (int i = 0; i < questItems.length; i++) {
 			questItems[i] = new QuestListItem(new Quest(mons, 0));

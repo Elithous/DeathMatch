@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Queue;
 
 import characters.enums.AilmentType;
@@ -13,27 +14,38 @@ import lib.Event;
 import lib.IEventListener;
 import models.player.PlayerSave;
 import models.quests.Quest;
+import views.controllers.BattleScreenController;
 
 public class BattleController implements IEventListener
 {
 	PlayerSave playerSave;
 	Quest quest;
-	Queue<characters.models.Character> characterOrder;
+	BattleScreenController view;
+	Queue<characters.models.Character> characterOrder = new LinkedList<>();
 	private boolean isWaitingForInput = false;
 	
-	public BattleController(PlayerSave playerSave, Quest quest) 
+	public BattleController(PlayerSave playerSave, Quest quest, BattleScreenController view) 
 	{
 		this.playerSave = playerSave;
 		this.quest = quest;
+		this.view = view;
 		
 		ArrayList<characters.models.Character> all = new ArrayList<>();
 		all.addAll(Arrays.asList(playerSave.getPlayers()));
 		all.addAll(Arrays.asList(quest.monsters));
 		
+		all.removeAll(Collections.singleton(null));
 		Collections.sort(all);
+		Collections.reverse(all);
+		for(characters.models.Character c : all)
+			c.fullHeal();
 		characterOrder.addAll(all);
-		
 		takeTurn();
+	}
+	
+	public Queue<characters.models.Character> getOrder()
+	{
+		return characterOrder;
 	}
 	
 	public boolean isWaitingForInput()
@@ -62,7 +74,10 @@ public class BattleController implements IEventListener
 	{
 		switch (te.choice)
 		{
-		case ATTACK:	te.character.adjustHealth(characterOrder.poll().getAttack());
+		case ATTACK:	System.out.println("before" + te.character.getCurrentHealth());
+						System.out.println(characterOrder.peek().getName()+"'s attack is "+(-characterOrder.peek().getAttack()));
+						te.character.adjustHealth(-characterOrder.peek().getAttack());
+						System.out.println("after" + te.character.getCurrentHealth());
 			break;
 		case DEFEND: 	te.character.addAilment(new Ailment(AilmentType.ARM, 1.5f, 1));
 			break;
@@ -70,8 +85,9 @@ public class BattleController implements IEventListener
 						playerSave.getInventory().removeConsumeable(te.item);
 						break;
 		}
-		
+
 		characterOrder.add(characterOrder.poll());
+		view.update();
 	}
 
 	@Override
