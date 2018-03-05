@@ -20,6 +20,6 @@ public class LossController {
 
     @FXML
     void initialize() {
-
+    	
     }
 }
