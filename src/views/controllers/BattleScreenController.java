@@ -281,6 +281,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 			for (Node node2 : box.getChildren()) {
 				VBox box2 = node2 instanceof VBox ? (VBox) node2 : new VBox();
 				if (count < 4) {
+
 					if (enemies[count] != null) {
 						enemies[count].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
 						box2.getChildren().add(enemies[count]);
@@ -330,6 +331,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 				cIV.update();
 			}
 		}
+
 		currentPlayerImage.setImage(batCon.getOrder().peek().getImage());
 		currentPlayerName.setText(batCon.getOrder().peek().getName());
 		
@@ -364,6 +366,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		else 
 			System.out.println("no item use yet");
 		notifyListeners(e);
+
 		SimpleDoubleProperty itemHeight = new SimpleDoubleProperty();
 		itemHeight.bind(itemsMenuBox.heightProperty().divide(3));
 		
@@ -395,5 +398,6 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		SimpleDoubleProperty itemListHeight = new SimpleDoubleProperty();
 		itemListHeight.bind(itemHeight.multiply((items.size()/2) + (items.size() % 2)));
 		((HBox)itemsMenuBox.getContent()).prefHeightProperty().bind(itemListHeight);
+
 	}
 }

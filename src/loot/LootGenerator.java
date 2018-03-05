@@ -38,7 +38,7 @@ public class LootGenerator
 	private static String[] paths = new String[] {"file:Assets/Weapons/Swords/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
 	private static String[] armorPaths = {"file:Assets/Armor/Helm/Helm", "file:Assets/Armor/Body/Body", "file:Assets/Armor/Legs/Legs" ,"file:Assets/Armor/Rings/Ring"};
 	private static String[][] consumableNames = new String[][] {{"Revive Potion", "Small Health Potion", "Medium Health Potion", "Large Health Potion"},
-																{"Ugandan Knife", "Shuriken", "Tomahawk", "Einstein's Big Toy"}};		
+																{"Throwing Knife", "Shuriken", "Tomahawk", "Einstein's Big Toy"}};		
 	private static String consumablePaths[] = new String[] {"file:Assets/Consumables/Potion", "file:Assets/Consumables/Damage"};
 	
 	
@@ -395,6 +395,7 @@ public class LootGenerator
 
 	private static Consumable generateDamage(int value, int level)
 	{
+		Random rand = new Random();
 		Consumable item;
 		
 		int type = level/8;
@@ -402,14 +403,14 @@ public class LootGenerator
 		if (type > names[1].length-1) type = names[1].length-1;
 		
 		item = new Consumable();
-		
+		int d = rand.nextInt(4);
 		//SETTING ATTACK
-		item.setName(consumableNames[1][type]);
+		item.setName(consumableNames[1][d]);
 		item.setEffectOnHealth(getHealthForPotions(level));
 		
 		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
 		
-		item.setImage(paths[1]+type+".png");
+		item.setImage(consumablePaths[1]+d+".png");
 		
 		return item;
 	}
@@ -428,13 +429,15 @@ public class LootGenerator
 		if (type == 0) item = new RevivePotion();
 		else item = new Consumable();
 		
+		int p = rand.nextInt(4);
 		//SETTING ATTACK
-		item.setName(consumableNames[0][type]);
+		item.setName(consumableNames[0][p]);
 		item.setEffectOnHealth(getHealthForPotions(level));
 		
 		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
 		
-		item.setImage(paths[0]+type+".png");
+		
+		item.setImage(consumablePaths[0]+p+".png");
 		
 		return item;
 	}
