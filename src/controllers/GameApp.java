@@ -13,6 +13,7 @@ import lib.Event;
 import lib.FileUtil;
 import lib.IEventListener;
 import loot.LootGenerator;
+import loot.LootGeneratorResult;
 import loot.models.Armor;
 import loot.models.Weapon;
 import models.player.PlayerSave;
@@ -30,9 +31,6 @@ public class GameApp extends Application implements IEventListener
 		public void start(Stage stage) throws IOException 
 		{
 
-			Armor hero = LootGenerator.generateRing(500, 35);
-			System.out.println(hero.getName() + " str "+hero.getStrength() + " dex "+ hero.getDexterity()+" int "+hero.getIntelligence() + hero.getRarity());
-			
 			this.stage = stage;
 			Parent root = loadFXML(ScreenType.MAIN, null, null);
 			stage.setScene(new Scene(root));

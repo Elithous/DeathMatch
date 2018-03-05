@@ -283,6 +283,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 			for (Node node2 : box.getChildren()) {
 				VBox box2 = node2 instanceof VBox ? (VBox) node2 : new VBox();
 				if (count < 4) {
+
 					if (enemies[count] != null) {
 						enemies[count].prefHeightProperty().bind(box2.heightProperty().multiply(.35));
 						box2.getChildren().add(enemies[count]);
@@ -333,6 +334,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 				cIV.update();
 			}
 		}
+
 		currentPlayerImage.setImage(batCon.getOrder().peek().getImage());
 		currentPlayerName.setText(batCon.getOrder().peek().getName());
 		
@@ -351,46 +353,6 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		playerOrder2Image.setImage(list.get(two).getImage());
 		playerOrder3Image.setImage(list.get(three).getImage());
 		playerOrder4Image.setImage(list.get(four).getImage());
-		
-		SimpleDoubleProperty itemHeight = new SimpleDoubleProperty();
-		itemHeight.bind(itemsMenuBox.heightProperty().divide(3));
-		
-		itemList1.getChildren().removeAll(itemList1.getChildren());
-		itemList2.getChildren().removeAll(itemList2.getChildren());
-		
-		ArrayList<Consumable> items = playerSave.getInventory().getConsumables();
-		for(int i = 0; i < items.size(); i++) 
-		{
-			ConsumableListItem cli = new ConsumableListItem(items.get(i));
-			if(i % 2 == 0) {
-				itemList1.getChildren().add(cli);
-			} else {
-				itemList2.getChildren().add(cli);
-			}
-			
-			cli.prefHeightProperty().bind(itemHeight);
-			
-			cli.getButton().addEventHandler(ActionEvent.ACTION, new EventHandler<Event>() {
-
-				@Override
-				public void handle(Event event) 
-				{
-					item = cli.item;
-					for(Node node : itemList1.getChildren())
-					{
-						node.setDisable(true);
-					}
-					for(Node node : itemList2.getChildren())
-					{
-						node.setDisable(true);
-					}
-				}
-			});
-		}
-		
-		SimpleDoubleProperty itemListHeight = new SimpleDoubleProperty();
-		itemListHeight.bind(itemHeight.multiply((items.size()/2) + (items.size() % 2)));
-		((HBox)itemsMenuBox.getContent()).prefHeightProperty().bind(itemListHeight);
 	}
 	
 	public void switchScreen(ChangeScreenEvent e)

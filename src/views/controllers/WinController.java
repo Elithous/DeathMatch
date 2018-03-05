@@ -27,7 +27,7 @@ import views.models.ViewOnlyLootListItem;
 public class WinController extends EventPublisher implements PlayerController{
 
 	private PlayerSave playerSave;
-	
+
 	@FXML
 	private Pane contentPane;
 	
@@ -74,6 +74,7 @@ public class WinController extends EventPublisher implements PlayerController{
     	continueButton.prefWidthProperty().bind(vBox.widthProperty().divide(5));
     	
     	lootList.prefWidthProperty().bind(vBox.widthProperty().multiply(.8));
+
     	lootList.prefHeightProperty().bind(vBox.heightProperty().multiply(.7));
     }
 
