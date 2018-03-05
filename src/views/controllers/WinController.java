@@ -1,8 +1,10 @@
 package views.controllers;
 
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
+import characters.models.Hero;
 import controllers.GameApp;
 import events.ChangeScreenEvent;
 import javafx.beans.binding.Bindings;
@@ -26,6 +28,8 @@ import views.models.ViewOnlyLootListItem;
 
 public class WinController extends EventPublisher implements PlayerController{
 
+	private final float LEVEL_MULTIPLIER = 3.0f;
+	
 	private PlayerSave playerSave;
 
 	@FXML
@@ -92,6 +96,14 @@ public class WinController extends EventPublisher implements PlayerController{
 			content.getChildren().add(li);
 		}
 		lootList.setContent(content);
+		
+		// (level*cons)*.8f+((level*cons)*rand.nextfloat*.4f)
+		Random rand = new Random();
+		
+		double totalExp = (quest.difficulty * LEVEL_MULTIPLIER) + ((quest.difficulty * LEVEL_MULTIPLIER)*rand.nextFloat()*0.4f);
+		for(Hero hero : playerSave.getPlayers()) {
+			hero.addExp((int) (totalExp/playerSave.getPlayers().length));
+		}
 	}
 
 	@Override

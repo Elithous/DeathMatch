@@ -109,7 +109,7 @@ public class MonsterGenerator {
 		monsterBase.setImage(new Image(path + ".png"));
 		
 		setStatsForMonster(monsterBase, level);
-		return monsterBase;
+		return new Monster(monsterBase);
 //		monsterBase.setLevel(level);
 		
 	}

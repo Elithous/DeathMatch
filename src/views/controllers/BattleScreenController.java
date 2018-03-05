@@ -45,6 +45,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	private Quest quest;
 	private BattleController batCon;
 	private ActionType action = ActionType.NONE;
+	private Consumable item = null;
 	private CharacterImageView[] players = new CharacterImageView[4];
 	private CharacterImageView[] enemies = new CharacterImageView[4];
 
@@ -159,6 +160,16 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		if (action == ActionType.ITEM)
 		{
 			action = ActionType.NONE;
+			item = null;
+			itemsMenuBox.setVisible(false);
+			for(Node node : itemList1.getChildren())
+				{
+					node.setDisable(false);
+				}
+				for(Node node : itemList2.getChildren())
+				{
+					node.setDisable(false);
+				}
 			attackButton.setDisable(false);
 			defendButton.setDisable(false);
 			itemsButton.setDisable(false);
@@ -167,7 +178,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		if (batCon.isWaitingForInput() && action == ActionType.NONE) 
 		{
 			action = ActionType.ITEM;
-			itemsMenuBox.setVisible(!itemsMenuBox.isVisible());
+			itemsMenuBox.setVisible(true);
 			attackButton.setDisable(true);
 			defendButton.setDisable(true);
 		}
@@ -313,6 +324,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	public void update()
 	{
 		action = ActionType.NONE;
+		item = null;
 		attackButton.setDisable(false);
 		defendButton.setDisable(false);
 		itemsButton.setDisable(false);
@@ -350,6 +362,47 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		playerOrder2Image.setImage(list.get(two).getImage());
 		playerOrder3Image.setImage(list.get(three).getImage());
 		playerOrder4Image.setImage(list.get(four).getImage());
+		
+
+		 		SimpleDoubleProperty itemHeight = new SimpleDoubleProperty();
+		 		itemHeight.bind(itemsMenuBox.heightProperty().divide(3));
+		 		
+		 		itemList1.getChildren().removeAll(itemList1.getChildren());
+		 		itemList2.getChildren().removeAll(itemList2.getChildren());
+		 		
+		 		ArrayList<Consumable> items = playerSave.getInventory().getConsumables();
+		 		for(int i = 0; i < items.size(); i++) 
+		 		{
+		 			ConsumableListItem cli = new ConsumableListItem(items.get(i));
+		 			if(i % 2 == 0) {
+		 				itemList1.getChildren().add(cli);
+		 			} else {
+		 				itemList2.getChildren().add(cli);
+		 			}
+		 			
+		 			cli.prefHeightProperty().bind(itemHeight);
+		 			
+		 			cli.getButton().addEventHandler(ActionEvent.ACTION, new EventHandler<Event>() {
+		 
+		 				@Override
+		 				public void handle(Event event) 
+		 				{
+		 					item = cli.item;
+		 					for(Node node : itemList1.getChildren())
+		 					{
+		 						node.setDisable(true);
+		 					}
+		 					for(Node node : itemList2.getChildren())
+		 					{
+		 						node.setDisable(true);
+		 					}
+		 				}
+		 			});
+		 		}
+		 		
+		 		SimpleDoubleProperty itemListHeight = new SimpleDoubleProperty();
+		 		itemListHeight.bind(itemHeight.multiply((items.size()/2) + (items.size() % 2)));
+		 		((HBox)itemsMenuBox.getContent()).prefHeightProperty().bind(itemListHeight);
 	}
 	
 	public void switchScreen(ChangeScreenEvent e)
@@ -364,40 +417,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		if (action == ActionType.ATTACK) e = new TurnEvent(character, BattleChoice.ATTACK, null);
 		else if (action == ActionType.DEFEND) e = new TurnEvent(character, BattleChoice.DEFEND, null);
 		else 
-			System.out.println("no item use yet");
+			if (action == ActionType.ITEM && item != null) e = new TurnEvent(character, BattleChoice.USE_ITEM, item);
 		notifyListeners(e);
-
-		SimpleDoubleProperty itemHeight = new SimpleDoubleProperty();
-		itemHeight.bind(itemsMenuBox.heightProperty().divide(3));
-		
-		itemList1.getChildren().removeAll(itemList1.getChildren());
-		itemList2.getChildren().removeAll(itemList2.getChildren());
-		
-		ArrayList<Consumable> items = playerSave.getInventory().getConsumables();
-		for(int i = 0; i < items.size(); i++) {
-			ConsumableListItem cli = new ConsumableListItem(items.get(i));
-			if(i % 2 == 0) {
-				itemList1.getChildren().add(cli);
-			} else {
-				itemList2.getChildren().add(cli);
-			}
-			
-			cli.prefHeightProperty().bind(itemHeight);
-			
-			cli.getButton().addEventHandler(ActionEvent.ACTION, new EventHandler<Event>() {
-
-				@Override
-				public void handle(Event event) 
-				{
-					// send an event to battle controller with the item chosen. Let them handle it
-					System.out.println("Button clicked");
-				}
-			});
-		}
-		
-		SimpleDoubleProperty itemListHeight = new SimpleDoubleProperty();
-		itemListHeight.bind(itemHeight.multiply((items.size()/2) + (items.size() % 2)));
-		((HBox)itemsMenuBox.getContent()).prefHeightProperty().bind(itemListHeight);
-
 	}
 }
