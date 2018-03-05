@@ -17,6 +17,7 @@ public class Consumable extends Loot
 	
 	public void use(characters.models.Character target) 
 	{
+		System.out.println("FOOOOOOOOO "+effectOnHealth);
 		target.adjustHealth(effectOnHealth);
 	}
 }

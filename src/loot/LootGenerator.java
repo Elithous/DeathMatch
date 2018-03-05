@@ -406,7 +406,7 @@ public class LootGenerator
 		int d = rand.nextInt(4);
 		//SETTING ATTACK
 		item.setName(consumableNames[1][d]);
-		item.setEffectOnHealth(getHealthForPotions(level));
+		item.setEffectOnHealth(-1 * getHealthForPotions(level));
 		
 		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
 		
