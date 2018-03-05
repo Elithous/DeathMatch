@@ -8,13 +8,16 @@ import java.util.Queue;
 
 import characters.enums.AilmentType;
 import characters.models.Ailment;
+import characters.models.Hero;
 import characters.models.Monster;
+import events.ChangeScreenEvent;
 import events.TurnEvent;
 import lib.Event;
 import lib.IEventListener;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.controllers.BattleScreenController;
+import views.enums.ScreenType;
 
 public class BattleController implements IEventListener
 {
@@ -55,19 +58,42 @@ public class BattleController implements IEventListener
 	
 	private void takeTurn()
 	{
-		int deadInRow = 0;
+		int monstersAlive = 0;
+		int heroesAlive = 0;
+		for (characters.models.Character c : (characters.models.Character[]) characterOrder.toArray(new characters.models.Character[characterOrder.size()]))
+		{
+			if (c instanceof Monster && c.getCurrentHealth()>0)
+				monstersAlive++;
+			else if (c instanceof Hero && c.getCurrentHealth()>0)
+				heroesAlive++;
+		}
+		if (heroesAlive==0) 
+		{
+			ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.LOSE, quest, playerSave);
+			view.switchScreen(e);
+		}
+		if (monstersAlive==0) 
+		{
+			ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.WIN, quest, playerSave);
+			view.switchScreen(e);
+		}
+		
 		while(characterOrder.peek().getCurrentHealth() <= 0)
 		{
-			deadInRow++;
 			characterOrder.add(characterOrder.poll());
-			if (deadInRow > characterOrder.size()) throw new IllegalArgumentException("All characters are dead, wtf??");
 		}
 		
 		characterOrder.peek().updateAilments();
 		if (characterOrder.peek() instanceof Monster)
+		{
+			System.out.println("monster!");
 			applyTurn(((Monster) characterOrder.peek()).decideNextTurn(playerSave.getPlayers()));
+		}
 		else
+		{
 			isWaitingForInput = true;
+			System.out.println("plauer waiting for input");
+		}
 	}
 	
 	private void applyTurn(TurnEvent te)
@@ -88,6 +114,8 @@ public class BattleController implements IEventListener
 
 		characterOrder.add(characterOrder.poll());
 		view.update();
+		System.out.println("applied turn");
+		takeTurn();
 	}
 
 	@Override
@@ -95,6 +123,7 @@ public class BattleController implements IEventListener
 	{
 		if (e instanceof TurnEvent) 
 		{
+			isWaitingForInput = false;
 			applyTurn((TurnEvent) e);
 		}
 	}

@@ -1,20 +1,25 @@
 package views.models;
 
 import characters.models.Character;
+import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import views.controllers.BattleScreenController;
 
 public class CharacterImageView extends VBox {
 
 	private Character character;
+	private BattleScreenController bsc;
 	private ImageView characterImage;
 	private ProgressBar health = new ProgressBar();
 
-	public CharacterImageView(Character character) 
+	public CharacterImageView(Character character, BattleScreenController bsc) 
 	{
 		this.setCharacter(character);
+		this.bsc = bsc;
 		if (character != null)
 		{
 			characterImage = new ImageView(character.getImage());
@@ -26,6 +31,17 @@ public class CharacterImageView extends VBox {
 			this.health.prefWidthProperty().bind(this.widthProperty().multiply(.35));
 			this.health.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
 			this.health.setStyle("-fx-accent: green;");
+			
+			characterImage.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() 
+			{
+			     @Override
+			     public void handle(MouseEvent event) 
+			     {
+			    	 bsc.characterClicked(character);
+			    	 event.consume();
+			     }
+			});
+			
 			update();
 		}
 	}
