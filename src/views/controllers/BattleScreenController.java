@@ -339,6 +339,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		}
 		for (CharacterImageView cIV : players) 
 		{
+			if (cIV != null)
 			if (cIV.getCharacter() != null) {
 				cIV.update();
 			}
