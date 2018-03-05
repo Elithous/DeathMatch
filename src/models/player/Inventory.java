@@ -34,7 +34,7 @@ public class Inventory implements Serializable{
 	}
 	
 	public void removeConsumeable(Consumable consumable) {
-		this.consumables.add(consumable);
+		this.consumables.remove(consumable);
 	}
 	
 	public ArrayList<Loot> getLoot() {
