@@ -32,6 +32,30 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	protected Image image;
 	private ArrayList<Ailment> ailments = new ArrayList<>();
 
+	public Character() {
+		
+	}
+	
+	public Character(Character clone) {
+		this.name = clone.name;
+		this.currentHealth = clone.currentHealth;
+		this.maxHealth = clone.maxHealth;
+		this.strength = clone.strength;
+		this.dexterity = clone.dexterity;
+		this.intelligence = clone.intelligence;
+		this.armor = clone.armor;
+		this.attack = clone.attack;
+		this.level = clone.level;
+		this.strengthMulti = clone.strengthMulti;
+		this.dexterityMulti = clone.dexterityMulti;
+		this.intelligenceMulti = clone.intelligenceMulti;
+		this.armorMulti = clone.armorMulti;
+		this.attackMulti = clone.attackMulti;
+		this.equipment = clone.equipment.clone();
+		this.image = clone.image;
+		this.ailments = (ArrayList<Ailment>) clone.ailments.clone();
+	}
+	
 	public int getLevel()
 	{
 		return level;

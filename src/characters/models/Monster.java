@@ -7,6 +7,14 @@ import events.TurnEvent;
 
 public class Monster extends Character
 {
+	public Monster() {
+		
+	}
+	
+	public Monster(Monster clone) {
+		super(clone);
+	}
+	
 	public TurnEvent decideNextTurn(Hero[] heros)
 	{
 		Random rand = new Random();
