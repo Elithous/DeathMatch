@@ -35,7 +35,7 @@ public class LootGenerator
 				{"Angel's Chest Plate", "Leather Shirt", "Iron Chest Plate", "Knight's Chest Plate", "Crusader's Chest Plate", "Cobalt Chest Plate", "Intimidating Steel Chest Plate", "Tribal Steel Chest Plate", "Samurai Chest Plate", "King's Guard Chest Plate", "King's Personal Guard Chest Plate", "Winged Chest Plate", "Master's Chest Plate", "Champion's Chest Plate", "Legend's Chest Plate", "Ethereal Plate"},
 				{"Angel's Boots", "Leather Boots", "Iron Boots", "Knight's Boots", "Crusader's Boots", "Tundra Explorer's Boots", "Intimidating Boots", "Tribal Steel Boots", "Samurai Boots", "King's Guard Boots", "King's Personal Guard Boots", "Winged Boots"}
 		};
-	private static String[] paths = new String[] {"file:Assets/Weapons/Sword/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
+	private static String[] paths = new String[] {"file:Assets/Weapons/Swords/Sword","file:Assets/Weapons/Spear/Spear", "file:Assets/Weapons/Axe/Axe", "file:Assets/Weapons/Shields/Shield", "file:Assets/Weapons/Bow/Bow", "file:Assets/Weapons/Magic/Magic"};
 	private static String[] armorPaths = {"file:Assets/Armor/Helm/Helm", "file:Assets/Armor/Body/Body", "file:Assets/Armor/Legs/Legs" ,"file:Assets/Armor/Rings/Ring"};
 	private static String[][] consumableNames = new String[][] {{"Revive Potion", "Small Health Potion", "Medium Health Potion", "Large Health Potion"},
 																{"Throwing Knife", "Shuriken", "Tomahawk", "Einstein's Big Toy"}};		
@@ -164,7 +164,7 @@ public class LootGenerator
 			armor.setImage(armorPaths[armorType]+0+".png");
 		}
 		else {
-			armor.setImage(armorPaths[armorType]+(armorGrade+1)+".png");
+			armor.setImage(armorPaths[armorType]+(armorGrade)+".png");
 		}
 		return armor;
 	}
@@ -255,7 +255,7 @@ public class LootGenerator
 			weapon.setImage(paths[choice]+0+".png");
 		}
 		else 
-			weapon.setImage(paths[choice]+(type+1)+".png");
+			weapon.setImage(paths[choice]+(type)+".png");
 		
 		return weapon;
 	}
