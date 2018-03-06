@@ -28,7 +28,7 @@ import views.models.ViewOnlyLootListItem;
 
 public class WinController extends EventPublisher implements PlayerController{
 
-	private final float LEVEL_MULTIPLIER = 3.0f;
+	private final float LEVEL_MULTIPLIER = 5.0f;
 	
 	private PlayerSave playerSave;
 
