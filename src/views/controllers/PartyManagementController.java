@@ -148,6 +148,15 @@ public class PartyManagementController implements PlayerController
     	}
     	
     	ps.getInventory().goldTransaction(-1 * e.getValue());
+    	if (e.isEquipped())
+    	for (int i = 0; i < EquipmentSlot.values().length; i++)
+    	{
+    		if ( ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.values()[i]) == e )
+    		{
+    			ps.getPlayers()[currentPlayer].equip(EquipmentSlot.values()[i], null);
+    		}
+    	}
+    	
     	ps.getInventory().removeEquipment(e);
     	
     	update();

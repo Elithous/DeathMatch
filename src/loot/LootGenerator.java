@@ -432,7 +432,6 @@ public class LootGenerator
 		
 		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
 		
-		
 		item.setImage(consumablePaths[0]+type+".png");
 		
 		return item;
