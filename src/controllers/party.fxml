@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.PartyManagementController">
+<StackPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.PartyManagementController">
    <children>
       <VBox fx:id="containerVBox" prefHeight="400.0" prefWidth="600.0">
          <children>
             <HBox fx:id="topHBox" prefHeight="310.0" prefWidth="600.0">
                <children>
-                  <ScrollPane fx:id="equipmentList" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="227.0" onDragOver="#listDragOver" onDragDropped="#listDragDropped"/>
+                  <ScrollPane fx:id="equipmentList" hbarPolicy="NEVER" onDragDropped="#listDragDropped" onDragOver="#listDragOver" prefHeight="300.0" prefWidth="227.0" />
                   <Pane fx:id="playerPane" prefHeight="300.0" prefWidth="374.0" style="-fx-border-color: black;">
                      <children>
                         <ImageView fx:id="currentPlayerImage" fitHeight="100.0" fitWidth="97.0" layoutX="163.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
@@ -106,33 +106,46 @@
                   </Pane>
                </children>
             </HBox>
-            <HBox fx:id="bottomHBox" alignment="CENTER" prefHeight="110.0" prefWidth="600.0" spacing="15.0" style="-fx-border-color: black;">
+            <HBox>
                <children>
-                  <ImageView fx:id="player1Image" fitHeight="58.0" fitWidth="49.0" onMouseClicked="#player1ImageClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Assets/empty%20sprite.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="player2Image" fitHeight="58.0" fitWidth="49.0" onMouseClicked="#player2ImageClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Assets/empty%20sprite.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="player3Image" fitHeight="58.0" fitWidth="49.0" onMouseClicked="#player3ImageClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Assets/empty%20sprite.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="player4Image" fitHeight="58.0" fitWidth="49.0" onMouseClicked="#player4ImageClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Assets/empty%20sprite.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="hireImage" fitHeight="28.0" fitWidth="31.0" onMouseClicked="#hireImageClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Assets/plus.png" />
-                     </image>
-                  </ImageView>
+                  <VBox fx:id="shopBox" onDragDropped="#shopBoxDragDropped" onDragOver="#shopBoxDragOver" prefHeight="100.0" prefWidth="103.0">
+                     <children>
+                        <ImageView fx:id="shopImage" fitHeight="102.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/sell.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <HBox fx:id="bottomHBox" alignment="CENTER" prefHeight="110.0" prefWidth="600.0" spacing="15.0" style="-fx-border-color: black;">
+                     <children>
+                        <ImageView fx:id="player1Image" fitHeight="58.0" fitWidth="49.0" onMouseClicked="#player1ImageClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/empty%20sprite.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="player2Image" fitHeight="58.0" fitWidth="49.0" onMouseClicked="#player2ImageClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/empty%20sprite.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="player3Image" fitHeight="58.0" fitWidth="49.0" onMouseClicked="#player3ImageClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/empty%20sprite.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="player4Image" fitHeight="58.0" fitWidth="49.0" onMouseClicked="#player4ImageClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/empty%20sprite.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="hireImage" fitHeight="28.0" fitWidth="31.0" onMouseClicked="#hireImageClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/plus.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
          </children>

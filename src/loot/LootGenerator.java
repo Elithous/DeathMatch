@@ -403,14 +403,12 @@ public class LootGenerator
 		if (type > names[1].length-1) type = names[1].length-1;
 		
 		item = new Consumable();
-		int d = rand.nextInt(4);
-		//SETTING ATTACK
-		item.setName(consumableNames[1][d]);
+		item.setName(consumableNames[1][type]);
 		item.setEffectOnHealth(-1 * getHealthForPotions(level));
 		
 		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
 		
-		item.setImage(consumablePaths[1]+d+".png");
+		item.setImage(consumablePaths[1]+type+".png");
 		
 		return item;
 	}
@@ -429,15 +427,12 @@ public class LootGenerator
 		if (type == 0) item = new RevivePotion();
 		else item = new Consumable();
 		
-		int p = rand.nextInt(4);
-		//SETTING ATTACK
-		item.setName(consumableNames[0][p]);
+		item.setName(consumableNames[0][type]);
 		item.setEffectOnHealth(getHealthForPotions(level));
 		
 		item.setValue((int)(item.getEffectOnHealth() * VALUE_PER_HEALTH_POINT ));
 		
-		
-		item.setImage(consumablePaths[0]+p+".png");
+		item.setImage(consumablePaths[0]+type+".png");
 		
 		return item;
 	}

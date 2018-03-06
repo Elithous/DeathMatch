@@ -46,6 +46,9 @@ public class PartyManagementController implements PlayerController
     
     @FXML
     private HBox bottomHBox;
+	
+	@FXML
+	private VBox shopBox;
     
     @FXML
     private Pane playerPane;
@@ -127,6 +130,43 @@ public class PartyManagementController implements PlayerController
     
     @FXML
     void bodySlotDragOver(DragEvent event) {
+		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        event.consume();
+    }
+    
+    @FXML
+    void shopBoxDragDropped(DragEvent event) 
+    {
+    	Equipment e = (Equipment) event.getDragboard().getContent(EquipmentListItem.lootDataFormat);
+    	
+    	for (Equipment eq : ps.getInventory().getEquipment())
+    	{
+    		if (eq.equals(e))
+    		{
+    			e = eq;
+    		}
+    	}
+    	
+    	ps.getInventory().goldTransaction(-1 * e.getValue());
+    	if (e.isEquipped())
+    	for (int i = 0; i < EquipmentSlot.values().length; i++)
+    	{
+    		if ( ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.values()[i]) == e )
+    		{
+    			ps.getPlayers()[currentPlayer].equip(EquipmentSlot.values()[i], null);
+    		}
+    	}
+    	
+    	ps.getInventory().removeEquipment(e);
+    	
+    	update();
+    	
+        event.setDropCompleted(true);
+        event.consume();
+    }
+    
+    @FXML
+    void shopBoxDragOver(DragEvent event) {
 		event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         event.consume();
     }
