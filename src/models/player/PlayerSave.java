@@ -14,6 +14,18 @@ public class PlayerSave implements Serializable{
 		return players;
 	}
 	
+	public int getNumOfHeros() {
+		int num=0;
+		
+		for(int i=0;i<4;i++) {
+			if(players[i] != null) {
+				num++;
+			}
+		}
+		return num;
+		
+	}
+	
 	public boolean removePlayer(Hero heroN) 
 	{
 		for (int i = 0; i < players.length; i++) 

@@ -4,7 +4,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import characters.enums.EquipmentSlot;
+import characters.models.Hero;
 import controllers.GameApp;
+import controllers.HeroGenerator;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
@@ -246,7 +248,11 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void hireImageClicked(MouseEvent event) {
-
+    		if(ps.getInventory().getGold() >=100) {
+    			ps.addPlayer(HeroGenerator.generateHero(1));
+    			ps.getInventory().goldTransaction(-100);
+    		}
+    		update();
     }
 
     @FXML

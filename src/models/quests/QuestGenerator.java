@@ -21,11 +21,11 @@ public class QuestGenerator  {
 		Quest quest = new Quest(MonsterGenerator.generateMonsters(heroTotalLevel), 0);
 		
 		
-		for(int i=0; i<playerSave.getPlayers().length; i++) {
+		for(int i=0; i<playerSave.getNumOfHeros(); i++) {
 			int heroLevel = h[i].getLevel();
 			heroTotalLevel = heroTotalLevel + heroLevel;
 		}
-		System.out.println(heroTotalLevel);
+		
 		int monsterLevel1 = heroTotalLevel -3;
 		int monsterLevel2 = heroTotalLevel -1;
 		int monsterLevel3 = heroTotalLevel;
