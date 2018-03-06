@@ -13,7 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import lib.EventPublisher;
@@ -44,15 +44,51 @@ public class QuestController extends EventPublisher implements PlayerController 
 	@FXML
 	private VBox questBox;
 
-	@FXML
-	void questListClicked(MouseEvent event) {
-		
-	}
+    @FXML
+    private HBox saveLoadBox;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private Button loadButton;
+    
+    @FXML
+    private Button saveQuitButton;
+    
+    @FXML
+    private Button quitButton;
+
+	private PlayerSave playerSave;
+
+    @FXML
+    void loadButtonClicked(ActionEvent event) {
+    	PlayerSave save = GameApp.load();
+    	ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.MANAGEMENT, null, save);
+    	this.notifyListeners(e);
+    }
+
+    @FXML
+    void saveButtonClicked(ActionEvent event) {
+    	GameApp.save(playerSave);
+    }
+
+    @FXML
+    void saveQuitButtonAction(ActionEvent event) {
+    	GameApp.save(playerSave);
+    	ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.MAIN, null, null);
+    	this.notifyListeners(e);
+    }
+
+    @FXML
+    void quitButtonAction(ActionEvent event) {
+    	ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.MAIN, null, null);
+    	this.notifyListeners(e);
+    }
 
 	@FXML
 	void initialize() {
 		assert questBox != null : "fx:id=\"questList\" was not injected: check your FXML file 'quest.fxml'.";
-		
 
 		StackPane parent = (StackPane) contentBox.getParent();
 		SimpleDoubleProperty titleFontSize = new SimpleDoubleProperty();
@@ -66,11 +102,22 @@ public class QuestController extends EventPublisher implements PlayerController 
 		contentBox.prefWidthProperty().bind(parent.widthProperty());
 		contentBox.prefHeightProperty().bind(parent.heightProperty());
 		
-	}
+
+		SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();
+
+		buttonFontSize.bind(parent.heightProperty().divide(35));
+		loadButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
+		saveButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
+		saveQuitButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
+		quitButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
+		
+		saveLoadBox.spacingProperty().bind(parent.widthProperty().divide(20));
+		}
 
 	@Override
 	public void init(PlayerSave playerSave, Quest quest, GameApp app) {
 		this.addListener(app);
+		this.playerSave = playerSave;
 		
 		Quest[] quests = QuestGenerator.generateQuests(playerSave);
 		

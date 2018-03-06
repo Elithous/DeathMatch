@@ -29,7 +29,8 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	protected float armorMulti = 1f;
 	protected float attackMulti = 1f;
 	protected Equipment[] equipment = new Equipment[7];
-	protected Image image;
+	protected transient Image image;
+	protected String imageUrl;
 	private ArrayList<Ailment> ailments = new ArrayList<>();
 
 	public Character() {
@@ -54,6 +55,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		this.equipment = clone.equipment.clone();
 		this.image = clone.image;
 		this.ailments = (ArrayList<Ailment>) clone.ailments.clone();
+		this.imageUrl = clone.imageUrl;
 	}
 	
 	public int getLevel()
@@ -273,15 +275,16 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		return false;
 	}
 	
-	public Image getImage()
+	public Image getImage() 
 	{
+		if (image == null) image = new Image(imageUrl);
 		return image;
 	}
 	
-	public void setImage(Image imageN)
+	public void setImage(String url) 
 	{
-		if (imageN != null)
-			image = imageN;
+		this.image = new Image(url);
+		if (image != null) imageUrl = url;
 	}
 
 	@Override
