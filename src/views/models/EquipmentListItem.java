@@ -1,6 +1,5 @@
 package views.models;
 
-import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -38,7 +37,7 @@ public class EquipmentListItem extends HBox
 		StringBuilder sb = new StringBuilder();
 		if(loot instanceof Weapon) {
 			Weapon wep = (Weapon) loot;
-			sb.append(loot.getAttack() > 0 ? "" + wep.getMinAttack() + "-" + wep.getMaxAttack() + " Attack  " : "");
+			sb.append(wep.getMaxAttack() > 0 ? "" + wep.getMinAttack() + "-" + wep.getMaxAttack() + " Attack  " : "");
 		} else {
 			sb.append(loot.getAttack() > 0 ? "+" + loot.getArmor() + " Attack  " : "");
 		}
