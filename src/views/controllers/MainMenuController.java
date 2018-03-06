@@ -99,6 +99,10 @@ public class MainMenuController extends EventPublisher implements PlayerControll
 		loadGameButton.prefWidthProperty().bind(stackPane.widthProperty().divide(5));
 
 		settingsButton.setDisable(true);
+		PlayerSave save = GameApp.load();
+		if(save == null) {
+			loadGameButton.setDisable(true);
+		}
 
 		contentBox.spacingProperty().bind(stackPane.heightProperty().divide(90));
 
