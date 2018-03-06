@@ -12,10 +12,6 @@ import javafx.stage.Stage;
 import lib.Event;
 import lib.FileUtil;
 import lib.IEventListener;
-import loot.LootGenerator;
-import loot.LootGeneratorResult;
-import loot.models.Armor;
-import loot.models.Weapon;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.enums.ScreenType;
@@ -26,14 +22,16 @@ public class GameApp extends Application implements IEventListener
 		public static HashMap<ScreenType, String> screenPaths;
 		
 		public Stage stage;
+		private Scene scene;
 		
 		@Override
 		public void start(Stage stage) throws IOException 
 		{
-			
+
 			this.stage = stage;
 			Parent root = loadFXML(ScreenType.MAIN, null, null);
-			stage.setScene(new Scene(root));
+			scene = new Scene(root);
+			stage.setScene(scene);
 			stage.setFullScreen(true);
 			stage.setFullScreenExitHint("");
 			stage.show();
@@ -85,7 +83,7 @@ public class GameApp extends Application implements IEventListener
 				ChangeScreenEvent screenEvent = (ChangeScreenEvent) arg0;
 				try {
 					Parent node = loadFXML(screenEvent.screenType, screenEvent.playerSave, screenEvent.quest);
-					stage.setScene(new Scene(node));
+					scene.setRoot(node);
 					stage.setFullScreen(true);
 				} catch (IOException e) {
 					
