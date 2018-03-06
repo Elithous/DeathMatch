@@ -43,7 +43,7 @@ public class BattleController implements IEventListener
 		for(characters.models.Character c : all)
 			c.fullHeal();
 		characterOrder.addAll(all);
-		takeTurn();
+//		takeTurn();
 	}
 	
 	public Queue<characters.models.Character> getOrder()
@@ -56,7 +56,7 @@ public class BattleController implements IEventListener
 		return isWaitingForInput;
 	}
 	
-	private void takeTurn()
+	public void takeTurn()
 	{
 		int monstersAlive = 0;
 		int heroesAlive = 0;
