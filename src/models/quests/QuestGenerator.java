@@ -25,11 +25,11 @@ public class QuestGenerator {
 			heroTotalLevel = h[i].getLevel();
 		}
 		
-		int monsterLevel1 = heroTotalLevel -2;
+		int monsterLevel1 = heroTotalLevel -3;
 		int monsterLevel2 = heroTotalLevel -1;
 		int monsterLevel3 = heroTotalLevel;
-		int monsterLevel4 = heroTotalLevel +1;
-		int monsterLevel5 = heroTotalLevel +2;
+		int monsterLevel4 = heroTotalLevel +3;
+		int monsterLevel5 = heroTotalLevel *2;
 		
 		if(monsterLevel1 <=0) {
 			monsterLevel1=1;
@@ -41,23 +41,23 @@ public class QuestGenerator {
 				
 		switch(difficulty) {
 		case 1: 
-			quest = new Quest(MonsterGenerator.generateMonsters(heroTotalLevel -2), heroTotalLevel -2);
+			quest = new Quest(MonsterGenerator.generateMonsters(monsterLevel1), monsterLevel1);
 		break;
 		
 		case 2: 
-			quest = new Quest(MonsterGenerator.generateMonsters(heroTotalLevel -1), heroTotalLevel -1);
+			quest = new Quest(MonsterGenerator.generateMonsters(monsterLevel2), monsterLevel2);
 		break;
 		
 		case 3:
-			quest = new Quest(MonsterGenerator.generateMonsters(heroTotalLevel), heroTotalLevel);
+			quest = new Quest(MonsterGenerator.generateMonsters(monsterLevel3), monsterLevel3);
 		break;
 		
 		case 4: 
-			quest = new Quest(MonsterGenerator.generateMonsters(heroTotalLevel +1), heroTotalLevel +1);
+			quest = new Quest(MonsterGenerator.generateMonsters(monsterLevel4), monsterLevel4);
 		break;
 		
 		case 5: 
-			quest = new Quest(MonsterGenerator.generateMonsters(heroTotalLevel +2), heroTotalLevel +2);
+			quest = new Quest(MonsterGenerator.generateMonsters(monsterLevel5), monsterLevel5);
 		break;
 		}
 		
