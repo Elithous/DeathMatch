@@ -426,7 +426,7 @@ public class LootGenerator
 		
 		if (type == 0) item = new RevivePotion();
 		else item = new Consumable();
-		
+
 		item.setName(consumableNames[0][type]);
 		item.setEffectOnHealth(getHealthForPotions(level));
 		
