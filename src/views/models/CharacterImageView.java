@@ -73,7 +73,10 @@ public class CharacterImageView extends VBox {
 	
 	public void update() 
 	{
-		health.setProgress(((float)character.getCurrentHealth())/character.getMaxHealth());
+		if (character.getCurrentHealth() <= 0)
+			health.setDisable(true);
+		else
+			health.setProgress(((float)character.getCurrentHealth())/character.getMaxHealth());
 		this.characterImage.setImage(character.getImage());
 	}
 }
