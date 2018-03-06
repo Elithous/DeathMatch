@@ -5,7 +5,7 @@ import characters.models.Hero;
 import characters.models.Monster;
 import models.player.PlayerSave;
 
-public class QuestGenerator {
+public class QuestGenerator  {
 	
 	
 	public static Quest[] generateQuests(PlayerSave playerSave) {
@@ -16,19 +16,20 @@ public class QuestGenerator {
 	}
 	
 	private static Quest generateQuest(PlayerSave playerSave, int difficulty) {
-		Hero[] h = playerSave.getPlayers();
+		Hero[] h = playerSave.getPlayers().clone();
 		int heroTotalLevel = 0;
 		Quest quest = new Quest(MonsterGenerator.generateMonsters(heroTotalLevel), 0);
 		
 		
 		for(int i=0; i<playerSave.getPlayers().length; i++) {
-			heroTotalLevel = h[i].getLevel();
+			int heroLevel = h[i].getLevel();
+			heroTotalLevel = heroTotalLevel + heroLevel;
 		}
-		
+		System.out.println(heroTotalLevel);
 		int monsterLevel1 = heroTotalLevel -3;
 		int monsterLevel2 = heroTotalLevel -1;
 		int monsterLevel3 = heroTotalLevel;
-		int monsterLevel4 = heroTotalLevel +3;
+		int monsterLevel4 = heroTotalLevel +2;
 		int monsterLevel5 = heroTotalLevel *2;
 		
 		if(monsterLevel1 <=0) {
