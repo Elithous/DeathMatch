@@ -21,7 +21,7 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 	protected int dexterity;
 	protected int intelligence;
 	protected int armor;
-	protected int attack;	
+	protected int attack;
 	protected int level = 1;
 	protected float strengthMulti = 1f;
 	protected float dexterityMulti = 1f;
@@ -297,6 +297,33 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		
 		return (int)(result * attackMulti);
 	}
+	
+	public int getMinAttack() {
+		int result = attack;
+		
+		for(Equipment e : equipment)
+			if (e!=null)
+				if(e instanceof Weapon) {
+					result += ((Weapon) e).getMinAttack();
+				} else
+					result += e.getAttack();
+		
+		return (int)(result * attackMulti);
+	}
+	
+	public int getMaxAttack() {
+
+		int result = attack;
+		
+		for(Equipment e : equipment)
+			if (e!=null)
+				if(e instanceof Weapon) {
+					result += ((Weapon) e).getMaxAttack();
+				} else
+					result += e.getAttack();
+		
+		return (int)(result * attackMulti);
+	}
 
 	@Override
 	public void setAttack(int attack) 
@@ -327,7 +354,11 @@ public class Character implements IHasStats, Serializable, Comparable<Character>
 		sb.append("Dexterity: ").append(this.getDexterity()).append("\n");
 		sb.append("Intelligence: ").append(this.getIntelligence()).append("\n");
 		sb.append("Armor: ").append(this.getArmor()).append("\n");
-		sb.append("Attack: ").append(this.getAttack()).append("\n");
+		if(this.getMinAttack() == this.getMaxAttack()) {
+			sb.append("Attack: ").append(this.getAttack()).append("\n");
+		} else {
+			sb.append("Attack: ").append(this.getMinAttack()).append("-").append(this.getMaxAttack()).append("\n");
+		}
 		
 		return sb.toString();
 	}
