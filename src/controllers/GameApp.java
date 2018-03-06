@@ -30,7 +30,7 @@ public class GameApp extends Application implements IEventListener
 		@Override
 		public void start(Stage stage) throws IOException 
 		{
-
+			
 			this.stage = stage;
 			Parent root = loadFXML(ScreenType.MAIN, null, null);
 			stage.setScene(new Scene(root));

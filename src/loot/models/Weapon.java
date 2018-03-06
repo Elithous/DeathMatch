@@ -30,4 +30,11 @@ public class Weapon extends Equipment{
 		return attackMin + (new Random().nextInt(attackMax-attackMin));
 	}
 	
+	public int getMinAttack() {
+		return attackMin;
+	}
+	
+	public int getMaxAttack() {
+		return attackMax;
+	}
 }
