@@ -113,7 +113,7 @@ public class MonsterGenerator {
 			path += rand.nextInt(4);
 			break;
 		}
-		monsterBase.setImage(new Image(path + ".png"));
+		monsterBase.setImage(path + ".png");
 		
 		setStatsForMonster(monsterBase, level);
 		return monsterBase;

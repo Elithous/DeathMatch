@@ -26,6 +26,7 @@ public class BattleController implements IEventListener
 	BattleScreenController view;
 	Queue<characters.models.Character> characterOrder = new LinkedList<>();
 	private boolean isWaitingForInput = false;
+	private boolean isDead = false;
 	
 	public BattleController(PlayerSave playerSave, Quest quest, BattleScreenController view) 
 	{
@@ -70,18 +71,23 @@ public class BattleController implements IEventListener
 		if (heroesAlive==0) 
 		{
 			ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.LOSE, quest, playerSave);
+			isDead = true;
 			view.switchScreen(e);
 		}
 		if (monstersAlive==0) 
 		{
 			ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.WIN, quest, playerSave);
+			isDead = true;
 			view.switchScreen(e);
 		}
 		
 		while(characterOrder.peek().getCurrentHealth() <= 0)
 		{
 			characterOrder.add(characterOrder.poll());
+			view.update();
 		}
+		
+		System.out.println("Helth is "+characterOrder.peek().getCurrentHealth());
 		
 		characterOrder.peek().updateAilments();
 		if (characterOrder.peek() instanceof Monster)
@@ -115,7 +121,7 @@ public class BattleController implements IEventListener
 		characterOrder.add(characterOrder.poll());
 		view.update();
 		System.out.println("applied turn");
-		takeTurn();
+		if (!isDead) takeTurn();
 	}
 
 	@Override
