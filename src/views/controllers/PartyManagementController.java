@@ -31,6 +31,8 @@ public class PartyManagementController implements PlayerController
 {
 	private int currentPlayer = 0;
 
+	@FXML
+	private VBox scroll;
     @FXML
     private ResourceBundle resources;
 
@@ -579,7 +581,8 @@ public class PartyManagementController implements PlayerController
 	@Override
 	public void update() 
 	{
-		VBox content = new VBox();
+		VBox content = scroll;
+		content.getChildren().removeAll(scroll.getChildren());
 		
 		Label goldLabel = new Label("Gold: " + ps.getInventory().getGold());
 		content.getChildren().add(goldLabel);
