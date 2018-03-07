@@ -607,8 +607,10 @@ public class PartyManagementController implements PlayerController
 		if (ps.getPlayers()[2] != null) player3Image.setImage(ps.getPlayers()[2].getImage());
 		if (ps.getPlayers()[3] != null) player4Image.setImage(ps.getPlayers()[3].getImage());
 		
-		if(ps.getPlayers()[3] != null) {
-			hireImage.setVisible(false);
+		for (int i = 0; i < 3; i++) {
+		if(ps.getPlayers()[i] == null) {
+			hireImage.setVisible(true);
+		}
 		}
 		
 	}
