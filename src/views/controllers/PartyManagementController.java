@@ -582,6 +582,11 @@ public class PartyManagementController implements PlayerController
 	public void update() 
 	{
 		VBox content = scroll;
+		content.getChildren().removeAll(scroll.getChildren());
+		
+		Label goldLabel = new Label("Gold: " + ps.getInventory().getGold());
+		content.getChildren().add(goldLabel);
+		
     	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
 		for (Equipment e : ps.getInventory().getEquipment())
 		{
