@@ -19,9 +19,6 @@
                   <Image url="@../../Assets/Backgrounds/forest.jpg" />
                </image>
             </ImageView>
-            <Label fx:id="logLabel1" layoutY="250.0" text="FOOOOOOOOOOOOOOOOO" textFill="RED" />
-            <Label fx:id="logLabel2" layoutY="235.0" opacity="0.8" text="FOOOOOOOOOOOOOOOOO" textFill="RED" />
-            <Label fx:id="logLabel3" layoutY="220.0" opacity="0.4" text="FOOOOOOOOOOOOOOOOO" textFill="RED" />
             <HBox prefHeight="270.0" prefWidth="294.0">
                <children>
                   <VBox alignment="CENTER_RIGHT" nodeOrientation="RIGHT_TO_LEFT" prefHeight="214.0" prefWidth="154.0">
@@ -48,6 +45,9 @@
                      </padding>
                   </VBox>
                </children></HBox>
+            <Label fx:id="logLabel1" layoutY="250.0" text="FOOOOOOOOOOOOOOOOO" textFill="RED" />
+            <Label fx:id="logLabel2" layoutY="235.0" opacity="0.8" text="FOOOOOOOOOOOOOOOOO" textFill="RED" />
+            <Label fx:id="logLabel3" layoutY="220.0" opacity="0.4" text="FOOOOOOOOOOOOOOOOO" textFill="RED" />
          </children>
       </Pane>
       <HBox fx:id="selectionBox" prefHeight="131.0" prefWidth="600.0">

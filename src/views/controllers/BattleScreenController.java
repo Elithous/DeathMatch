@@ -298,8 +298,10 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 
 		int count = 0;
 		for (Node node : battlePane.getChildren()) {
-			HBox box = node instanceof HBox ? (HBox) node : new HBox();
-			for (Node node2 : box.getChildren()) {
+			HBox box = node instanceof HBox ? (HBox) node : null;
+			if (box != null)
+			for (Node node2 : box.getChildren()) 
+			{
 				VBox box2 = node2 instanceof VBox ? (VBox) node2 : new VBox();
 				if (count < 4) {
 
