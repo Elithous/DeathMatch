@@ -53,9 +53,9 @@ public class MonsterGenerator {
 		int levelRange = 30 / MonsterType.values().length;
 		Random rand = new Random();
 		MonsterType monsterType = MonsterType.values()[(level / levelRange >= MonsterType.values().length ? MonsterType.values().length - 1 : level / levelRange)];
-		Monster monsterBase = baseMonsters.get(monsterType);
+		Monster monsterBase = new Monster(baseMonsters.get(monsterType));
 		
-		if (monsterType == MonsterType.Goblin || monsterType == MonsterType.Skeleton || monsterType == MonsterType.Imp || monsterType == MonsterType.Mage) {
+		if (monsterType == MonsterType.GOBLIN || monsterType == MonsterType.SKELETON || monsterType == MonsterType.IMP || monsterType == MonsterType.MAGE) {
 			
 			monsterBase.equip(EquipmentSlot.MAIN_HAND, LootGenerator.generateWeapon(level * 5, level));
 			//Armor Chance
@@ -90,26 +90,33 @@ public class MonsterGenerator {
 		}
 		
 		//Setting Image
+
 		String path = "file:Assets/Monsters/Monster Completed/" + monsterType.name() + "/" + monsterType.name();
 		
-		if (monsterType == MonsterType.Skeleton) {
+		switch(monsterType) {
+		case SKELETON:
 			path += rand.nextInt(2);
-		} else if (monsterType == MonsterType.Goblin) {
+			break;
+		case GOBLIN:
 			path += rand.nextInt(4);
-		} else if (monsterType == MonsterType.Monster) {
+			break;
+		case MONSTER:
 			path += rand.nextInt(8);
-		} else if (monsterType == MonsterType.Imp) {
+			break;
+		case IMP:
 			path += rand.nextInt(3);
-		} else if (monsterType == MonsterType.Dragon) {
+			break;
+		case DRAGON:
 			path += rand.nextInt(10);
-		} else if (monsterType == MonsterType.Boss) {
+			break;
+		case BOSS:
 			path += rand.nextInt(4);
+			break;
 		}
-		
-		monsterBase.setImage(new Image(path + ".png"));
+		monsterBase.setImage(path + ".png");
 		
 		setStatsForMonster(monsterBase, level);
-		return new Monster(monsterBase);
+		return monsterBase;
 //		monsterBase.setLevel(level);
 		
 	}
@@ -119,28 +126,100 @@ public class MonsterGenerator {
 		for(MonsterType monsterType : MonsterType.values()) {
 			Random rand = new Random();
 			Monster tempMonster = new Monster();
+			//Setting Image
 			tempMonster.setName(monsterType.name());
-			//TODO Set up the system for images
-//			String path = "file:Assets/Monsters/Monster Completed/" + monsterType.name() + "/" + monsterType.name();
-//			
-//			if (monsterType == MonsterType.Skeleton) {
-//				path += rand.nextInt(2);
-//			} else if (monsterType == MonsterType.Goblin) {
-//				path += rand.nextInt(4);
-//			} else if (monsterType == MonsterType.Monster) {
-//				path += rand.nextInt(8);
-//			} else if (monsterType == MonsterType.Imp) {
-//				path += rand.nextInt(3);
-//			} else if (monsterType == MonsterType.Dragon) {
-//				path += rand.nextInt(10);
-//			} else if (monsterType == MonsterType.Boss) {
-//				path += rand.nextInt(4);
-//			}
-//			
-//			tempMonster.setImage(new Image(path));
 			
 			baseMonsters.put(monsterType, tempMonster);
 		}
+		Monster slime = new Monster();
+		slime.setName("Slime");
+		slime.setAttack(1);
+		slime.setArmor(1);
+		slime.setStrength(3);
+		slime.setDexterity(3);
+		slime.setIntelligence(3);
+		slime.setMaxHealth(15);
+		baseMonsters.put(MonsterType.SLIME, slime);
+		
+		Monster skeleton = new Monster();
+		skeleton.setName("Skeleton");
+		skeleton.setAttack(5);
+		skeleton.setArmor(3);
+		skeleton.setStrength(7);
+		skeleton.setDexterity(7);
+		skeleton.setIntelligence(7);
+		skeleton.setMaxHealth(25);
+		baseMonsters.put(MonsterType.SKELETON, skeleton);
+		
+		Monster goblin = new Monster();
+		goblin.setName("Goblin");
+		goblin.setAttack(8);
+		goblin.setArmor(6);
+		goblin.setStrength(10);
+		goblin.setDexterity(10);
+		goblin.setIntelligence(10);
+		goblin.setMaxHealth(35);
+		baseMonsters.put(MonsterType.GOBLIN, goblin);
+		
+		Monster mage = new Monster();
+		mage.setName("Mage");
+		mage.setAttack(12);
+		mage.setArmor(9);
+		mage.setStrength(13);
+		mage.setDexterity(13);
+		mage.setIntelligence(13);
+		mage.setMaxHealth(45);
+		baseMonsters.put(MonsterType.MAGE, mage);
+		
+		Monster monster = new Monster();
+		monster.setName("Monster");
+		monster.setAttack(15);
+		monster.setArmor(12);
+		monster.setStrength(16);
+		monster.setDexterity(16);
+		monster.setIntelligence(16);
+		monster.setMaxHealth(55);
+		baseMonsters.put(MonsterType.MONSTER, monster);
+
+		Monster imp = new Monster();
+		imp.setName("Monster");
+		imp.setAttack(15);
+		imp.setArmor(12);
+		imp.setStrength(16);
+		imp.setDexterity(16);
+		imp.setIntelligence(16);
+		imp.setMaxHealth(55);
+		baseMonsters.put(MonsterType.IMP, imp);
+		
+		Monster ratking = new Monster();
+		ratking.setName("Monster");
+		ratking.setAttack(15);
+		ratking.setArmor(12);
+		ratking.setStrength(16);
+		ratking.setDexterity(16);
+		ratking.setIntelligence(16);
+		ratking.setMaxHealth(55);
+		baseMonsters.put(MonsterType.RATKING, ratking);
+		
+		Monster dragon = new Monster();
+		dragon.setName("Monster");
+		dragon.setAttack(15);
+		dragon.setArmor(12);
+		dragon.setStrength(16);
+		dragon.setDexterity(16);
+		dragon.setIntelligence(16);
+		dragon.setMaxHealth(55);
+		baseMonsters.put(MonsterType.DRAGON, dragon);
+
+		Monster boss = new Monster();
+		boss.setName("Monster");
+		boss.setAttack(15);
+		boss.setArmor(12);
+		boss.setStrength(16);
+		boss.setDexterity(16);
+		boss.setIntelligence(16);
+		boss.setMaxHealth(55);
+		baseMonsters.put(MonsterType.BOSS, boss);
 	}
 	
 	private static void setStatsForMonster(Monster monster, int level) {

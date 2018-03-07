@@ -271,6 +271,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		this.playerSave = playerSave;
 		this.quest = quest;
 		batCon = new BattleController(playerSave, quest, this);
+		batCon.takeTurn();
 		this.addListener(batCon);
 		
 		for (Hero c : playerSave.getPlayers())
@@ -344,7 +345,6 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 				cIV.update();
 			}
 		}
-
 		currentPlayerImage.setImage(batCon.getOrder().peek().getImage());
 		currentPlayerName.setText(batCon.getOrder().peek().getName());
 		

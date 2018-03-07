@@ -33,7 +33,8 @@ public class PlayerSave implements Serializable{
 			if (players[i] == heroN) 
 			{
 				players[i] = null;
-				if (i < players.length)
+				
+				if (i < players.length)	
 				for(int j = i+1; j < players.length; j++)
 					players[i] = players[j];
 				return true;

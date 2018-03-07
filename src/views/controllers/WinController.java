@@ -1,6 +1,9 @@
 package views.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -28,7 +31,7 @@ import views.models.ViewOnlyLootListItem;
 
 public class WinController extends EventPublisher implements PlayerController{
 
-	private final float LEVEL_MULTIPLIER = 3.0f;
+	private final float LEVEL_MULTIPLIER = 5.0f;
 	
 	private PlayerSave playerSave;
 
@@ -102,8 +105,22 @@ public class WinController extends EventPublisher implements PlayerController{
 		
 		double totalExp = (quest.difficulty * LEVEL_MULTIPLIER) + ((quest.difficulty * LEVEL_MULTIPLIER)*rand.nextFloat()*0.4f);
 		for(Hero hero : playerSave.getPlayers()) {
+			if(hero !=null) {
 			hero.addExp((int) (totalExp/playerSave.getPlayers().length));
+			}
+			}
+		
+		ArrayList<Hero> heroes = new ArrayList<Hero>();
+		heroes.addAll(Arrays.asList(playerSave.getPlayers()));
+		
+		for(Hero h : heroes) {
+			if(h!=null && h.getCurrentHealth()<=0) {
+				playerSave.removePlayer(h);
+			}
 		}
+		
+		
+		
 	}
 
 	@Override

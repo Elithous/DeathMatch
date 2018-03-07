@@ -1,5 +1,9 @@
 package characters.models;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import characters.enums.BattleChoice;
@@ -17,9 +21,12 @@ public class Monster extends Character
 	
 	public TurnEvent decideNextTurn(Hero[] heros)
 	{
+		
 		Random rand = new Random();
-		Hero hero = heros[rand.nextInt(heros.length)];
-		return new TurnEvent(hero, BattleChoice.ATTACK, null);
+		ArrayList<Hero> heroes = new ArrayList<Hero>();
+		heroes.addAll(Arrays.asList(heros));
+		heroes.removeAll(Collections.singleton(null));
+		return new TurnEvent(heroes.get(rand.nextInt(heroes.size())), BattleChoice.ATTACK, null);
 
 	}
 	

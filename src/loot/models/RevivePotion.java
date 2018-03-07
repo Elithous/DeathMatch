@@ -7,6 +7,11 @@ public class RevivePotion extends Consumable
 	@Override
 	public void use(characters.models.Character target) 
 	{
-		target.adjustHealth((int)(target.getMaxHealth() * PERCENT_HEALTH));
+		if(target.getCurrentHealth() <= 0) {
+			target.adjustHealth((int)(target.getMaxHealth() * PERCENT_HEALTH));
+			System.out.println("Success - revive");
+		} else {
+			System.out.println("Fail - not revive");
+		}
 	}
 }

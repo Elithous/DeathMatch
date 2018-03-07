@@ -39,7 +39,7 @@ public class HeroGenerator
 		{
 			hired.addExp(hired.getRequiredExp());
 		}
-		hired.setImage(new Image(path+rand.nextInt(HERO_AMOUNT) +".png"));
+		hired.setImage(path+rand.nextInt(HERO_AMOUNT) +".png");
 		return hired;
 	}
 	
