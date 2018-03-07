@@ -31,6 +31,8 @@ public class PartyManagementController implements PlayerController
 {
 	private int currentPlayer = 0;
 
+	@FXML
+	private VBox scroll;
     @FXML
     private ResourceBundle resources;
 
@@ -579,7 +581,7 @@ public class PartyManagementController implements PlayerController
 	@Override
 	public void update() 
 	{
-		VBox content = new VBox();
+		VBox content = scroll;
     	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
 		for (Equipment e : ps.getInventory().getEquipment())
 		{
