@@ -63,17 +63,20 @@ public class QuestController extends EventPublisher implements PlayerController 
     	PlayerSave save = GameApp.load();
     	ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.MANAGEMENT, null, save);
     	this.notifyListeners(e);
+    	update();
     }
 
     @FXML
     void saveButtonClicked(ActionEvent event) {
     	GameApp.save(playerSave);
+    	update();
     }
 
     @FXML
     void quitButtonAction(ActionEvent event) {
     	ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.MAIN, null, null);
     	this.notifyListeners(e);
+    	update();
     }
 
 	@FXML
@@ -137,10 +140,11 @@ public class QuestController extends EventPublisher implements PlayerController 
 			});
 		}
 		questBox.getChildren().addAll(questItems);
+		update();
 	}
 
 	@Override
 	public void update() {
-		
+		loadButton.setDisable(GameApp.load() == null);
 	}
 }

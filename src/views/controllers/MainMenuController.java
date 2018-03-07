@@ -83,6 +83,7 @@ public class MainMenuController extends EventPublisher implements PlayerControll
 
 		backgroundImage.fitWidthProperty().bind(stackPane.widthProperty());
 		backgroundImage.fitHeightProperty().bind(stackPane.heightProperty());
+		backgroundImage.setPreserveRatio(false);
 
 		SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();
 		SimpleDoubleProperty titleFontSize = new SimpleDoubleProperty();
