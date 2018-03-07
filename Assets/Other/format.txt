@@ -1,0 +1,2 @@
+bckground color:  #85BEE9
+border color:  #3A5E90

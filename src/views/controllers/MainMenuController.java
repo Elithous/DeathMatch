@@ -91,7 +91,7 @@ public class MainMenuController extends EventPublisher implements PlayerControll
 		contentBox.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
 
 		titleFontSize.bind(stackPane.heightProperty().divide(10));
-		titleLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", titleFontSize.asString(), ";"));
+	//	titleLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", titleFontSize.asString(), ";"));
 
 		exitButton.prefWidthProperty().bind(stackPane.widthProperty().divide(5));
 		settingsButton.prefWidthProperty().bind(stackPane.widthProperty().divide(5));
