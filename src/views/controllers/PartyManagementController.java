@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import characters.enums.EquipmentSlot;
-import characters.models.Hero;
 import controllers.GameApp;
 import controllers.HeroGenerator;
 import javafx.beans.binding.Bindings;
@@ -455,6 +454,9 @@ public class PartyManagementController implements PlayerController
         playerPane.prefHeightProperty().bind(topHBox.heightProperty());
         
         equipmentList.prefWidthProperty().bind(topHBox.widthProperty().multiply(.4));
+        
+        scroll.prefWidthProperty().bind(equipmentList.prefWidthProperty().subtract(2));
+        scroll.prefHeightProperty().bind(equipmentList.heightProperty().subtract(10));
         
         // Bind the image objects in playerPane to positions and sizes
         currentPlayerImage.fitWidthProperty().bind(playerPane.widthProperty().divide(5));
