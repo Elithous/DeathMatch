@@ -49,6 +49,7 @@ public class EquipmentListItem extends HBox
 		sb.append(loot.getRequiredStrength() > 0 ? "" + loot.getRequiredStrength() + " Required Strength  " : "");
 		sb.append(loot.getRequiredDexterity() > 0 ? "" + loot.getRequiredDexterity() + " Required Dexterity  " : "");
 		sb.append(loot.getRequiredIntelligence() > 0 ? "" + loot.getRequiredIntelligence() + " Required Intelligence  " : "");
+		sb.append(loot.getValue() > 0 ? "Value: " + loot.getValue() : "");
 		stats.setText(sb.toString());
 		stats.setTextFill(new Color(.4, .4, .4, 1));
 		forSpacing.getChildren().addAll(info, stats);
