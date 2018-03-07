@@ -21,7 +21,6 @@
                <children>
                   <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
                   <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadButtonClicked" text="Load" />
-                  <Button fx:id="saveQuitButton" mnemonicParsing="false" onAction="#saveQuitButtonAction" text="Save &amp; Quit" />
                   <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quitButtonAction" text="Quit" />
                </children>
             </HBox>

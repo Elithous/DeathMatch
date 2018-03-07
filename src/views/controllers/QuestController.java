@@ -54,9 +54,6 @@ public class QuestController extends EventPublisher implements PlayerController 
     private Button loadButton;
     
     @FXML
-    private Button saveQuitButton;
-    
-    @FXML
     private Button quitButton;
 
 	private PlayerSave playerSave;
@@ -71,13 +68,6 @@ public class QuestController extends EventPublisher implements PlayerController 
     @FXML
     void saveButtonClicked(ActionEvent event) {
     	GameApp.save(playerSave);
-    }
-
-    @FXML
-    void saveQuitButtonAction(ActionEvent event) {
-    	GameApp.save(playerSave);
-    	ChangeScreenEvent e = new ChangeScreenEvent(ScreenType.MAIN, null, null);
-    	this.notifyListeners(e);
     }
 
     @FXML
@@ -108,7 +98,6 @@ public class QuestController extends EventPublisher implements PlayerController 
 		buttonFontSize.bind(parent.heightProperty().divide(35));
 		loadButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
 		saveButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
-		saveQuitButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
 		quitButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
 		
 		saveLoadBox.spacingProperty().bind(parent.widthProperty().divide(20));

@@ -9,8 +9,10 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import loot.models.Equipment;
+import loot.models.Weapon;
 
 public class EquipmentListItem extends HBox
 {
@@ -18,6 +20,8 @@ public class EquipmentListItem extends HBox
 	private ImageView icon;
 	private Label info;
 	private HBox me;
+	private Label stats;
+	private VBox forSpacing = new VBox();
 	
 	public EquipmentListItem(Equipment loot) 
 	{
@@ -28,8 +32,27 @@ public class EquipmentListItem extends HBox
 		icon.setFitWidth(60);
 		info = new Label(loot.getName()+(loot.isEquipped()? " - Equipped" : ""));
 		this.getChildren().add(icon);
-		this.getChildren().add(info);
 		updateInfo();
+		stats = new Label();
+		StringBuilder sb = new StringBuilder();
+		if(loot instanceof Weapon) {
+			Weapon wep = (Weapon) loot;
+			sb.append(wep.getMaxAttack() > 0 ? "" + wep.getMinAttack() + "-" + wep.getMaxAttack() + " Attack  " : "");
+		} else {
+			sb.append(loot.getAttack() > 0 ? "+" + loot.getArmor() + " Attack  " : "");
+		}
+		sb.append(loot.getArmor() > 0 ? "+" + loot.getArmor() + " Armor  " : "");
+		sb.append(loot.getMaxHealth() > 0 ? "+" + loot.getMaxHealth() + " Max Health  " : "");
+		sb.append(loot.getStrength() > 0 ? "+" + loot.getStrength() + " Strength  " : "");
+		sb.append(loot.getDexterity() > 0 ? "+" + loot.getDexterity() + " Dexterity  " : "");
+		sb.append(loot.getIntelligence() > 0 ? "+" + loot.getIntelligence() + " Intelligence  " : "");
+		sb.append(loot.getRequiredStrength() > 0 ? "" + loot.getRequiredStrength() + " Required Strength  " : "");
+		sb.append(loot.getRequiredDexterity() > 0 ? "" + loot.getRequiredDexterity() + " Required Dexterity  " : "");
+		sb.append(loot.getRequiredIntelligence() > 0 ? "" + loot.getRequiredIntelligence() + " Required Intelligence  " : "");
+		stats.setText(sb.toString());
+		stats.setTextFill(new Color(.4, .4, .4, 1));
+		forSpacing.getChildren().addAll(info, stats);
+		this.getChildren().add(forSpacing);
 		
 		if (!loot.isEquipped())
 		this.setOnDragDetected(new EventHandler<MouseEvent>()
