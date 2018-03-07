@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import characters.enums.EquipmentSlot;
-import characters.models.Hero;
 import controllers.GameApp;
 import controllers.HeroGenerator;
 import javafx.beans.binding.Bindings;
@@ -31,6 +30,8 @@ public class PartyManagementController implements PlayerController
 {
 	private int currentPlayer = 0;
 
+	@FXML
+	private VBox scroll;
     @FXML
     private ResourceBundle resources;
 
@@ -454,6 +455,9 @@ public class PartyManagementController implements PlayerController
         
         equipmentList.prefWidthProperty().bind(topHBox.widthProperty().multiply(.4));
         
+        scroll.prefWidthProperty().bind(equipmentList.prefWidthProperty().subtract(2));
+        scroll.prefHeightProperty().bind(equipmentList.heightProperty().subtract(10));
+        
         // Bind the image objects in playerPane to positions and sizes
         currentPlayerImage.fitWidthProperty().bind(playerPane.widthProperty().divide(5));
         currentPlayerImage.fitHeightProperty().bind(currentPlayerImage.fitWidthProperty());
@@ -579,7 +583,12 @@ public class PartyManagementController implements PlayerController
 	@Override
 	public void update() 
 	{
-		VBox content = new VBox();
+		VBox content = scroll;
+		content.getChildren().removeAll(scroll.getChildren());
+		
+		Label goldLabel = new Label("Gold: " + ps.getInventory().getGold());
+		content.getChildren().add(goldLabel);
+		
     	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
 		for (Equipment e : ps.getInventory().getEquipment())
 		{
@@ -605,8 +614,10 @@ public class PartyManagementController implements PlayerController
 		if (ps.getPlayers()[2] != null) player3Image.setImage(ps.getPlayers()[2].getImage());
 		if (ps.getPlayers()[3] != null) player4Image.setImage(ps.getPlayers()[3].getImage());
 		
-		if(ps.getPlayers()[3] != null) {
-			hireImage.setVisible(false);
+		for (int i = 0; i < 3; i++) {
+		if(ps.getPlayers()[i] == null) {
+			hireImage.setVisible(true);
+		}
 		}
 		
 	}

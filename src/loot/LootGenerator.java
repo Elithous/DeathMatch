@@ -400,7 +400,7 @@ public class LootGenerator
 		
 		int type = level/8;
 		if (type < 0) type = 0;
-		if (type > names[1].length-1) type = names[1].length-1;
+		if (type > consumableNames[1].length-1) type = consumableNames[1].length-1;
 		
 		item = new Consumable();
 		item.setName(consumableNames[1][type]);
@@ -420,7 +420,7 @@ public class LootGenerator
 		
 		int type = level/8 + 1;
 		if (type < 1) type = 1;
-		if (type > names[0].length) type = names[0].length;
+		if (type > consumableNames[0].length) type = consumableNames[0].length;
 		if (rand.nextFloat() < REVIVE_POTION_CHANCE) type = 0;
 		else type--;
 		
