@@ -19,7 +19,7 @@ public class HeroGenerator
 	public static float SUPERSTAT_CHANCE = .2f;
 	public static int HERO_AMOUNT = 8;
 	
-	public static String[] names = new String[] {"Bob", "Tias", "Guppy", "Assassin", "Elithous", "Mike", "Aniki", "Jon", "Tyrion", "Bilbo", "Aragorn"};
+	public static String[] names = new String[] {"Rylee", "Caelan", "Kezlin", "Avery", "Jordan", "Phoenix", "Charle", "Blake", "Tate", "Drew", "Eden"};
 	public static String path = "file:../../Assets/Heros/HeroComplete/Hero";
 	
 	public static Hero generateHero(int level)
