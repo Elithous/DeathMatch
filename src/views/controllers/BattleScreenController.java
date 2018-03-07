@@ -54,6 +54,15 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 
 	@FXML
 	private URL location;
+	
+	@FXML
+	private Label logLabel1;
+	
+	@FXML
+	private Label logLabel2;
+	
+	@FXML
+	private Label logLabel3;
 
 	@FXML
 	private HBox playerOrderBox;
@@ -420,5 +429,12 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		else 
 			if (action == ActionType.ITEM && item != null) e = new TurnEvent(character, BattleChoice.USE_ITEM, item);
 		notifyListeners(e);
+	}
+	
+	public void addLog(String text)
+	{
+		logLabel3.setText(logLabel2.getText());
+		logLabel2.setText(logLabel1.getText());
+		logLabel1.setText(text);
 	}
 }

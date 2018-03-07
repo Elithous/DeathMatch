@@ -39,7 +39,6 @@ public class BattleController implements IEventListener
 		all.addAll(Arrays.asList(quest.monsters));
 		
 		all.removeAll(Collections.singleton(null));
-		System.out.println(all);
 		Collections.sort(all);
 		Collections.reverse(all);
 		for(characters.models.Character c : all)
@@ -88,18 +87,14 @@ public class BattleController implements IEventListener
 			view.update();
 		}
 		
-		System.out.println("Helth is "+characterOrder.peek().getCurrentHealth());
-		
 		characterOrder.peek().updateAilments();
 		if (characterOrder.peek() instanceof Monster)
 		{
-			System.out.println("monster!");
 			applyTurn(((Monster) characterOrder.peek()).decideNextTurn(playerSave.getPlayers()));
 		}
 		else
 		{
 			isWaitingForInput = true;
-			System.out.println("plauer waiting for input");
 		}
 	}
 	
@@ -107,14 +102,14 @@ public class BattleController implements IEventListener
 	{
 		switch (te.choice)
 		{
-		case ATTACK:	System.out.println("before" + te.character.getCurrentHealth());
-						System.out.println(characterOrder.peek().getName()+"'s attack is "+(-characterOrder.peek().getAttack()));
-						te.character.adjustHealth(-characterOrder.peek().getAttack());
-						System.out.println("after" + te.character.getCurrentHealth());
+		case ATTACK:	int damage = -characterOrder.peek().getAttack();
+						te.character.adjustHealth(damage);
+						view.addLog(characterOrder.peek().getName()+" attacked "+te.character.getName()+" for "+(damage*-1) + " damage!");
 			break;
-		case DEFEND: 	te.character.addAilment(new Ailment(AilmentType.ARM, 1.5f, 1));
+		case DEFEND: 	view.addLog(characterOrder.peek().getName()+" defends himself!");
+						te.character.addAilment(new Ailment(AilmentType.ARM, 1.5f, 1));
 			break;
-		case USE_ITEM:	te.item.use(te.character);
+		case USE_ITEM:	view.addLog(te.item.use(te.character, characterOrder.peek()));
 						playerSave.getInventory().removeConsumeable(te.item);
 						break;
 		}

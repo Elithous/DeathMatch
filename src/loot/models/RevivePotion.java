@@ -5,13 +5,14 @@ public class RevivePotion extends Consumable
 	private final float PERCENT_HEALTH = .1f;
 	
 	@Override
-	public void use(characters.models.Character target) 
+	public String use(characters.models.Character target, characters.models.Character user) 
 	{
-		if(target.getCurrentHealth() <= 0) {
+		String result =  user.getName()+" used "+name+" on "+target.getName()+"! ";
+		if(target.getCurrentHealth() <= 0)
+		{
 			target.adjustHealth((int)(target.getMaxHealth() * PERCENT_HEALTH));
-			System.out.println("Success - revive");
-		} else {
-			System.out.println("Fail - not revive");
+			return result + user.getName() + " revived "+target.getName();
 		}
+		return result + user.getName() + " wasted "+name+"!";
 	}
 }

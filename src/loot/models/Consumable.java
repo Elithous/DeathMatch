@@ -15,9 +15,19 @@ public class Consumable extends Loot
 		this.effectOnHealth = effectOnHealth;
 	}
 	
-	public void use(characters.models.Character target) 
+	public String use(characters.models.Character target, characters.models.Character user) 
 	{
-		System.out.println("FOOOOOOOOO "+effectOnHealth);
-		target.adjustHealth(effectOnHealth);
+		String result =  user.getName()+" used "+name+" on "+target.getName()+"! ";
+		if (target.getCurrentHealth() > 0)
+		{
+			target.adjustHealth(effectOnHealth);
+			if (effectOnHealth>0)
+				result += "It dealt "+target.getName()+" "+effectOnHealth+" damage!";
+			else
+				result += "It healed "+target.getName()+" "+effectOnHealth+" health!";
+		}
+		else
+			result += user.getName() + " wasted "+name+"!";
+		return result;
 	}
 }
