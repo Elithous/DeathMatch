@@ -13,10 +13,10 @@
    <children>
       <VBox fx:id="containerVBox" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <HBox fx:id="topHBox" prefHeight="310.0" prefWidth="600.0">
+            <HBox fx:id="topHBox" prefHeight="310.0" prefWidth="600.0" style="-fx-background-color: #85BEE9;">
                <children>
-                  <ScrollPane fx:id="equipmentList" hbarPolicy="NEVER" onDragDropped="#listDragDropped" onDragOver="#listDragOver" prefHeight="300.0" prefWidth="227.0" />
-                  <Pane fx:id="playerPane" prefHeight="300.0" prefWidth="374.0" style="-fx-border-color: black;">
+                  <ScrollPane fx:id="equipmentList" hbarPolicy="NEVER" onDragDropped="#listDragDropped" onDragOver="#listDragOver" prefHeight="300.0" prefWidth="227.0" style="-fx-border-width: 5; -fx-background-color: #85BEE9;" />
+                  <Pane fx:id="playerPane" prefHeight="300.0" prefWidth="374.0" style="-fx-border-color: #3A5E90; -fx-border-width: 5; -fx-background-color: #85BEE9;">
                      <children>
                         <ImageView fx:id="currentPlayerImage" fitHeight="100.0" fitWidth="97.0" layoutX="163.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -108,16 +108,16 @@
             </HBox>
             <HBox>
                <children>
-                  <VBox fx:id="shopBox" onDragDropped="#shopBoxDragDropped" onDragOver="#shopBoxDragOver" prefHeight="100.0" prefWidth="103.0">
+                  <VBox fx:id="shopBox" onDragDropped="#shopBoxDragDropped" onDragOver="#shopBoxDragOver" prefHeight="100.0" prefWidth="103.0" style="-fx-background-color: #85BEE9; -fx-border-width: 5; -fx-border-color: #3A5E90;">
                      <children>
-                        <ImageView fx:id="shopImage" fitHeight="102.0" fitWidth="108.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="shopImage" fitHeight="102.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Assets/sell.jpg" />
+                              <Image url="@../../Assets/Other/sell.png" />
                            </image>
                         </ImageView>
                      </children>
                   </VBox>
-                  <HBox fx:id="bottomHBox" alignment="CENTER" prefHeight="110.0" prefWidth="600.0" spacing="15.0" style="-fx-border-color: black;">
+                  <HBox fx:id="bottomHBox" alignment="CENTER" prefHeight="112.0" prefWidth="488.0" spacing="15.0" style="-fx-border-color: #3A5E90; -fx-border-width: 5; -fx-background-color: #85BEE9;">
                      <children>
                         <ImageView fx:id="player1Image" fitHeight="58.0" fitWidth="49.0" onMouseClicked="#player1ImageClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -139,9 +139,9 @@
                               <Image url="@../../Assets/empty%20sprite.png" />
                            </image>
                         </ImageView>
-                        <ImageView fx:id="hireImage" fitHeight="28.0" fitWidth="31.0" onMouseClicked="#hireImageClicked" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="hireImage" fitHeight="64.0" fitWidth="50.0" onMouseClicked="#hireImageClicked" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Assets/plus.png" />
+                              <Image url="@../../Assets/Other/hire.png" />
                            </image>
                         </ImageView>
                      </children>

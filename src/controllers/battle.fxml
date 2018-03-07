@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="containerVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.BattleScreenController">
+<VBox fx:id="containerVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.BattleScreenController">
    <children>
       <Pane fx:id="battlePane">
          <children>
@@ -49,30 +49,30 @@
       </Pane>
       <HBox fx:id="selectionBox" prefHeight="131.0" prefWidth="600.0">
          <children>
-            <Pane fx:id="currentPlayerPane" prefHeight="131.0" prefWidth="104.0" style="-fx-border-color: black;">
+            <Pane fx:id="currentPlayerPane" prefHeight="131.0" prefWidth="104.0" style="-fx-border-width: 5; -fx-border-color: #3A5E90; -fx-background-color: #85BEE9;">
                <children>
                   <ImageView fx:id="currentPlayerImage" fitHeight="53.0" fitWidth="48.0" layoutX="28.0" layoutY="14.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../Assets/empty%20sprite.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="currentPlayerName" alignment="CENTER" layoutX="11.0" layoutY="77.0" prefHeight="17.0" text="Player Name" />
+                  <Label fx:id="currentPlayerName" alignment="CENTER" layoutX="11.0" layoutY="77.0" prefHeight="17.0" text="Player Name" textAlignment="CENTER" />
                </children>
             </Pane>
-            <VBox fx:id="optionsVBox" alignment="CENTER" prefHeight="131.0" prefWidth="138.0" spacing="5.0">
+            <VBox fx:id="optionsVBox" alignment="CENTER" prefHeight="131.0" prefWidth="138.0" spacing="5.0" style="-fx-background-color: #85BEE9; -fx-border-width: 5; -fx-border-color: #3A5E90;">
                <children>
-                  <Button mnemonicParsing="false" fx:id="attackButton" onAction="#attackButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Attack" />
-                  <Button mnemonicParsing="false" fx:id="defendButton" onAction="#defendButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Defend" />
-                  <Button mnemonicParsing="false" fx:id="itemsButton" onAction="#itemsButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Items" />
-                  <Button mnemonicParsing="false" fx:id="skipButton" onAction="#skipButtonClicked" prefHeight="25.0" prefWidth="100.0" text="Skip" />
+                  <Button fx:id="attackButton" mnemonicParsing="false" onAction="#attackButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Attack" />
+                  <Button fx:id="defendButton" mnemonicParsing="false" onAction="#defendButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Defend" />
+                  <Button fx:id="itemsButton" mnemonicParsing="false" onAction="#itemsButtonClicked" prefHeight="25.0" prefWidth="104.0" text="Items" />
+                  <Button fx:id="skipButton" mnemonicParsing="false" onAction="#skipButtonClicked" prefHeight="25.0" prefWidth="100.0" text="Skip" />
                </children>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <Pane fx:id="sideBox" prefHeight="131.0" prefWidth="358.0">
+            <Pane fx:id="sideBox" prefHeight="131.0" prefWidth="358.0" style="-fx-background-color: #3A5E90;">
                <children>
-                  <HBox fx:id="playerOrderBox" alignment="CENTER" layoutX="2.0" prefHeight="131.0" prefWidth="358.0" spacing="10.0" style="-fx-border-color: black;">
+                  <HBox fx:id="playerOrderBox" alignment="CENTER" layoutX="2.0" prefHeight="131.0" prefWidth="358.0" spacing="10.0" style="-fx-border-color: #3A5E90; -fx-border-width: 5; -fx-background-color: #85BEE9;">
                      <children>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
