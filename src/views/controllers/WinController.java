@@ -105,6 +105,7 @@ public class WinController extends EventPublisher implements PlayerController{
 		}
 		lootList.setContent(content);
 		
+		playerSave.getInventory().goldTransaction(-loot.gold);
 		// (level*cons)*.8f+((level*cons)*rand.nextfloat*.4f)
 		Random rand = new Random();
 		
