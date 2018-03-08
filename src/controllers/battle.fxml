@@ -45,9 +45,9 @@
                      </padding>
                   </VBox>
                </children></HBox>
-            <Label fx:id="logLabel1" layoutY="250.0" text="FOOOOOOOOOOOOOOOOO" textFill="RED" />
-            <Label fx:id="logLabel2" layoutY="235.0" opacity="0.8" text="FOOOOOOOOOOOOOOOOO" textFill="RED" />
-            <Label fx:id="logLabel3" layoutY="220.0" opacity="0.4" text="FOOOOOOOOOOOOOOOOO" textFill="RED" />
+            <Label fx:id="logLabel1" layoutY="250.0" text="" textFill="RED" />
+            <Label fx:id="logLabel2" layoutY="235.0" opacity="0.8" text="" textFill="RED" />
+            <Label fx:id="logLabel3" layoutY="220.0" opacity="0.4" text="" textFill="RED" />
          </children>
       </Pane>
       <HBox fx:id="selectionBox" prefHeight="131.0" prefWidth="600.0">

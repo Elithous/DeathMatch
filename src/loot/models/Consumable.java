@@ -21,7 +21,7 @@ public class Consumable extends Loot
 		if (target.getCurrentHealth() > 0)
 		{
 			target.adjustHealth(effectOnHealth);
-			if (effectOnHealth>0)
+			if (effectOnHealth<0)
 				result += "It dealt "+target.getName()+" "+effectOnHealth+" damage!";
 			else
 				result += "It healed "+target.getName()+" "+effectOnHealth+" health!";

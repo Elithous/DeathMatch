@@ -12,6 +12,7 @@ import characters.models.Hero;
 import characters.models.Monster;
 import events.ChangeScreenEvent;
 import events.TurnEvent;
+import javafx.animation.AnimationTimer;
 import lib.Event;
 import lib.IEventListener;
 import models.player.PlayerSave;
@@ -113,10 +114,19 @@ public class BattleController implements IEventListener
 						playerSave.getInventory().removeConsumeable(te.item);
 						break;
 		}
-
+		
 		characterOrder.add(characterOrder.poll());
 		view.update();
-		System.out.println("applied turn");
+		
+		/*AnimationTimer timer = new AnimationTimer()
+		{
+			@Override
+			public void handle(long now)
+			{
+				
+			}
+		}.start();*/
+		
 		if (!isDead) takeTurn();
 	}
 
