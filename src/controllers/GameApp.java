@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import lib.Event;
 import lib.FileUtil;
@@ -34,6 +35,7 @@ public class GameApp extends Application implements IEventListener
 			stage.setScene(scene);
 			stage.setFullScreen(true);
 			stage.setFullScreenExitHint("");
+			stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 			stage.show();
 
 		}

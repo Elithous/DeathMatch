@@ -225,10 +225,10 @@ public class MonsterGenerator {
 	private static void setStatsForMonster(Monster monster, int level) {
 		monster.setLevel(level);
 		
-		monster.setMaxHealth(25);
-		monster.setStrength(10);
-		monster.setDexterity(10);
-		monster.setIntelligence(10);
+//		monster.setMaxHealth(25);
+//		monster.setStrength(10);
+//		monster.setDexterity(10);
+//		monster.setIntelligence(10);
 		
 		for(int x = 1; x <= level; x++) {
 			monster.setMaxHealth((int)(monster.getMaxHealth() * 1.2f));

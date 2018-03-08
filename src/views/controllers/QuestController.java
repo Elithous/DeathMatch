@@ -87,7 +87,7 @@ public class QuestController extends EventPublisher implements PlayerController 
 		SimpleDoubleProperty titleFontSize = new SimpleDoubleProperty();
 
 		titleFontSize.bind(parent.heightProperty().divide(25));
-		title.styleProperty().bind(Bindings.concat("-fx-font-size: ", titleFontSize.asString(), ";"));
+		title.styleProperty().bind(Bindings.concat(title.styleProperty().getValue(), "-fx-font-size: ", titleFontSize.asString(), ";"));
 
 		questBox.setSpacing(20);
 		questBox.prefHeightProperty().bind(contentBox.heightProperty().multiply(.7));
@@ -99,9 +99,9 @@ public class QuestController extends EventPublisher implements PlayerController 
 		SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();
 
 		buttonFontSize.bind(parent.heightProperty().divide(35));
-		loadButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
-		saveButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
-		quitButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
+		loadButton.styleProperty().bind(Bindings.concat(loadButton.styleProperty().getValue(),"-fx-font-size: ", buttonFontSize.asString(), ";"));
+		saveButton.styleProperty().bind(Bindings.concat(saveButton.styleProperty().getValue(),"-fx-font-size: ", buttonFontSize.asString(), ";"));
+		quitButton.styleProperty().bind(Bindings.concat(quitButton.styleProperty().getValue(),"-fx-font-size: ", buttonFontSize.asString(), ";"));
 		
 		saveLoadBox.spacingProperty().bind(parent.widthProperty().divide(20));
 		}
