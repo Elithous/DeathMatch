@@ -342,22 +342,34 @@ public class PartyManagementController implements PlayerController
     }
 
     @FXML
-    void player2ImageClicked(MouseEvent event) {
-    	currentPlayer = 1;
-    	update();
+    void player2ImageClicked(MouseEvent event) 
+    {
+    	if (ps.getPlayers()[1] != null)
+    	{
+    		currentPlayer = 1;
+    		update();
+    	}
     }
 
 
     @FXML
-    void player3ImageClicked(MouseEvent event) {
-    	currentPlayer = 2;
-    	update();
+    void player3ImageClicked(MouseEvent event)
+    {
+    	if (ps.getPlayers()[2] != null)
+    	{
+    		currentPlayer = 2;
+    		update();
+    	}
     }
 
     @FXML
-    void player4ImageClicked(MouseEvent event) {
-    	currentPlayer = 3;
-    	update();
+    void player4ImageClicked(MouseEvent event) 
+    {
+    	if (ps.getPlayers()[3] != null)
+    	{
+    		currentPlayer = 3;
+    		update();
+    	}
     }
 
     @FXML
