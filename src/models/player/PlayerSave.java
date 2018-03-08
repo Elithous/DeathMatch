@@ -26,24 +26,20 @@ public class PlayerSave implements Serializable{
 		
 	}
 	
-	public boolean removePlayer(Hero heroN) 
+	public void removePlayer(Hero heroN) 
 	{
+		Hero[] h = new Hero[4];
+		int count = 0;
+	
 		for (int i = 0; i < players.length; i++) 
 		{
-			if (players[i] == heroN) 
-			{
-				players[i] = null;
-				
-				if (i < players.length)	
-				for(int j = i+1; j < players.length; j++)
-					players[i] = players[j];
-					
-				players[i]=null;
-				
-				return true;
+			if(players[i] != null && players[i]!=heroN) {
+				h[count] = players[i];
+				count++;
 			}
 		}
-		return false;
+			players = h.clone();
+
 	}
 	
 	public boolean addPlayer(Hero heroN) 

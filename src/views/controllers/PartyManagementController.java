@@ -625,7 +625,7 @@ public class PartyManagementController implements PlayerController
 			currentPlayer=1;
 		}
 		
-    	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
+    //	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
 		for (Equipment e : ps.getInventory().getEquipment())
 		{
 			System.out.println(e);
