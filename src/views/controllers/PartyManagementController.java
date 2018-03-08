@@ -475,15 +475,13 @@ public class PartyManagementController implements PlayerController
         equipmentList.prefWidthProperty().bind(topHBox.widthProperty().multiply(.4));
         
         scroll.prefWidthProperty().bind(equipmentList.prefWidthProperty().subtract(10));
-        scroll.prefHeightProperty().bind(equipmentList.heightProperty().subtract(10));
+        //scroll.prefHeightProperty().bind(equipmentList.heightProperty().subtract(10));
         
         // Bind the image objects in playerPane to positions and sizes
         currentPlayerImage.fitWidthProperty().bind(playerPane.widthProperty().divide(5));
         currentPlayerImage.fitHeightProperty().bind(currentPlayerImage.fitWidthProperty());
         currentPlayerImage.layoutXProperty().bind(playerPane.widthProperty().divide(2).subtract(currentPlayerImage.fitWidthProperty().divide(3)));
         currentPlayerImage.layoutYProperty().bind(playerPane.heightProperty().divide(2).subtract(currentPlayerImage.fitHeightProperty().divide(3)));
-        
-        
         
         SimpleDoubleProperty playerMidX = new SimpleDoubleProperty();
         SimpleDoubleProperty playerMidY = new SimpleDoubleProperty();
@@ -632,8 +630,13 @@ public class PartyManagementController implements PlayerController
 			System.out.println(e);
 			EquipmentListItem li = new EquipmentListItem(e);
 			content.getChildren().add(li);
-		}
+		}		
 		equipmentList.setContent(content);
+		
+		if(content.getHeight() < equipmentList.getHeight()) {
+			content.setPrefHeight(equipmentList.getHeight() - 10);
+		}
+		
 		currentPlayerImage.setImage(ps.getPlayers()[currentPlayer].getImage());
 		currentPlayerName.setText(ps.getPlayers()[currentPlayer].getName());
 		currentPlayerStats.setText(ps.getPlayers()[currentPlayer].loadStats());

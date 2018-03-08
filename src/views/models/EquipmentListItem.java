@@ -11,7 +11,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import loot.models.Equipment;
 import loot.models.Weapon;
 
@@ -56,6 +55,8 @@ public class EquipmentListItem extends HBox
 		stats.setWrapText(true);
 		forSpacing.getChildren().addAll(info, stats);
 		this.getChildren().add(forSpacing);
+		System.out.println(35*((sb.length()/50)+2));
+		this.setMinHeight(35*((sb.length()/50)+2));
 		
 		if (!loot.isEquipped())
 		this.setOnDragDetected(new EventHandler<MouseEvent>()
