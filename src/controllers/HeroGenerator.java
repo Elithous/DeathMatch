@@ -76,14 +76,14 @@ public class HeroGenerator
 	{
 		PlayerSave ps = new PlayerSave();
 		ps.addPlayer(generateHero(1));
-		ps.getInventory().addEquipment(LootGenerator.generateWeapon(100, 1));
-		ps.getInventory().addEquipment(LootGenerator.generateArmor(100, 1));
-		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(100,10));
-		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(100,10));
-		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(100,10));
-		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(100,10));
-		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(100,10));
-		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(100,10));
+		ps.getInventory().addEquipment(LootGenerator.generateWeapon(1));
+		ps.getInventory().addEquipment(LootGenerator.generateArmor(1));
+		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(10));
+		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(10));
+		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(10));
+		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(10));
+		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(10));
+		ps.getInventory().addConsumeable(LootGenerator.generateConsumable(10));
 		
 		return ps;
 	}

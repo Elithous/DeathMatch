@@ -81,13 +81,13 @@ public class LootGenerator
 			Loot item = null;
 			int choice = rand.nextInt(WEAPON_RATIO+ARMOR_RATIO+RING_RATIO+CONSUMABLES_RATIO);
 			if (choice < WEAPON_RATIO)
-				item = generateWeapon(valueLeft, quest.difficulty);
+				item = generateWeapon(quest.difficulty);
 			else if (choice < WEAPON_RATIO + ARMOR_RATIO)
-				item = generateArmor(valueLeft, quest.difficulty);
+				item = generateArmor(quest.difficulty);
 			else if (choice < WEAPON_RATIO + ARMOR_RATIO + RING_RATIO)
-				item = generateRing(valueLeft, quest.difficulty);
+				item = generateRing(quest.difficulty);
 			else
-				item = generateConsumable(valueLeft, quest.difficulty);
+				item = generateConsumable(quest.difficulty);
 			
 			if (item==null) break;
 			
@@ -98,7 +98,7 @@ public class LootGenerator
 		return new LootGeneratorResult(loot, valueLeft);
 	}
 	
-	public static Armor generateArmor(int value, int level) 
+	public static Armor generateArmor(int level) 
 	{
 		Random rand = new Random();
 		int armorType = rand.nextInt(ArmorType.values().length - 1);
@@ -171,7 +171,7 @@ public class LootGenerator
 	
 	
 	// Type 1 is spears, Type 0 is sword, add others as needed
-	public static Weapon generateWeapon(int value, int level)
+	public static Weapon generateWeapon(int level)
 	{
 		Random rand = new Random();
 		int choice = rand.nextInt(WeaponType.values().length);
@@ -260,7 +260,7 @@ public class LootGenerator
 		return weapon;
 	}
 	
-	public static Armor generateRing(int value, int level) {
+	public static Armor generateRing(int level) {
 		
 		Random rand = new Random();
 		int choice = -1;
@@ -385,15 +385,15 @@ public class LootGenerator
 	}
 
 	
-	public static Consumable generateConsumable(int value, int level) 
+	public static Consumable generateConsumable(int level) 
 	{
 		if (new Random().nextFloat() < POTION_TO_DAMAGE_RATIO)
-			return generatePotion(value, level);
+			return generatePotion(level);
 		else 
-			return generateDamage(value, level);
+			return generateDamage(level);
 	}
 
-	private static Consumable generateDamage(int value, int level)
+	private static Consumable generateDamage(int level)
 	{
 		Random rand = new Random();
 		Consumable item;
@@ -413,7 +413,7 @@ public class LootGenerator
 		return item;
 	}
 
-	public static Consumable generatePotion(int value, int level)
+	public static Consumable generatePotion(int level)
 	{
 		Random rand = new Random();
 		Consumable item;

@@ -65,35 +65,35 @@ public class MonsterGenerator {
 		
 		if (monsterType == MonsterType.GOBLIN || monsterType == MonsterType.SKELETON || monsterType == MonsterType.IMP || monsterType == MonsterType.MAGE) {
 			
-			monsterBase.equip(EquipmentSlot.MAIN_HAND, LootGenerator.generateWeapon(level * 5, level));
+			monsterBase.equip(EquipmentSlot.MAIN_HAND, LootGenerator.generateWeapon(level));
 			//Armor Chance
 			if (rand.nextInt(100) + 1 > 50) {
 				Armor armorPeice;
 				do {
-					armorPeice = LootGenerator.generateArmor(level * 5, level);
+					armorPeice = LootGenerator.generateArmor(level);
 				} while(armorPeice.armorType != ArmorType.HELM);
 				
 				monsterBase.equip(EquipmentSlot.HELM, armorPeice);
 				
 				do {
-					armorPeice = LootGenerator.generateArmor(level * 5, level);
+					armorPeice = LootGenerator.generateArmor(level);
 				} while(armorPeice.armorType != ArmorType.BODY);
 				
 				monsterBase.equip(EquipmentSlot.BODY, armorPeice);
 				
 				do {
-					armorPeice = LootGenerator.generateArmor(level * 5, level);
+					armorPeice = LootGenerator.generateArmor(level);
 				} while(armorPeice.armorType != ArmorType.LEGS);
 			}
 			
 			//Ring Chance
 			if (rand.nextInt(100) + 1 > 66) {
-				monsterBase.equip(EquipmentSlot.RING1, LootGenerator.generateRing(level * 5, level));
+				monsterBase.equip(EquipmentSlot.RING1, LootGenerator.generateRing(level));
 			}
 			
 			//Second Weapon Chance
 			if (rand.nextInt(100) + 1 > 66) {
-				monsterBase.equip(EquipmentSlot.OFFHAND, LootGenerator.generateWeapon(level * 5, level));
+				monsterBase.equip(EquipmentSlot.OFFHAND, LootGenerator.generateWeapon(level));
 			}
 		}
 		
