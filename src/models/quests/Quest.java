@@ -11,5 +11,14 @@ public class Quest {
 		this.difficulty = difficulty;
 	}
 	
+	public Monster getStrongestMonster() {
+		Monster monster = monsters[0];
+		for (Monster nextMonster : monsters) {
+			if (nextMonster.getLevel() > monster.getLevel()) {
+				monster = nextMonster;
+			}
+		}
+		return monster;
+	}
 	
 }

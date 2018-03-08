@@ -22,11 +22,16 @@ public class MonsterGenerator {
 	 * @return An array of monster, where the length of the array is the number of monsters, which will be between 1 and 4.
 	 */
 	public static Monster[] generateMonsters(int levelTotal) {
-		
+		if (levelTotal <= 0) {
+			levelTotal = 1;
+		}
 		if(baseMonsters.isEmpty()) {
 			initializeMonsters();
 		}
 		int monsterLvlBase = levelTotal / 4;
+		if (monsterLvlBase <= 0) {
+			monsterLvlBase = 1;
+		}
 		Random rand = new Random();
 		ArrayList<Monster> monsters = new ArrayList<>();
 		
@@ -44,12 +49,15 @@ public class MonsterGenerator {
 		for (int x = 0; x < result.length; x++) {
 			result[x] = (Monster) monsters.toArray()[x];
 		}
+		System.out.println("Level : " + levelTotal);
+		System.out.println("Monsters made.");
 		
 		return result;
 	}
 	
 	private static Monster generateMonster(int level) {
 		//TODO
+		System.out.println("Making a monster");
 		int levelRange = 30 / MonsterType.values().length;
 		Random rand = new Random();
 		MonsterType monsterType = MonsterType.values()[(level / levelRange >= MonsterType.values().length ? MonsterType.values().length - 1 : level / levelRange)];
@@ -224,7 +232,9 @@ public class MonsterGenerator {
 	
 	private static void setStatsForMonster(Monster monster, int level) {
 		monster.setLevel(level);
-		
+		if (monster.getEquipment(EquipmentSlot.MAIN_HAND) == null) {
+			monster.setAttack(monster.getStrength());
+		}
 //		monster.setMaxHealth(25);
 //		monster.setStrength(10);
 //		monster.setDexterity(10);
