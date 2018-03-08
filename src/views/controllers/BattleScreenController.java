@@ -250,7 +250,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		textFontSize.bind(selectionBox.heightProperty().divide(11));
 		for (Node node : optionsVBox.getChildren()) {
 			Button button = node instanceof Button ? (Button) node : new Button();
-			button.styleProperty().bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";"));
+			button.styleProperty().bind(Bindings.concat(button.styleProperty().getValue(), "-fx-font-size: ", textFontSize.asString(), ";"));
 			button.prefWidthProperty().bind(optionsVBox.widthProperty().multiply(.8));
 		}
 
@@ -261,7 +261,7 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 				.bind(currentPlayerPane.widthProperty().subtract(currentPlayerImage.fitWidthProperty()).divide(2));
 
 		currentPlayerName.styleProperty()
-				.bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";-fx-border-color: black;"));
+				.bind(Bindings.concat(currentPlayerName.styleProperty().getValue(), "-fx-font-size: ", textFontSize.asString(), ";"));
 		currentPlayerName.layoutXProperty()
 				.bind(currentPlayerPane.widthProperty().subtract(currentPlayerName.widthProperty()).divide(2));
 		currentPlayerName.layoutYProperty()

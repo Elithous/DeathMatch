@@ -52,8 +52,11 @@ public class EquipmentListItem extends HBox
 		sb.append(loot.getValue() > 0 ? "Value: " + loot.getValue() : "");
 		stats.setText(sb.toString());
 		stats.setTextFill(new Color(.4, .4, .4, 1));
+		stats.setWrapText(true);
 		forSpacing.getChildren().addAll(info, stats);
 		this.getChildren().add(forSpacing);
+		System.out.println(35*((sb.length()/50)+2));
+		this.setMinHeight(35*((sb.length()/50)+2));
 		
 		if (!loot.isEquipped())
 		this.setOnDragDetected(new EventHandler<MouseEvent>()
