@@ -336,8 +336,7 @@ public class PartyManagementController implements PlayerController
     }
 
     @FXML
-    void player1ImageClicked(MouseEvent event)
-    {
+    void player1ImageClicked(MouseEvent event)  {
     	currentPlayer = 0;
     	update();
     }
@@ -347,6 +346,7 @@ public class PartyManagementController implements PlayerController
     	currentPlayer = 1;
     	update();
     }
+
 
     @FXML
     void player3ImageClicked(MouseEvent event) {
@@ -611,6 +611,7 @@ public class PartyManagementController implements PlayerController
 	@Override
 	public void update() 
 	{
+		
 		VBox content = scroll;
 		content.getChildren().removeAll(scroll.getChildren());
 
