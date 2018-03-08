@@ -475,7 +475,7 @@ public class PartyManagementController implements PlayerController
         equipmentList.prefWidthProperty().bind(topHBox.widthProperty().multiply(.4));
         
         scroll.prefWidthProperty().bind(equipmentList.prefWidthProperty().subtract(10));
-        //scroll.prefHeightProperty().bind(equipmentList.heightProperty().subtract(10));
+        scroll.prefHeightProperty().bind(equipmentList.heightProperty().subtract(10));
         
         // Bind the image objects in playerPane to positions and sizes
         currentPlayerImage.fitWidthProperty().bind(playerPane.widthProperty().divide(5));
