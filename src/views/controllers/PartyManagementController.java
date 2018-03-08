@@ -455,56 +455,61 @@ public class PartyManagementController implements PlayerController
         
         equipmentList.prefWidthProperty().bind(topHBox.widthProperty().multiply(.4));
         
-        scroll.prefWidthProperty().bind(equipmentList.prefWidthProperty().subtract(2));
+        scroll.prefWidthProperty().bind(equipmentList.prefWidthProperty().subtract(10));
         scroll.prefHeightProperty().bind(equipmentList.heightProperty().subtract(10));
         
         // Bind the image objects in playerPane to positions and sizes
         currentPlayerImage.fitWidthProperty().bind(playerPane.widthProperty().divide(5));
         currentPlayerImage.fitHeightProperty().bind(currentPlayerImage.fitWidthProperty());
-        currentPlayerImage.layoutXProperty().bind(playerPane.widthProperty().divide(2).subtract(currentPlayerImage.fitWidthProperty().divide(2)));
-        currentPlayerImage.layoutYProperty().bind(playerPane.heightProperty().divide(2).subtract(currentPlayerImage.fitHeightProperty().divide(2)));
+        currentPlayerImage.layoutXProperty().bind(playerPane.widthProperty().divide(2).subtract(currentPlayerImage.fitWidthProperty().divide(3)));
+        currentPlayerImage.layoutYProperty().bind(playerPane.heightProperty().divide(2).subtract(currentPlayerImage.fitHeightProperty().divide(3)));
+        
         
         
         SimpleDoubleProperty playerMidX = new SimpleDoubleProperty();
         SimpleDoubleProperty playerMidY = new SimpleDoubleProperty();
-        playerMidX.bind(currentPlayerImage.layoutXProperty().add(currentPlayerImage.fitWidthProperty().divide(2)));
-        playerMidY.bind(currentPlayerImage.layoutYProperty().add(currentPlayerImage.fitHeightProperty().divide(2)));
+        SimpleDoubleProperty playerX = new SimpleDoubleProperty();
+        SimpleDoubleProperty playerY = new SimpleDoubleProperty();
+        playerX.bind(playerPane.widthProperty().divide(2).subtract(currentPlayerImage.fitWidthProperty().divide(2)));
+        playerY.bind(playerPane.heightProperty().divide(2).subtract(currentPlayerImage.fitHeightProperty().divide(2)));
+        playerMidX.bind(playerX.add(currentPlayerImage.fitWidthProperty().divide(2)));
+        playerMidY.bind(playerY.add(currentPlayerImage.fitHeightProperty().divide(2)));
         
         // Bind each slot location to the player
         helmSlot.fitWidthProperty().bind(playerPane.widthProperty().divide(20));
         helmSlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
         helmSlot.layoutXProperty().bind(playerMidX.subtract(helmSlot.fitWidthProperty().divide(2)));
-        helmSlot.layoutYProperty().bind(currentPlayerImage.layoutYProperty().subtract(helmSlot.fitHeightProperty().multiply(1.2)));
+        helmSlot.layoutYProperty().bind(playerY.subtract(helmSlot.fitHeightProperty().multiply(1.2)));
         
         bodySlot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
         bodySlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
-        bodySlot.layoutXProperty().bind(currentPlayerImage.layoutXProperty().subtract(bodySlot.fitWidthProperty().multiply(1.2)));
+        bodySlot.layoutXProperty().bind(playerX.subtract(bodySlot.fitWidthProperty().multiply(1.2)));
         bodySlot.layoutYProperty().bind(playerMidY.subtract(bodySlot.fitHeightProperty().divide(2)));
         
         legsSlot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
         legsSlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
         legsSlot.layoutXProperty().bind(playerMidX.subtract(legsSlot.fitWidthProperty().divide(2)));
-        legsSlot.layoutYProperty().bind(currentPlayerImage.layoutYProperty().add(currentPlayerImage.fitHeightProperty()).add(legsSlot.fitHeightProperty().multiply(1.2)));
+        legsSlot.layoutYProperty().bind(playerY.add(currentPlayerImage.fitHeightProperty()).add(legsSlot.fitHeightProperty().multiply(1.2)));
         
         mainArmSlot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
         mainArmSlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
-        mainArmSlot.layoutXProperty().bind(currentPlayerImage.layoutXProperty().subtract(mainArmSlot.fitWidthProperty().multiply(1.2)));
+        mainArmSlot.layoutXProperty().bind(playerX.subtract(mainArmSlot.fitWidthProperty().multiply(1.2)));
         mainArmSlot.layoutYProperty().bind(playerMidY.subtract(currentPlayerImage.fitHeightProperty().divide(3)).subtract(mainArmSlot.fitHeightProperty().divide(2)));
         
         sideArmSlot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
         sideArmSlot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
-        sideArmSlot.layoutXProperty().bind(currentPlayerImage.layoutXProperty().add(currentPlayerImage.fitWidthProperty()).add(sideArmSlot.fitWidthProperty().multiply(0.2)));
+        sideArmSlot.layoutXProperty().bind(playerX.add(currentPlayerImage.fitWidthProperty()).add(sideArmSlot.fitWidthProperty().multiply(0.2)));
         sideArmSlot.layoutYProperty().bind(playerMidY.subtract(currentPlayerImage.fitHeightProperty().divide(3)).subtract(sideArmSlot.fitHeightProperty().divide(2)));
         
         ring1Slot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
         ring1Slot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
         ring1Slot.layoutXProperty().bind(playerMidX.subtract(ring1Slot.fitWidthProperty().multiply(2.1)));
-        ring1Slot.layoutYProperty().bind(currentPlayerImage.layoutYProperty().add(currentPlayerImage.fitHeightProperty()).add(ring1Slot.fitHeightProperty().multiply(1.2)));
+        ring1Slot.layoutYProperty().bind(playerY.add(currentPlayerImage.fitHeightProperty()).add(ring1Slot.fitHeightProperty().multiply(1.2)));
         
         ring2Slot.fitWidthProperty().bind(helmSlot.fitWidthProperty());
         ring2Slot.fitHeightProperty().bind(helmSlot.fitWidthProperty());
         ring2Slot.layoutXProperty().bind(playerMidX.add(ring1Slot.fitWidthProperty().multiply(2.1)));
-        ring2Slot.layoutYProperty().bind(currentPlayerImage.layoutYProperty().add(currentPlayerImage.fitHeightProperty()).add(ring2Slot.fitHeightProperty().multiply(1.2)));
+        ring2Slot.layoutYProperty().bind(playerY.add(currentPlayerImage.fitHeightProperty()).add(ring2Slot.fitHeightProperty().multiply(1.2)));
         
         // Bind each slot back image to the slot
         helmBack.fitWidthProperty().bind(helmSlot.fitWidthProperty());
@@ -545,18 +550,24 @@ public class PartyManagementController implements PlayerController
         // Text size for the name label and the stats label
         SimpleDoubleProperty nameTextSize = new SimpleDoubleProperty();
         nameTextSize.bind(playerPane.heightProperty().divide(15));
-        currentPlayerName.styleProperty().bind(Bindings.concat("-fx-font-size: ", nameTextSize.asString(), ";"));
+        currentPlayerName.styleProperty().bind(Bindings.concat(currentPlayerName.styleProperty().getValue(), "-fx-font-size: ", nameTextSize.asString(), ";"));
         currentPlayerName.layoutXProperty().bind(playerPane.widthProperty().divide(2).subtract(currentPlayerName.widthProperty().divide(2)));
         currentPlayerName.layoutYProperty().bind(playerPane.heightProperty().multiply(.1));
         currentPlayerName.prefWidthProperty().bind(playerPane.widthProperty());
 
         SimpleDoubleProperty statsTextSize = new SimpleDoubleProperty();
         statsTextSize.bind(playerPane.heightProperty().divide(30));
-        currentPlayerStats.styleProperty().bind(Bindings.concat("-fx-font-size: ", statsTextSize.asString(), ";"));
+        currentPlayerStats.styleProperty().bind(Bindings.concat(currentPlayerStats.styleProperty().getValue(), "-fx-font-size: ", statsTextSize.asString(), ";"));
         currentPlayerStats.prefHeightProperty().bind(playerPane.heightProperty().multiply(.5));
         currentPlayerStats.prefWidthProperty().bind(playerPane.widthProperty().multiply(.2));
         currentPlayerStats.layoutXProperty().bind(playerPane.widthProperty().multiply(.05));
         currentPlayerStats.layoutYProperty().bind(playerPane.heightProperty().divide(2).subtract(currentPlayerStats.heightProperty().divide(2)));
+        
+        //Bind the shop size to the bottom HBox
+        shopBox.prefWidthProperty().bind(bottomHBox.widthProperty().multiply(.3));
+        ((ImageView) shopBox.getChildren().get(0)).fitHeightProperty().bind(shopBox.heightProperty().subtract(10));
+        ((ImageView) shopBox.getChildren().get(0)).fitWidthProperty().bind(shopBox.widthProperty().subtract(10));
+        //((ImageView) shopBox.getChildren().get(0))
         
         //Bind the image objects in bottomHBox to the height and spacing correctly
         player1Image.fitHeightProperty().bind(bottomHBox.heightProperty().multiply(.7));
@@ -586,8 +597,11 @@ public class PartyManagementController implements PlayerController
 		VBox content = scroll;
 		content.getChildren().removeAll(scroll.getChildren());
 		
-		Label goldLabel = new Label("Gold: " + ps.getInventory().getGold());
-		content.getChildren().add(goldLabel);
+		HBox goldBox = new HBox();
+		Label goldLabel = new Label("" + ps.getInventory().getGold());
+		ImageView goldImage = new ImageView("file:Assets/Other/Gold.png");
+		goldBox.getChildren().addAll(goldImage, goldLabel);
+		content.getChildren().add(goldBox);
 		
     	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
 		for (Equipment e : ps.getInventory().getEquipment())

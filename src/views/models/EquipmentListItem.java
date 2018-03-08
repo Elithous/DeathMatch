@@ -52,6 +52,7 @@ public class EquipmentListItem extends HBox
 		sb.append(loot.getValue() > 0 ? "Value: " + loot.getValue() : "");
 		stats.setText(sb.toString());
 		stats.setTextFill(new Color(.4, .4, .4, 1));
+		stats.setWrapText(true);
 		forSpacing.getChildren().addAll(info, stats);
 		this.getChildren().add(forSpacing);
 		

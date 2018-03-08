@@ -7,17 +7,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.WinController">
+<Pane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="624.0" style="-fx-background-color: #85BEE9; -fx-border-color: #3A5E90; -fx-border-width: 5;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.controllers.WinController">
    <children>
-      <VBox fx:id="vBox" alignment="CENTER" prefHeight="400.0" prefWidth="622.0" spacing="10.0">
+      <VBox fx:id="vBox" alignment="CENTER" prefHeight="400.0" prefWidth="621.0" spacing="10.0">
          <children>
             <Label fx:id="title" alignment="CENTER" prefHeight="34.0" prefWidth="204.0" text="You won!">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="lootList" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" />
+            <ScrollPane fx:id="lootList" hbarPolicy="NEVER" prefHeight="250.0" prefWidth="604.0" style="-fx-border-color: #3A5E90; -fx-background-color: #85BEE9; -fx-border-width: 5;">
+               <content>
+                  <VBox fx:id="lootBox" prefHeight="231.0" prefWidth="592.0" style="-fx-background-color: #85BEE9; -fx-border-width: 5;" />
+               </content></ScrollPane>
             <Button fx:id="continueButton" mnemonicParsing="false" onAction="#continueButtonClicked" text="Continue" />
          </children>
       </VBox>

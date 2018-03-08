@@ -86,12 +86,10 @@ public class MainMenuController extends EventPublisher implements PlayerControll
 		backgroundImage.setPreserveRatio(false);
 
 		SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();
-		SimpleDoubleProperty titleFontSize = new SimpleDoubleProperty();
 
 		buttonFontSize.bind(stackPane.heightProperty().divide(30));
-		contentBox.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
+		contentBox.styleProperty().bind(Bindings.concat(contentBox.styleProperty().getValue(), "-fx-font-size: ", buttonFontSize.asString(), ";"));
 
-		titleFontSize.bind(stackPane.heightProperty().divide(10));
 	//	titleLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", titleFontSize.asString(), ";"));
 
 		exitButton.prefWidthProperty().bind(stackPane.widthProperty().divide(5));

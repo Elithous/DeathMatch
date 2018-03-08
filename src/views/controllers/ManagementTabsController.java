@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import controllers.GameApp;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.TabPane;
@@ -52,7 +54,14 @@ public class ManagementTabsController implements PlayerController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		tabPane.tabMinWidthProperty().bind((tabPane.widthProperty().subtract(50)).divide(2));
+		tabPane.tabMinWidthProperty().bind((tabPane.widthProperty().subtract(75)).divide(2));
+		tabPane.tabMaxWidthProperty().bind(tabPane.tabMinWidthProperty());
+		
+		SimpleDoubleProperty textSize = new SimpleDoubleProperty();
+		textSize.bind(tabPane.widthProperty().divide(70));
+		
+		tabPane.styleProperty().bind(Bindings.concat(tabPane.styleProperty().getValue(), "-fx-font-size: ", textSize, ";"));
+		
 		
 	}
 

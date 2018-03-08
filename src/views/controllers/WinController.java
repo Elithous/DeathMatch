@@ -3,7 +3,6 @@ package views.controllers;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -35,6 +34,9 @@ public class WinController extends EventPublisher implements PlayerController{
 	
 	private PlayerSave playerSave;
 
+	@FXML
+	private VBox lootBox;
+	
 	@FXML
 	private Pane contentPane;
 	
@@ -71,13 +73,13 @@ public class WinController extends EventPublisher implements PlayerController{
     	SimpleDoubleProperty textFontSize = new SimpleDoubleProperty();
     	
     	textFontSize.bind(vBox.heightProperty().divide(10));
-    	title.styleProperty().bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";"));
+    	title.styleProperty().bind(Bindings.concat(title.styleProperty().getValue(), "-fx-font-size: ", textFontSize.asString(), ";"));
     	title.prefWidthProperty().bind(vBox.widthProperty());
     	
     	SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();
     	
     	buttonFontSize.bind(vBox.heightProperty().divide(30));
-    	continueButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonFontSize.asString(), ";"));
+    	continueButton.styleProperty().bind(Bindings.concat(continueButton.styleProperty().getValue(), "-fx-font-size: ", buttonFontSize.asString(), ";"));
     	continueButton.prefWidthProperty().bind(vBox.widthProperty().divide(5));
     	
     	lootList.prefWidthProperty().bind(vBox.widthProperty().multiply(.8));
@@ -91,7 +93,9 @@ public class WinController extends EventPublisher implements PlayerController{
 		this.playerSave = playerSave;
 		LootGeneratorResult loot = LootGenerator.generateLoot(quest);
 		
-		VBox content = new VBox();
+		VBox content = lootBox;
+		content.prefWidthProperty().bind(lootList.widthProperty().subtract(12));
+		content.prefHeightProperty().bind(lootList.heightProperty().subtract(12));
 		for(Loot lootAdd : loot.loot) {
 			playerSave.getInventory().addLoot(lootAdd);
 
