@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import characters.enums.EquipmentSlot;
 import characters.models.Hero;
 import controllers.GameApp;
 import events.ChangeScreenEvent;
@@ -117,8 +118,16 @@ public class WinController extends EventPublisher implements PlayerController{
 		ArrayList<Hero> heroes = new ArrayList<Hero>();
 		heroes.addAll(Arrays.asList(playerSave.getPlayers()));
 		
-		for(Hero h : heroes) {
-			if(h!=null && h.getCurrentHealth()<=0) {
+		for(Hero h : heroes) 
+		{
+			if(h!=null && h.getCurrentHealth()<=0)
+			{
+				for (int i = 0; i < EquipmentSlot.values().length; i++)
+				{
+					if (h.getEquipment(EquipmentSlot.values()[i]) != null)
+						playerSave.getInventory().removeEquipment(h.getEquipment(EquipmentSlot.values()[i]));
+				}
+				
 				playerSave.removePlayer(h);
 			}
 		}
