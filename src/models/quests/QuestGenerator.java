@@ -28,11 +28,11 @@ public class QuestGenerator  {
 			}
 		}
 		
-		int monsterLevel1 = heroTotalLevel -3;
-		int monsterLevel2 = heroTotalLevel -1;
-		int monsterLevel3 = heroTotalLevel;
-		int monsterLevel4 = heroTotalLevel +2;
-		int monsterLevel5 = heroTotalLevel *2;
+		int monsterLevel1 = heroTotalLevel -1;
+		int monsterLevel2 = heroTotalLevel;
+		int monsterLevel3 = heroTotalLevel +2;
+		int monsterLevel4 = heroTotalLevel +4;
+		int monsterLevel5 = heroTotalLevel +8;
 		
 		if(monsterLevel1 <=0) {
 			monsterLevel1=1;

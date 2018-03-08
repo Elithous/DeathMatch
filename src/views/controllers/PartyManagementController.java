@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import characters.enums.EquipmentSlot;
+import characters.models.Hero;
 import controllers.GameApp;
 import controllers.HeroGenerator;
 import javafx.beans.binding.Bindings;
@@ -249,10 +250,28 @@ public class PartyManagementController implements PlayerController
 
     @FXML
     void hireImageClicked(MouseEvent event) {
+    	boolean full = true;
+    	Hero[] h = ps.getPlayers().clone();
+    	
+    		if(h[0]==null) {
+				full=false;
+			}
+    		if(h[1]==null) {
+    			full=false;
+    		}
+    		if(h[2]==null) {
+    			full=false;
+    		}
+    		if(h[3]==null) {
+    			full=false;
+    		}
+    	
+    	if(full==false) {
     		if(ps.getInventory().getGold() >=100) {
     			ps.addPlayer(HeroGenerator.generateHero(1));
     			ps.getInventory().goldTransaction(-100);
     		}
+    	}
     		update();
     }
 
@@ -596,12 +615,16 @@ public class PartyManagementController implements PlayerController
 	{
 		VBox content = scroll;
 		content.getChildren().removeAll(scroll.getChildren());
-		
+
 		HBox goldBox = new HBox();
 		Label goldLabel = new Label("" + ps.getInventory().getGold());
 		ImageView goldImage = new ImageView("file:Assets/Other/Gold.png");
 		goldBox.getChildren().addAll(goldImage, goldLabel);
 		content.getChildren().add(goldBox);
+		
+		if(ps.getPlayers()[0]==null) {
+			currentPlayer=1;
+		}
 		
     	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
 		for (Equipment e : ps.getInventory().getEquipment())
@@ -628,11 +651,11 @@ public class PartyManagementController implements PlayerController
 		if (ps.getPlayers()[2] != null) player3Image.setImage(ps.getPlayers()[2].getImage());
 		if (ps.getPlayers()[3] != null) player4Image.setImage(ps.getPlayers()[3].getImage());
 		
-		for (int i = 0; i < 3; i++) {
-		if(ps.getPlayers()[i] == null) {
-			hireImage.setVisible(true);
-		}
-		}
+//		for (int i = 0; i < 3; i++) {
+//		if(ps.getPlayers()[i] == null) {
+//			hireImage.setVisible(true);
+//		}
+//		}
 		
 	}
 }
