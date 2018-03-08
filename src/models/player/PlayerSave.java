@@ -38,7 +38,7 @@ public class PlayerSave implements Serializable{
 				for(int j = i+1; j < players.length; j++)
 					players[i] = players[j];
 					
-				
+				players[i]=null;
 				
 				return true;
 			}
