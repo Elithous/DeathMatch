@@ -194,9 +194,10 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 	}
 
 	@FXML
-	void skipButtonClicked(ActionEvent event) {
-		// TEMPORARY CODE
-		this.notifyListeners(new ChangeScreenEvent(ScreenType.WIN, quest, playerSave));
+	void skipButtonClicked(ActionEvent event) 
+	{
+		TurnEvent e = new TurnEvent(batCon.getOrder().peek(), BattleChoice.SKIP, null);
+		notifyListeners(e);
 	}
 
 	@FXML

@@ -113,6 +113,8 @@ public class BattleController implements IEventListener
 		case USE_ITEM:	view.addLog(te.item.use(te.character, characterOrder.peek()));
 						playerSave.getInventory().removeConsumeable(te.item);
 						break;
+		case SKIP:		view.addLog(characterOrder.peek().getName()+" has skipped his turn!");
+						break;
 		}
 		
 		characterOrder.add(characterOrder.poll());
