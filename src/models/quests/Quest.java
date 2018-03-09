@@ -16,7 +16,7 @@ public class Quest {
 		switch (choice) {
 		
 		case 0:
-			name = "A wild " + getStrongestMonster().getName() + (monsters.length > 1 ? " (and friends) " : " ") + "appeared!";
+			name = "A Wild " + getStrongestMonster().getName() + (monsters.length > 1 ? " (and friends) " : " ") + "Appeared!";
 			break;
 		case 1:
 			name = "Protect the City!";
@@ -27,7 +27,7 @@ public class Quest {
 		default:
 			String monsterName = getStrongestMonster().getName();
 			if (monsterName.equalsIgnoreCase("Slime")) {
-				name = "Humble Beinnings";
+				name = "Humble Beginnings";
 			} else if (monsterName.equalsIgnoreCase("Skeleton")) {
 				name = "The Attack of the Dead";
 			} else if (monsterName.equalsIgnoreCase("Goblin")) {
