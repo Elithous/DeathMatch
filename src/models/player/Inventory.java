@@ -11,7 +11,7 @@ public class Inventory implements Serializable{
 
 	private ArrayList<Equipment> equipment = new ArrayList<>();
 	private ArrayList<Consumable> consumables = new ArrayList<>();
-	private int gold = 1000;
+	private int gold = 100;
 	
 	public ArrayList<Equipment> getEquipment() {
 		return equipment;
