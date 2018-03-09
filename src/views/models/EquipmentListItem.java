@@ -57,6 +57,8 @@ public class EquipmentListItem extends HBox
 		this.getChildren().add(forSpacing);
 		System.out.println(35*((sb.length()/50)+2));
 		this.setMinHeight(35*((sb.length()/50)+2));
+
+		this.setStyle("-fx-background: transparent;");
 		
 		if (!loot.isEquipped())
 		this.setOnDragDetected(new EventHandler<MouseEvent>()

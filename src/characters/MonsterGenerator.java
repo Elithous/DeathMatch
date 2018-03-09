@@ -49,15 +49,15 @@ public class MonsterGenerator {
 		for (int x = 0; x < result.length; x++) {
 			result[x] = (Monster) monsters.toArray()[x];
 		}
-		System.out.println("Level : " + levelTotal);
-		System.out.println("Monsters made.");
+//		System.out.println("Level : " + levelTotal);
+//		System.out.println("Monsters made.");
 		
 		return result;
 	}
 	
 	private static Monster generateMonster(int level) {
 		//TODO
-		System.out.println("Making a monster");
+//		System.out.println("Making a monster");
 		int levelRange = 30 / MonsterType.values().length;
 		Random rand = new Random();
 		MonsterType monsterType = MonsterType.values()[(level / levelRange >= MonsterType.values().length ? MonsterType.values().length - 1 : level / levelRange)];
@@ -115,7 +115,7 @@ public class MonsterGenerator {
 			path += rand.nextInt(3);
 			break;
 		case DRAGON:
-			path += rand.nextInt(10);
+			path += rand.nextInt(9);
 			break;
 		case BOSS:
 			path += rand.nextInt(4);
