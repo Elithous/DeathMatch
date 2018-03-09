@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -30,6 +31,12 @@ import views.models.EquipmentListItem;
 public class PartyManagementController implements PlayerController
 {
 	private int currentPlayer = 0;
+	
+	private Image[] placeholders = {new Image("file:Assets/Placeholders/emptySword.png"), 
+			new Image("file:Assets/Placeholders/emptyHelm.png"), 
+			new Image("file:Assets/Placeholders/emptyLegs.png"), 
+			new Image("file:Assets/Placeholders/emptyBody.png"), 
+			new Image("file:Assets/Placeholders/emptyRing.png")};
 
 	@FXML
 	private VBox scroll;
@@ -616,7 +623,7 @@ public class PartyManagementController implements PlayerController
 	@Override
 	public void init(PlayerSave playerSave, Quest quest, GameApp app)
 	{
-        ps = playerSave;
+        ps = playerSave;        
         update();
 	}
 
@@ -637,7 +644,7 @@ public class PartyManagementController implements PlayerController
 			currentPlayer=1;
 		}
 		
-    	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
+    //	System.out.println(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND));
 		for (Equipment e : ps.getInventory().getEquipment())
 		{
 			System.out.println(e);
@@ -654,13 +661,21 @@ public class PartyManagementController implements PlayerController
 		currentPlayerName.setText(ps.getPlayers()[currentPlayer].getName());
 		currentPlayerStats.setText(ps.getPlayers()[currentPlayer].loadStats());
 		
-		this.mainArmSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND).getImage() : null);
-		this.sideArmSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.OFFHAND)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.OFFHAND).getImage() : null);
-		this.helmSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.HELM)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.HELM).getImage() : null);
-		this.legsSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.LEGS)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.LEGS).getImage() : null);
-		this.bodySlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.BODY)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.BODY).getImage() : null);
-		this.ring1Slot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING1)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING1).getImage() : null);
-		this.ring2Slot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING2)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING2).getImage() : null);
+		this.mainArmSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.MAIN_HAND).getImage() : placeholders[0]);
+		this.sideArmSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.OFFHAND)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.OFFHAND).getImage() : placeholders[0]);
+		this.helmSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.HELM)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.HELM).getImage() : placeholders[1]);
+		this.legsSlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.LEGS)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.LEGS).getImage() : placeholders[2]);
+		this.bodySlot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.BODY)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.BODY).getImage() : placeholders[3]);
+		this.ring1Slot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING1)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING1).getImage() : placeholders[4]);
+		this.ring2Slot.setImage(ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING2)!=null? ps.getPlayers()[currentPlayer].getEquipment(EquipmentSlot.RING2).getImage() : placeholders[4]);
+		
+		mainArmSlot.setOpacity(mainArmSlot.getImage() == placeholders[0] ? .5 : 1);
+		sideArmSlot.setOpacity(sideArmSlot.getImage() == placeholders[0] ? .5 : 1);
+		helmSlot.setOpacity(helmSlot.getImage() == placeholders[1] ? .5 : 1);
+		legsSlot.setOpacity(legsSlot.getImage() == placeholders[2] ? .5 : 1);
+		bodySlot.setOpacity(bodySlot.getImage() == placeholders[3] ? .5 : 1);
+		ring1Slot.setOpacity(ring1Slot.getImage() == placeholders[4] ? .5 : 1);
+		ring2Slot.setOpacity(ring2Slot.getImage() == placeholders[4] ? .5 : 1);
 		
 		if (ps.getPlayers()[0] != null) player1Image.setImage(ps.getPlayers()[0].getImage());
 		if (ps.getPlayers()[1] != null) player2Image.setImage(ps.getPlayers()[1].getImage());

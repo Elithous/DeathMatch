@@ -272,6 +272,14 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		
 		itemList1.prefWidthProperty().bind(itemsMenuBox.widthProperty().divide(2));
 		itemList2.prefWidthProperty().bind(itemsMenuBox.widthProperty().divide(2));
+
+		logLabel1.layoutYProperty().bind(battlePane.heightProperty().subtract(logLabel1.heightProperty()));
+		logLabel2.layoutYProperty().bind(logLabel1.layoutYProperty().subtract(logLabel2.heightProperty()));
+		logLabel3.layoutYProperty().bind(logLabel2.layoutYProperty().subtract(logLabel3.heightProperty()));
+		
+		logLabel1.styleProperty().bind(Bindings.concat(logLabel1.styleProperty().getValue(), "-fx-font-size: ", textFontSize, ";"));
+		logLabel2.styleProperty().bind(logLabel1.styleProperty());
+		logLabel3.styleProperty().bind(logLabel2.styleProperty());
 	}
 
 	@Override
