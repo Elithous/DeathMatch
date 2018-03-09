@@ -32,6 +32,8 @@ public class PartyManagementController implements PlayerController
 {
 	private int currentPlayer = 0;
 	
+	private static boolean loaded = false;
+	
 	private Image[] placeholders = {new Image("file:Assets/Placeholders/emptySword.png"), 
 			new Image("file:Assets/Placeholders/emptyHelm.png"), 
 			new Image("file:Assets/Placeholders/emptyLegs.png"), 
@@ -494,7 +496,7 @@ public class PartyManagementController implements PlayerController
         equipmentList.prefWidthProperty().bind(topHBox.widthProperty().multiply(.4));
         
         scroll.prefWidthProperty().bind(equipmentList.prefWidthProperty().subtract(10));
-        scroll.minHeightProperty().bind(equipmentList.heightProperty().subtract(10));
+        //scroll.minHeightProperty().bind(equipmentList.heightProperty().subtract(10));
         
         // Bind the image objects in playerPane to positions and sizes
         currentPlayerImage.fitWidthProperty().bind(playerPane.widthProperty().divide(5));
@@ -653,8 +655,12 @@ public class PartyManagementController implements PlayerController
 		}		
 		equipmentList.setContent(content);
 		
+//		if (!loaded) {
+//			content.setMinHeight(638);
+//		}
+		
 		if(content.getHeight() < equipmentList.getHeight()) {
-			content.setPrefHeight(equipmentList.getHeight() - 10);
+			content.setMinHeight(equipmentList.getHeight() - 10);
 		}
 		
 		currentPlayerImage.setImage(ps.getPlayers()[currentPlayer].getImage());
