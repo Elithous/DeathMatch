@@ -31,10 +31,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lib.EventPublisher;
 import loot.models.Consumable;
+import loot.models.RevivePotion;
 import models.player.PlayerSave;
 import models.quests.Quest;
 import views.enums.ActionType;
-import views.enums.ScreenType;
 import views.interfaces.PlayerController;
 import views.models.CharacterImageView;
 import views.models.ConsumableListItem;
@@ -54,6 +54,9 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 
 	@FXML
 	private URL location;
+	
+	@FXML
+	private Label hireLabel;
 	
 	@FXML
 	private Label logLabel1;
@@ -433,9 +436,13 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 
 	public void characterClicked(Character character) 
 	{
-		if (action == ActionType.NONE) return;
+		if (character.getCurrentHealth()<=0)
+		{
+			if (item== null || !(item instanceof RevivePotion))
+				return;
+		}
 		TurnEvent e = null;
-		if (action == ActionType.ATTACK) e = new TurnEvent(character, BattleChoice.ATTACK, null);
+		if (action == ActionType.NONE || action == ActionType.ATTACK) e = new TurnEvent(character, BattleChoice.ATTACK, null);
 		else if (action == ActionType.DEFEND) e = new TurnEvent(character, BattleChoice.DEFEND, null);
 		else 
 			if (action == ActionType.ITEM && item != null) e = new TurnEvent(character, BattleChoice.USE_ITEM, item);

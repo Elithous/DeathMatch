@@ -99,7 +99,7 @@ public class WinController extends EventPublisher implements PlayerController{
 		VBox content = lootBox;
 
 		HBox goldBox = new HBox();
-		Label goldLabel = new Label("" + (-loot.gold));
+		Label goldLabel = new Label(""+loot.gold);
 		ImageView goldImage = new ImageView("file:Assets/Other/Gold.png");
 		goldBox.getChildren().addAll(goldImage, goldLabel);
 		content.getChildren().add(goldBox);
@@ -114,7 +114,7 @@ public class WinController extends EventPublisher implements PlayerController{
 		}
 		lootList.setContent(content);
 		
-		playerSave.getInventory().goldTransaction(-loot.gold);
+		playerSave.getInventory().goldTransaction(loot.gold);
 		// (level*cons)*.8f+((level*cons)*rand.nextfloat*.4f)
 		Random rand = new Random();
 		
@@ -141,9 +141,6 @@ public class WinController extends EventPublisher implements PlayerController{
 				playerSave.removePlayer(h);
 			}
 		}
-		
-		
-		
 	}
 
 	@Override
