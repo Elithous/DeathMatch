@@ -151,8 +151,8 @@
                                     <Image url="@../../Assets/Other/hire.png" />
                                  </image>
                               </ImageView>
-                              <Label text="Hero for" />
-                              <Label text="100 Gold" />
+                              <Label fx:id="hireLabel" text="Hero for" />
+                              <Label fx:id="hireLabel1" text="100 Gold" />
                            </children>
                         </VBox>
                      </children>

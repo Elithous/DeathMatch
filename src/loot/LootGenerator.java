@@ -95,6 +95,11 @@ public class LootGenerator
 			loot.add(item);
 		}
 		
+		if (valueLeft<=0)
+		{
+			valueLeft = 0;
+		}
+		
 		return new LootGeneratorResult(loot, valueLeft);
 	}
 	
@@ -326,9 +331,9 @@ public class LootGenerator
 					ring.setIntelligence(plus);
 					ring.setAttack(plus1);
 					ring.setDexterity(plus2);
-					ring.setMaxHealth(plus);
-					ring.setStrength(plus1);
-					ring.setArmor(plus2);
+					ring.setMaxHealth(plus3);
+					ring.setStrength(plus4);
+					ring.setArmor(plus5);
 			}
 			
 			if(ring.getRarity()==Rarity.LEGENDARY) {

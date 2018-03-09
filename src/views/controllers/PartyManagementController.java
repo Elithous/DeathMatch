@@ -47,6 +47,12 @@ public class PartyManagementController implements PlayerController
     private URL location;
 
     @FXML
+    private Label hireLabel;
+    
+    @FXML
+    private Label hireLabel1;
+
+    @FXML
     private ScrollPane equipmentList;
 
     @FXML
@@ -683,8 +689,16 @@ public class PartyManagementController implements PlayerController
 		if (ps.getPlayers()[3] != null) player4Image.setImage(ps.getPlayers()[3].getImage());
 		
 			if(ps.getPlayers()[3] == null)
+			{
 				hireImage.setVisible(true);
+				hireLabel.setVisible(true);
+				hireLabel1.setVisible(true);
+			}
 			else
+			{
 				hireImage.setVisible(false);
+				hireLabel.setVisible(false);
+				hireLabel1.setVisible(false);
+			}
 	}
 }

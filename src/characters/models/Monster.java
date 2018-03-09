@@ -26,7 +26,10 @@ public class Monster extends Character
 		Random rand = new Random();
 		ArrayList<Hero> heroes = new ArrayList<Hero>();
 		heroes.addAll(Arrays.asList(heros));
-		heroes.removeAll(Collections.singleton(null));
+		for (Hero hero : heros) {
+			if (hero == null || hero.getCurrentHealth() <= 0) heroes.remove(hero);
+		}
+
 		return new TurnEvent(heroes.get(rand.nextInt(heroes.size())), BattleChoice.ATTACK, null);
 
 	}
