@@ -190,7 +190,7 @@ public class MonsterGenerator {
 		baseMonsters.put(MonsterType.MONSTER, monster);
 
 		Monster imp = new Monster();
-		imp.setName("Monster");
+		imp.setName("Imp");
 		imp.setAttack(15);
 		imp.setArmor(12);
 		imp.setStrength(16);
@@ -200,7 +200,7 @@ public class MonsterGenerator {
 		baseMonsters.put(MonsterType.IMP, imp);
 		
 		Monster ratking = new Monster();
-		ratking.setName("Monster");
+		ratking.setName("Ratking");
 		ratking.setAttack(15);
 		ratking.setArmor(12);
 		ratking.setStrength(16);
@@ -210,7 +210,7 @@ public class MonsterGenerator {
 		baseMonsters.put(MonsterType.RATKING, ratking);
 		
 		Monster dragon = new Monster();
-		dragon.setName("Monster");
+		dragon.setName("Dragon");
 		dragon.setAttack(15);
 		dragon.setArmor(12);
 		dragon.setStrength(16);
@@ -220,7 +220,7 @@ public class MonsterGenerator {
 		baseMonsters.put(MonsterType.DRAGON, dragon);
 
 		Monster boss = new Monster();
-		boss.setName("Monster");
+		boss.setName("Boss");
 		boss.setAttack(15);
 		boss.setArmor(12);
 		boss.setStrength(16);
