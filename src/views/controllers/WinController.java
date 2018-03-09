@@ -17,6 +17,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import lib.EventPublisher;
@@ -95,6 +97,13 @@ public class WinController extends EventPublisher implements PlayerController{
 		LootGeneratorResult loot = LootGenerator.generateLoot(quest);
 		
 		VBox content = lootBox;
+
+		HBox goldBox = new HBox();
+		Label goldLabel = new Label("" + (-loot.gold));
+		ImageView goldImage = new ImageView("file:Assets/Other/Gold.png");
+		goldBox.getChildren().addAll(goldImage, goldLabel);
+		content.getChildren().add(goldBox);
+		
 		content.prefWidthProperty().bind(lootList.widthProperty().subtract(12));
 		content.prefHeightProperty().bind(lootList.heightProperty().subtract(12));
 		for(Loot lootAdd : loot.loot) {
@@ -114,7 +123,7 @@ public class WinController extends EventPublisher implements PlayerController{
 			if(hero !=null) {
 			hero.addExp((int) (totalExp/playerSave.getPlayers().length));
 			}
-			}
+		}
 		
 		ArrayList<Hero> heroes = new ArrayList<Hero>();
 		heroes.addAll(Arrays.asList(playerSave.getPlayers()));
