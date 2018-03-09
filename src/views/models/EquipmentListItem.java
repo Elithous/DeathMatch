@@ -11,6 +11,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import loot.enums.WeaponType;
 import loot.models.Equipment;
 import loot.models.Weapon;
 
@@ -38,6 +39,7 @@ public class EquipmentListItem extends HBox
 		if(loot instanceof Weapon) {
 			Weapon wep = (Weapon) loot;
 			sb.append(wep.getMaxAttack() > 0 ? "" + wep.getMinAttack() + "-" + wep.getMaxAttack() + " Attack  " : "");
+			sb.append(wep.isTwoHanded ? "Two Handed " : "One Handed ");
 		} else {
 			sb.append(loot.getAttack() > 0 ? "+" + loot.getArmor() + " Attack  " : "");
 		}

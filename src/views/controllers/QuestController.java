@@ -95,6 +95,10 @@ public class QuestController extends EventPublisher implements PlayerController 
 		contentBox.prefWidthProperty().bind(parent.widthProperty());
 		contentBox.prefHeightProperty().bind(parent.heightProperty());
 		
+		
+		loadButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+		saveButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+		quitButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
 
 		SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();
 
@@ -102,6 +106,10 @@ public class QuestController extends EventPublisher implements PlayerController 
 		loadButton.styleProperty().bind(Bindings.concat(loadButton.styleProperty().getValue(),"-fx-font-size: ", buttonFontSize.asString(), ";"));
 		saveButton.styleProperty().bind(Bindings.concat(saveButton.styleProperty().getValue(),"-fx-font-size: ", buttonFontSize.asString(), ";"));
 		quitButton.styleProperty().bind(Bindings.concat(quitButton.styleProperty().getValue(),"-fx-font-size: ", buttonFontSize.asString(), ";"));
+		
+		loadButton.setBackground(GameApp.buttonBack);
+		saveButton.setBackground(GameApp.buttonBack);
+		quitButton.setBackground(GameApp.buttonBack);
 		
 		saveLoadBox.spacingProperty().bind(parent.widthProperty().divide(20));
 		}
@@ -121,10 +129,10 @@ public class QuestController extends EventPublisher implements PlayerController 
 			SimpleDoubleProperty textFontSize = new SimpleDoubleProperty();
 			
 			textFontSize.bind(questBox.heightProperty().divide(20));
-			questItems[i].getQuestName().styleProperty().bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";"));
+			questItems[i].getQuestName().styleProperty().bind(Bindings.concat(questItems[i].getQuestName().styleProperty().getValue(), "-fx-font-size: ", textFontSize.asString(), ";"));
 			
 			//buttonFontSize.bind(questBox.heightProperty().divide(20));
-			questItems[i].getPlayButton().styleProperty().bind(Bindings.concat("-fx-font-size: ", textFontSize.asString(), ";"));	
+			questItems[i].getPlayButton().styleProperty().bind(Bindings.concat(questItems[i].getPlayButton().styleProperty().getValue(), "-fx-font-size: ", textFontSize.asString(), ";"));	
 			
 			questItems[i].getQuestIcon().fitHeightProperty().bind(textFontSize);
 			questItems[i].getQuestIcon().fitWidthProperty().bind(textFontSize);

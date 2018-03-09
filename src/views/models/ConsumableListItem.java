@@ -1,5 +1,6 @@
 package views.models;
 
+import controllers.GameApp;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Pos;
@@ -26,15 +27,19 @@ public class ConsumableListItem extends HBox {
 		
 		this.spacingProperty().bind(this.widthProperty().divide(10));
 		
+		useButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+		
 		SimpleDoubleProperty buttonTextSize = new SimpleDoubleProperty();
 		
 		buttonTextSize.bind(this.heightProperty().divide(5));
-		useButton.styleProperty().bind(Bindings.concat("-fx-font-size: ", buttonTextSize.asString(), ";"));
+		useButton.styleProperty().bind(Bindings.concat(useButton.styleProperty().getValue(), "-fx-font-size: ", buttonTextSize.asString(), ";"));
+		
+		useButton.setBackground(GameApp.buttonBack);
 		
 		SimpleDoubleProperty infoTextSize = new SimpleDoubleProperty();
 		
 		infoTextSize.bind(this.heightProperty().divide(4));
-		info.styleProperty().bind(Bindings.concat("-fx-font-size: ", infoTextSize.asString(), ";"));
+		info.styleProperty().bind(Bindings.concat(info.styleProperty().getValue(), "-fx-font-size: ", infoTextSize.asString(), ";"));
 		
 		icon.fitHeightProperty().bind(this.heightProperty().divide(2));
 		icon.fitWidthProperty().bind(icon.fitHeightProperty());

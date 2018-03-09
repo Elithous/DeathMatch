@@ -79,11 +79,15 @@ public class WinController extends EventPublisher implements PlayerController{
     	title.styleProperty().bind(Bindings.concat(title.styleProperty().getValue(), "-fx-font-size: ", textFontSize.asString(), ";"));
     	title.prefWidthProperty().bind(vBox.widthProperty());
     	
+    	continueButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+    	continueButton.setBackground(GameApp.buttonBack);
+    	
     	SimpleDoubleProperty buttonFontSize = new SimpleDoubleProperty();
     	
     	buttonFontSize.bind(vBox.heightProperty().divide(30));
     	continueButton.styleProperty().bind(Bindings.concat(continueButton.styleProperty().getValue(), "-fx-font-size: ", buttonFontSize.asString(), ";"));
     	continueButton.prefWidthProperty().bind(vBox.widthProperty().divide(5));
+    	
     	
     	lootList.prefWidthProperty().bind(vBox.widthProperty().multiply(.8));
 

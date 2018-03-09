@@ -8,7 +8,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 import lib.Event;
 import lib.FileUtil;
@@ -20,6 +26,9 @@ import views.interfaces.PlayerController;
 
 public class GameApp extends Application implements IEventListener
 {
+		public static Background buttonBack = new Background(new BackgroundImage(new Image("file:Assets/button.jpg"),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
+	
+	
 		public static HashMap<ScreenType, String> screenPaths;
 		
 		public Stage stage;

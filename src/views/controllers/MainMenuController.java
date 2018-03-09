@@ -13,7 +13,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import lib.EventPublisher;
@@ -91,11 +97,22 @@ public class MainMenuController extends EventPublisher implements PlayerControll
 		contentBox.styleProperty().bind(Bindings.concat(contentBox.styleProperty().getValue(), "-fx-font-size: ", buttonFontSize.asString(), ";"));
 
 	//	titleLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", titleFontSize.asString(), ";"));
-
+		
+		
 		exitButton.prefWidthProperty().bind(stackPane.widthProperty().divide(5));
 		settingsButton.prefWidthProperty().bind(stackPane.widthProperty().divide(5));
 		newGameButton.prefWidthProperty().bind(stackPane.widthProperty().divide(5));
 		loadGameButton.prefWidthProperty().bind(stackPane.widthProperty().divide(5));
+		
+		exitButton.setBackground(GameApp.buttonBack);
+		settingsButton.setBackground(GameApp.buttonBack);
+		newGameButton.setBackground(GameApp.buttonBack);
+		loadGameButton.setBackground(GameApp.buttonBack);
+		
+		exitButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+		settingsButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+		newGameButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+		loadGameButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
 
 		settingsButton.setDisable(true);
 		PlayerSave save = GameApp.load();

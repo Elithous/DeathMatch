@@ -254,8 +254,11 @@ public class BattleScreenController extends EventPublisher implements PlayerCont
 		textFontSize.bind(selectionBox.heightProperty().divide(11));
 		for (Node node : optionsVBox.getChildren()) {
 			Button button = node instanceof Button ? (Button) node : new Button();
+			button.setStyle("-fx-border-color: black; -fx-border-width: 2;");
 			button.styleProperty().bind(Bindings.concat(button.styleProperty().getValue(), "-fx-font-size: ", textFontSize.asString(), ";"));
 			button.prefWidthProperty().bind(optionsVBox.widthProperty().multiply(.8));
+			button.setBackground(GameApp.buttonBack);
+			
 		}
 
 		// Scale currentPlayer stuff
