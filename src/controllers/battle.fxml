@@ -45,9 +45,6 @@
                      </padding>
                   </VBox>
                </children></HBox>
-            <Label fx:id="logLabel1" layoutY="250.0" text="" textFill="RED" />
-            <Label fx:id="logLabel2" layoutY="235.0" opacity="0.8" text="" textFill="RED" />
-            <Label fx:id="logLabel3" layoutY="220.0" opacity="0.4" text="" textFill="RED" />
          </children>
       </Pane>
       <HBox fx:id="selectionBox" prefHeight="131.0" prefWidth="600.0">
@@ -119,12 +116,12 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <ScrollPane fx:id="itemsMenuBox" hbarPolicy="NEVER" prefHeight="131.0" prefWidth="358.0" visible="false">
+                  <ScrollPane fx:id="itemsMenuBox" hbarPolicy="NEVER" prefHeight="131.0" prefWidth="358.0" style="-fx-background-color: #85BEE9; -fx-border-color: #3A5E90; -fx-border-width: 5;" visible="false">
                      <content>
-                        <HBox prefHeight="123.0" prefWidth="359.0" style="-fx-background-color: #85BEE9; -fx-border-width: 5; -fx-border-color: #3A5E90;">
+                        <HBox prefHeight="123.0" prefWidth="359.0">
                            <children>
-                              <VBox fx:id="itemList1" prefHeight="123.0" prefWidth="176.0" style="-fx-background-color: #85BEE9; -fx-border-color: #3A5E90;" />
-                              <VBox fx:id="itemList2" prefHeight="123.0" prefWidth="178.0" style="-fx-border-color: #3A5E90; -fx-background-color: #85BEE9;" />
+                              <VBox fx:id="itemList1" prefHeight="123.0" prefWidth="176.0" />
+                              <VBox fx:id="itemList2" prefHeight="123.0" prefWidth="178.0" />
                            </children>
                         </HBox>
                      </content>

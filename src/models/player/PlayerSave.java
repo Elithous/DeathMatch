@@ -39,7 +39,6 @@ public class PlayerSave implements Serializable{
 			}
 		}
 			players = h.clone();
-
 	}
 	
 	public boolean addPlayer(Hero heroN) 
